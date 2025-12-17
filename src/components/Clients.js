@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
-import { useTranslation } from 'react-i18next';
-import ImageWebp from './ImageWebp';
+import { useTranslation } from "react-i18next";
+import ImageWebp from "./ImageWebp";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src="/assets/clients arrow right.svg" alt="serviceIcon" />
+      <img src="/assets/clients arrow right.svg" alt="arrow right" />
     </div>
   );
 }
@@ -17,140 +17,113 @@ function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src="/assets/clients arrow left.svg" alt="serviceIcon" />
+      <img src="/assets/clients arrow left.svg" alt="arrow left" />
     </div>
   );
 }
 
-const Clients = ({direction}) => {
+const Clients = ({ direction }) => {
+  const { t } = useTranslation();
 
-  const {t} = useTranslation();
-  
-  var settings = {
+  const logos = [
+    "abc.png",
+    "aishti.webp",
+    "algeco.webp",
+    "ambassade.png",
+    "aub.png",
+    "bankaudi.png",
+    "bloc.png",
+    "chaddad.webp",
+    "croix.webp",
+    "damac.png",
+    "dos-logo-light.webp",
+    "general.webp",
+    "hicon.png",
+    "imar.png",
+    "jesh.webp",
+    "ka.webp",
+    "kbuild.png",
+    "kfoury.webp",
+    "mac.webp",
+    "Man.webp",
+    "modec.png",
+    "parissis.webp",
+    "solidere.png",
+    "spinneys.webp",
+    "vaccum.webp",
+    "zerock.gif",
+  ];
+
+  const settings = {
     dots: false,
     infinite: true,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 4000,
-    pauseOnHover: true,
+    speed: 700,
+    autoplaySpeed: 2000,
+    pauseOnHover: false,
     swipeToSlide: true,
     slidesToShow: 5,
+    slidesToScroll: 1,
     swipe: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    rtl: direction === "rtl",
     responsive: [
       {
         breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-        },
+        settings: { slidesToShow: 1, slidesToScroll: 1, infinite: true },
       },
       {
         breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-        },
+        settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true },
       },
       {
         breakpoint: 1000,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-        },
+        settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true },
       },
       {
         breakpoint: 1200,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: true,
-        },
+        settings: { slidesToShow: 4, slidesToScroll: 1, infinite: true },
       },
     ],
-    rtl : direction === 'rtl' ? true : false,
   };
+
   return (
-    <div id="clients" className="text-center  pb-[100px] pt-[100px]">
+    <div id="clients" className="text-center pb-[100px] pt-[100px]">
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
-        className="uppercase text-[#003A80] font-sairaStencil md:mb-[5px] text-[35px] leading-[36.4px] font-[400] md:text-[40px] 2xl:leading-[66px] xl:leading-[66px] lg:leading-[56.4px] pb-[60px]"
+        className="font-[Rajdhani] text-[42px] font-[700] uppercase mb-[40px] leading-[1.15] text-[#003A80] text-center"
       >
-        {t('clients.title')}
+        {t("clients.title")}
       </motion.h1>
+
       <Slider {...settings}>
-        <ImageWebp
-          srcWebp='/assets/download(1)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(1)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(2)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(2)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(3)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(3)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(4)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(4)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(5)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(5)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(6)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(6)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/download(7)_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/download(7)_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp srcWebp='/assets/download.webp' alt="companyLogo" src="/assets/download.webp" className="w-[50%]" />
-        <ImageWebp srcWebp='/assets/download_lossyalpha.webp' alt="companyLogo" src="/assets/download_lossyalpha.webp" className="w-[50%]" />
-        <ImageWebp
-          srcWebp='/assets/bluelogo_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/bluelogo_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp srcWebp='/assets/logo(1)_lossyalpha.webp' alt="companyLogo" src="/assets/logo(1)_lossyalpha.webp" className="w-[50%]" />
-        <img alt="companyLogo" src="/assets/logo.gif" className="w-[50%]" />
-        <ImageWebp srcWebp='/assets/logo(2)_lossyalpha.webp' alt="companyLogo" src="/assets/logo(2)_lossyalpha.webp" className="w-[50%]" />
-        <ImageWebp
-          srcWebp='/assets/logo_black_lossyalpha.webp'
-          alt="companyLogo"
-          src="/assets/logo_black_lossyalpha.webp"
-          className="w-[50%]"
-        />
-        <ImageWebp
-          srcWebp='/assets/Logo_confirm-04_ydgnbu.webp'
-          alt="companyLogo"
-          src="/assets/Logo_confirm-04_ydgnbu.webp"
-          className="w-[50%]"
-        />
+        {logos.map((file, idx) => {
+          const src = `/assets/clients/${file}`;
+          const isGif = file.toLowerCase().endsWith(".gif");
+
+          return (
+            <div key={idx} className="flex items-center justify-center">
+              {isGif ? (
+                <img
+                  src={src}
+                  alt="companyLogo"
+                  className="w-[50%] object-contain"
+                />
+              ) : (
+                <ImageWebp
+                  srcWebp={src}
+                  src={src}
+                  alt="companyLogo"
+                  className="w-[50%] object-contain"
+                />
+              )}
+            </div>
+          );
+        })}
       </Slider>
     </div>
   );
