@@ -1,0 +1,189 @@
+import React, { useEffect, useState } from 'react'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom"
+import { useTranslation } from 'react-i18next'
+import ImageWebp from './ImageWebp'
+
+function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry = "Country" }) {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isHome = location.pathname === "/"
+  const { t } = useTranslation()
+
+  const [showMenu, setshowMenu] = useState(false)
+  const [showMenu2, setshowMenu2] = useState(false)
+  const [showMenu3, setshowMenu3] = useState(false)
+  const [showCountry, setshowCountry] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.classList.toggle("home-page", isHome)
+    return () => document.body.classList.remove("home-page")
+  }, [isHome])
+
+  const closeAllDropdowns = () => {
+    setshowMenu(false)
+    setshowMenu2(false)
+    setshowMenu3(false)
+    setshowCountry(false)
+  }
+
+  const goToHomeSection = (id) => {
+    closeAllDropdowns()
+    if (!isHome) {
+      navigate('/')
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+      }, 200)
+    } else {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    }
+    setOpen(false)
+  }
+
+  const headerWrapClass = isHome
+    ? "absolute inset-x-0 top-0 z-[999999]"
+    : "fixed inset-x-0 top-0 z-[999999]"
+
+  const navLinkClass = ({ isActive }) =>
+    isActive
+      ? "text-[#FA7800] font-saira font-[600] uppercase text-[14px] tracking-wide"
+      : "text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300"
+
+  const mobileNavLinkClass = ({ isActive }) =>
+    isActive
+      ? "block ltr:ml-[20px] rtl:mr-[20px] text-[#FA7800]"
+      : "block ltr:ml-[20px] rtl:mr-[20px] text-[#FFFFFF]"
+
+  return (
+    <>
+      <header className={headerWrapClass}>
+        <div className='bg-[#28509E] hidden md:flex flex-col md:flex-row justify-between items-center pt-[13px] pb-[13px] sm:pr-[20px] border-b-[#FFFFFF] border-b-[1px] border-solid'>
+          <div className='flex flex-row justify-between items-center w-[100%] md:w-[80%] lg:w-[70%] xl:w-[60%] px-[8px] sm:px-[0px]'>
+            <Link
+              to={`/`}
+              className='hidden md:block ltr:2xl:ml-[100px] ltr:xl:ml-[75px] ltr:lg:ml-[50px] ltr:md:ml-[20px] ltr:sm:ml-[60px] rtl:2xl:mr-[100px] rtl:xl:mr-[75px] rtl:lg:mr-[50px] rtl:md:mr-[20px] rtl:sm:mr-[60px] 2xl:flex-[0.5] xl:flex-[0.5] lg:flex-[0.5] md:flex-[0.5]'
+              onClick={() => { closeAllDropdowns(); setOpen(false) }}
+            >
+              <ImageWebp srcWebp='/assets/ArchiScaffoldinglogo_lossyalpha.webp' src='/assets/ArchiScaffoldinglogo_lossyalpha.webp' alt='siteLogo' className='2xl:w-[150px] w-[100px]' />
+            </Link>
+
+            <div className='flex justify-center items-center ltr:md:ml-[20px] ltr:sm:ml-[60px] ltr:lg:ml-0 rtl:md:mr-[20px] rtl:sm:mr-[60px] rtl:lg:mr-0'>
+              <ImageWebp srcWebp="/assets/localisationsicon_lossyalpha.webp" src='/assets/localisationsicon_lossyalpha.webp' className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='localizationIcon' />
+              <p className='text-[11px] text-white ltr:font-[500] rtl:font-[600] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira'>{t('header.Lebanon')}</p>
+            </div>
+
+            <div className='flex justify-center items-center sm:text-[15px]'>
+              <ImageWebp srcWebp='/assets/emailIcon_lossyalpha.webp' src="/assets/emailIcon_lossyalpha.webp" className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='emailIcon' />
+              <p className='text-[11px] text-white font-[500] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira'>achi.gr@hotmail.com</p>
+            </div>
+
+            <div className='flex justify-center items-center'>
+              <ImageWebp srcWebp='/assets/wpicon_lossyalpha.webp' src="/assets/wpicon_lossyalpha.webp" className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='whatsappIcon' />
+              <p className='text-[11px] text-white font-[500] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira' dir='ltr'>+96103322811</p>
+            </div>
+          </div>
+
+          <div className='hidden xl:flex justify-center items-center pr-[20px] mt-[20px] mb-[10px] md:mt-[0px] md:pt-[10px]'>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://facebook.com/ACHISCAFF' target='_blank' rel="noreferrer"><img src="/assets/iconoir_facebook.svg" alt='Facebook' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.instagram.com/achiscaffoldinglb' target='_blank' rel="noreferrer"><img src="/assets/mdi_instagram.svg" alt='Instagram' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://twitter.com/AchiScaffolding' target='_blank' rel="noreferrer"><img src="/assets/ri_twitter-x-fill.svg" alt='X' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.linkedin.com/company/achi-scaffolding/' target='_blank' rel="noreferrer"><img src="/assets/basil_linkedin-outline.svg" alt='LinkedIn' /></a>
+            <a className='cursor-pointer' href='https://www.tiktok.com/@achiscaffolding' target='_blank' rel="noreferrer"><img src="/assets/ph_tiktok-logo.svg" alt='TikTok' /></a>
+          </div>
+
+          <div className='flex items-center gap-5 ltr:mr-5 rtl:ml-5 relative'>
+            <div className='flex justify-center items-center cursor-pointer relative' onClick={() => { closeAllDropdowns(); setshowCountry(!showCountry) }}>
+              <img src="/assets/ic_outline-language.svg" className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='country' />
+              <p className='text-white font-saira font-[500] text-[16px]'>{currentCountry}</p>
+              <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
+              <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showCountry ? 'flex' : 'hidden'} z-[999]`}>
+                <div className='flex flex-col'>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => { if (handleCountry) handleCountry('Lebanon'); setshowCountry(false) }}>Lebanon</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { if (handleCountry) handleCountry('Italy'); setshowCountry(false) }}>Italy</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { if (handleCountry) handleCountry('France'); setshowCountry(false) }}>France</p>
+                </div>
+              </div>
+            </div>
+
+            <div className='flex justify-center items-center cursor-pointer relative' onClick={() => { closeAllDropdowns(); setshowMenu3(!showMenu3) }}>
+              <img src="/assets/ic_outline-language.svg" className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='language' />
+              <p className='text-white font-saira font-[500] text-[16px]'>{currentLanguage}</p>
+              <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
+              <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showMenu3 ? 'flex' : 'hidden'} cursor-default z-[999]`}>
+                <div className='flex flex-col ltr:mr-[50px] rtl:ml-[50px]'>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => { handleLanguage('en'); setshowMenu3(false) }}>{t('langDropwn.english')}</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { handleLanguage('ar'); setshowMenu3(false) }}>{t('langDropwn.arabic')}</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { handleLanguage('fr'); setshowMenu3(false) }}>{t('langDropwn.french')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav
+          className={`hidden md:block ${isHome ? "absolute left-0 right-0 top-full bg-transparent border-b-0" : "bg-[#28509E] border-b-[#FFFFFF] border-b-[1px] border-solid"}`}
+        >
+          <div className={`w-full flex ${isHome ? "justify-start" : "justify-start"}`}>
+            <ul className={`${isHome? "flex gap-8 pt-[18px] pb-[18px] ml-[120px]"  : "flex gap-8 pt-[18px] pb-[18px] ml-[120px]"}`}>
+              <li><NavLink to="/" className={navLinkClass} onClick={closeAllDropdowns}>Home</NavLink></li>
+              <li><NavLink to="/about" className={navLinkClass} onClick={closeAllDropdowns}>About us</NavLink></li>
+              <li><NavLink to="/services" className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
+              <li><NavLink to="/products" className={navLinkClass} onClick={closeAllDropdowns}>Products</NavLink></li>
+              <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("clientsSection")}>Clients</button></li>
+              <li><NavLink to="/projects" className={navLinkClass} onClick={closeAllDropdowns}>Projects</NavLink></li>
+              <li><NavLink to="/blog" className={navLinkClass} onClick={closeAllDropdowns}>Blog</NavLink></li>
+              <li><NavLink to="/gallery" className={navLinkClass} onClick={closeAllDropdowns}>Gallery</NavLink></li>
+              <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("contactForm")}>Contact us</button></li>
+            </ul>
+          </div>
+        </nav>
+
+        <div className='bg-[#28509E] flex md:hidden flex-row justify-between items-center pt-[10px] pb-[10px] sm:pr-[20px] border-b-[#FFFFFF] border-b-[1px] border-solid'>
+          <div className='flex flex-row justify-between items-center w-[100%] px-[8px] sm:px-[0px] ltr:ml-[20px] rtl:mr-[20px]'>
+            <Link to={`/`} onClick={() => { closeAllDropdowns(); setOpen(false) }}>
+              <img className='w-[90px]' src='/assets/ArchiScaffoldinglogo.png' alt='siteLogo' />
+            </Link>
+          </div>
+
+          <div className='ltr:mr-[20px] rtl:ml-[20px] md:hidden'>
+            <MenuIcon sx={{ fontSize: "40px" }} className="text-white cursor-pointer" onClick={() => { closeAllDropdowns(); setOpen(!open) }} />
+          </div>
+        </div>
+      </header>
+
+      {!isHome && <div className="h-[132px] md:h-[120px]" />}
+
+      <ul className={`md:hidden bg-[#28509E] text-white fixed w-full top-0 overflow-y-auto bottom-0 py-[40px] text-start duration-500 ${open ? "left-0" : "left-[-100%]"} z-[99999999] ltr:pl-3 rtl:pr-3`}>
+        <li>
+          <div className='flex justify-between items-center mb-[25px]'>
+            <div className='flex flex-row justify-between items-center w-[100%] px-[8px] sm:px-[0px]'>
+              <Link to={`/`} onClick={() => setOpen(false)}>
+                <ImageWebp srcWebp='/assets/ArchiScaffoldinglogo_lossyalpha.webp' className='w-[90px]' src='/assets/ArchiScaffoldinglogo_lossyalpha.webp' alt='siteLogo' />
+              </Link>
+            </div>
+            <div className='ltr:mr-5 rtl:ml-5'>
+              <CloseIcon fontSize={'large'} className="text-[#BED0FF] cursor-pointer" onClick={() => setOpen(false)} />
+            </div>
+          </div>
+        </li>
+
+        <NavLink to={`/`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Home</p></NavLink>
+        <NavLink to={`/about`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>About us</p></NavLink>
+        <NavLink to={`/services`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Services</p></NavLink>
+        <NavLink to={`/products`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Products</p></NavLink>
+        <li className='ltr:ml-[20px] rtl:mr-[20px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("clientsSection")}>Clients</p></li>
+        <NavLink to={`/projects`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Projects</p></NavLink>
+        <NavLink to={`/blog`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Blog</p></NavLink>
+        <NavLink to={`/gallery`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Gallery</p></NavLink>
+        <li className='ltr:ml-[20px] rtl:mr-[20px] border-[#FFFFFF] border-solid border-b-[2px] pb-[30px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("contactForm")}>Contact us</p></li>
+      </ul>
+    </>
+  )
+}
+
+export default Header
