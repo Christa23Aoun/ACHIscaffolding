@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Home from './pages/Home'
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
 import 'glider-js/glider.min.css'
@@ -45,7 +45,7 @@ function App() {
   }, [i18n, i18n.language])
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <div className="App" onClick={() => showMenu ? setshowMenu(false) : true}>
         <Header
@@ -75,7 +75,7 @@ function App() {
 
         <Footer />
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 
