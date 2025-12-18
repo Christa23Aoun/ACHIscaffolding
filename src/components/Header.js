@@ -47,7 +47,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
 
   const headerWrapClass = isHome
     ? "absolute inset-x-0 top-0 z-[999999]"
-    : "fixed inset-x-0 top-0 z-[999999]"
+    : "relative w-full z-[999999]"
 
   const navLinkClass = ({ isActive }) =>
     isActive
@@ -62,7 +62,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
   return (
     <>
       <header className={headerWrapClass}>
-        <div className='bg-[#28509E] hidden md:flex flex-col md:flex-row justify-between items-center pt-[13px] pb-[13px] sm:pr-[20px] border-b-[#FFFFFF] border-b-[1px] border-solid'>
+        <div className="bg-[#28509E] hidden md:flex flex-col md:flex-row justify-between items-center pt-[13px] pb-[13px] sm:pr-[20px] border-b-[0.5px] border-white/15">
           <div className='flex flex-row justify-between items-center w-[100%] md:w-[80%] lg:w-[70%] xl:w-[60%] px-[8px] sm:px-[0px]'>
             <Link
               to={`/`}
@@ -126,10 +126,14 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
         </div>
 
         <nav
-          className={`hidden md:block ${isHome ? "absolute left-0 right-0 top-full bg-transparent border-b-0" : "bg-[#28509E] border-b-[#FFFFFF] border-b-[1px] border-solid"}`}
+          className={`hidden md:block ${
+            isHome
+              ? "absolute left-0 right-0 top-full bg-transparent border-b-0"
+              : "relative bg-[#28509E] border-b-[#FFFFFF] border-b-[1px] border-solid"
+          }`}
         >
-          <div className={`w-full flex ${isHome ? "justify-start" : "justify-start"}`}>
-            <ul className={`${isHome? "flex gap-8 pt-[18px] pb-[18px] ml-[120px]"  : "flex gap-8 pt-[18px] pb-[18px] ml-[120px]"}`}>
+          <div className="w-full flex justify-start">
+            <ul className={`${isHome ? "flex gap-8 py-[18px] px-[120px]" : "flex gap-8 py-[18px] px-[120px]"}`}>
               <li><NavLink to="/" className={navLinkClass} onClick={closeAllDropdowns}>Home</NavLink></li>
               <li><NavLink to="/about" className={navLinkClass} onClick={closeAllDropdowns}>About us</NavLink></li>
               <li><NavLink to="/services" className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
@@ -155,8 +159,6 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
           </div>
         </div>
       </header>
-
-      {!isHome && <div className="h-[132px] md:h-[120px]" />}
 
       <ul className={`md:hidden bg-[#28509E] text-white fixed w-full top-0 overflow-y-auto bottom-0 py-[40px] text-start duration-500 ${open ? "left-0" : "left-[-100%]"} z-[99999999] ltr:pl-3 rtl:pr-3`}>
         <li>

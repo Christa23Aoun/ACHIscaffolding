@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ function SampleNextArrow({ className, style, onClick }) {
     <button
       type="button"
       aria-label="Next testimonial"
-      className={`${className} !right-[10px] md:!right-[24px] !z-[30]`}
+      className={`${className} !right-[6px] md:!right-[16px] !z-[30]`}
       style={{ ...style }}
       onClick={onClick}
     >
@@ -22,7 +22,7 @@ function SamplePrevArrow({ className, style, onClick }) {
     <button
       type="button"
       aria-label="Previous testimonial"
-      className={`${className} !left-[10px] md:!left-[24px] !z-[30]`}
+      className={`${className} !left-[6px] md:!left-[16px] !z-[30]`}
       style={{ ...style }}
       onClick={onClick}
     >
@@ -39,109 +39,147 @@ const Testimonials = ({ direction }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeReviewKey, setActiveReviewKey] = useState(null);
 
-  const testimonials = [
-    {
-      key: "karim",
-      name: "Karim Radi",
-      rating: "★★★★★",
-      text:
-        "After our experience with Aashi Group on several projects — including Le Grey Hotel in Downtown Beirut and numerous private villas — we can confidently say they are among the best and most professional scaffolding contractors.",
-      thumb: "/assets/reviews/karim1.jpg",
-      images: ["/assets/reviews/karim1.jpg", "/assets/reviews/karim2.jpg", "/assets/reviews/karim3.jpg"],
-    },
-    {
-      key: "kevin",
-      name: "Kevin Gemayel",
-      rating: "★★★★★",
-      text: "Excellent work and support on the PORTSIDE project.",
-      thumb: "/assets/reviews/kevin1.jpg",
-      images: ["/assets/reviews/kevin1.jpg", "/assets/reviews/kevin2.jpg", "/assets/reviews/kevin3.jpg"],
-    },
-    {
-      key: "mohammad",
-      name: "Mohammad Sabbagh",
-      rating: "★★★★★",
-      text: "ACHI Scaffolding exceeded my expectations!",
-      thumb: "/assets/reviews/mohammad1.jpg",
-      images: ["/assets/reviews/mohammad1.jpg", "/assets/reviews/mohammad2.jpg", "/assets/reviews/mohammad3.jpg"],
-    },
-    {
-      key: "michael",
-      name: "Michael Jibrine",
-      rating: "★★★★★",
-      text:
-        "We recently collaborated with Achi Scaffolding on a highly complex project that involved constructing a 33-meter high steel cross.",
-      thumb: "/assets/reviews/michael1.jpg",
-      images: [
-        "/assets/reviews/michael1.jpg",
-        "/assets/reviews/michael2.jpg",
-        "/assets/reviews/michael3.jpg",
-        "/assets/reviews/michael4.jpg",
-      ],
-    },
-    {
-      key: "wadih",
-      name: "Wadih Karkabi",
-      rating: "★★★★★",
-      text:
-        "Dear Mr. Barbar Achi (Achi Group), I am writing to express my heartfelt appreciation for your team's outstanding job in completing the project we entrusted to you.",
-      thumb: "/assets/reviews/wadih1.jpg",
-      images: ["/assets/reviews/wadih1.jpg", "/assets/reviews/wadih2.jpg", "/assets/reviews/wadih3.jpg", "/assets/reviews/wadih4.png"],
-    },
-    {
-      key: "georges",
-      name: "Georges Homsi",
-      rating: "★★★★★",
-      text:
-        "Accurate service! Clean workers! Professional attitude! We barely recall having an experience in scaffolding with such a professional team.",
-      thumb: "/assets/reviews/georges1.jpg",
-      images: [
-        "/assets/reviews/georges1.jpg",
-        "/assets/reviews/georges2.jpg",
-        "/assets/reviews/georges3.jpg",
-        "/assets/reviews/georges4.jpg",
-        "/assets/reviews/georges5.jpg",
-      ],
-    },
-    {
-      key: "francois",
-      name: "Francois Efrem",
-      rating: "★★★★★",
-      text:
-        "Thank you Achi group for providing us a great service of installing your scaffolding at our newly purchased villa in Daroun / Harissa (4 floors of steel scaffolding were installed) Amazing service of professionalism and skilled technical team.",
-      thumb: "/assets/reviews/Francois1.jpg",
-      images: [
-        "/assets/reviews/Francois1.jpg",
-        "/assets/reviews/Francois2.jpg",
-        "/assets/reviews/Francois3.jpg",
-        "/assets/reviews/Francois4.jpg",
-      ],
-    },
-    {
-      key: "ziad",
-      name: "Ziad Bou Dagher",
-      rating: "★★★★★",
-      text: "Really appreciate the way u manage your business.",
-      thumb: "/assets/reviews/ziad1.jpg",
-      images: ["/assets/reviews/ziad1.jpg", "/assets/reviews/ziad2.jpg", "/assets/reviews/ziad3.jpg", "/assets/reviews/ziad4.jpg"],
-    },
-    {
-      key: "jad",
-      name: "Jad Issa",
-      rating: "★★★★★",
-      text: "Very professional and respectful team.",
-      thumb: "/assets/reviews/jad1.jpg",
-      images: ["/assets/reviews/jad1.jpg"],
-    },
-    {
-      key: "mourad",
-      name: "Mourad Achkar",
-      rating: "★★★★★",
-      text: "Excellent service",
-      thumb: "/assets/reviews/mourad1.jpg",
-      images: ["/assets/reviews/mourad1.jpg"],
-    },
-  ];
+  const reviewsData = useMemo(
+    () => ({
+      karim: {
+        name: "Karim Radi",
+        rating: 5,
+        text: `After our experience with Aashi Group on several projects — including Le Grey Hotel in Downtown Beirut and numerous private villas — we can confidently say they are among the best and most professional scaffolding contractors. They consistently deliver their work with exceptional precision, attention to detail, and on-time execution.`,
+        images: [
+          "/assets/reviews/karim1.jpg",
+          "/assets/reviews/karim2.jpg",
+          "/assets/reviews/karim3.jpg",
+        ],
+      },
+      kevin: {
+        name: "Kevin Gemayel",
+        rating: 5,
+        text: `Excellent work and support on the PORTSIDE project. Their team delivered and installed the scaffolding for our façade works with great professionalism, ensuring both safety and efficiency on site.
+
+The installation was completed on schedule and in full compliance with safety standards, allowing our operations to proceed smoothly and without interruption. Their responsiveness and technical coordination were highly appreciated.`,
+        images: [
+          "/assets/reviews/kevin1.jpg",
+          "/assets/reviews/kevin2.jpg",
+          "/assets/reviews/kevin3.jpg",
+        ],
+      },
+      mohammad: {
+        name: "Mohammad Sabbagh",
+        rating: 5,
+        text: `ACHI Scaffolding exceeded my expectations! Their customer support is outstanding—quick to respond, professional, and always ready to assist with any inquiries. The scaffolding itself is heavy-duty and extremely reliable, providing the durability and stability needed for even the most demanding projects. On top of that, their service is impressively fast, ensuring that everything is delivered and set up on time. Highly recommended for anyone looking for top-quality scaffolding solutions!`,
+        images: [
+          "/assets/reviews/mohammad1.jpg",
+          "/assets/reviews/mohammad2.jpg",
+          "/assets/reviews/mohammad3.jpg",
+        ],
+      },
+      michael: {
+        name: "Michael Jibrine",
+        rating: 5,
+        text: `We recently collaborated with Achi Scaffolding on a highly complex project that involved constructing a 33-meter high steel cross.
+From start to finish, their team demonstrated exceptional professionalism and punctuality. Whether it was the top management or the laborers on-site, everyone was committed to delivering top-notch service. Their expertise and dedication made a challenging project run smoothly.
+We wouldn’t consider working with any other company for our scaffolding needs.
+
+Highly recommended!`,
+        images: [
+          "/assets/reviews/michael1.jpg",
+          "/assets/reviews/michael2.jpg",
+          "/assets/reviews/michael3.jpg",
+          "/assets/reviews/michael4.jpg",
+        ],
+      },
+      wadih: {
+        name: "Wadih Karkabi",
+        rating: 5,
+        text: `Dear Mr. Barbar Achi (Achi Group),
+I am writing to express my heartfelt appreciation for your team's outstanding job in completing the project we entrusted to you. Your attention to detail, professionalism, and dedication to delivering excellence did not go unnoticed.
+From the initial stages of planning to the final execution, your company demonstrated a level of expertise and skill that is truly commendable. The way your team worked together seamlessly and efficiently to ensure that every aspect of the project was handled in a perfect manner was truly impressive.
+Not only did you meet our expectations, but you exceeded them in every way. The quality of your work speaks volumes about your commitment to excellence and customer satisfaction. We are thrilled with the end result and are grateful for the hard work and effort put forth by each member of your team.
+In a competitive business environment, it is rare to find a company that consistently delivers exceptional service. Your company has certainly set the bar high, and we are grateful for the opportunity to work with such a dedicated and proficient team.
+Thank you once again for your remarkable service. We look forward to the possibility of working together in the future and will not hesitate to recommend your company to others seeking top-tier service.
+Warm regards,
+Eng. Wadih Karkabi
+Managing Director
+Arch-Consult sarl.`,
+        images: [
+          "/assets/reviews/wadih1.jpg",
+          "/assets/reviews/wadih2.jpg",
+          "/assets/reviews/wadih3.jpg",
+          "/assets/reviews/wadih4.png",
+        ],
+      },
+      georges: {
+        name: "Georges Homsi",
+        rating: 5,
+        text: `Accurate service! Clean workers! Professional attitude! We barely recall having an experience in scaffolding with such a professional team.
+The villa was not in a construction phase. It is already inhabited. It is a very high end sensitive space. We needed to install the AC DUCTS. We were advised Achi group. Their workers highly respected the space and they were so involved in leaving the area clean and in delivering a very neat product. We highly recommend this company.
+This experience with Achi group is to be repeated without any doubt. Thank you
+GroundFloor0819
+George and Fadi`,
+        images: [
+          "/assets/reviews/georges1.jpg",
+          "/assets/reviews/georges2.jpg",
+          "/assets/reviews/georges3.jpg",
+          "/assets/reviews/georges4.jpg",
+          "/assets/reviews/georges5.jpg",
+        ],
+      },
+      francois: {
+        name: "Francois Efrem",
+        rating: 5,
+        text: `Thank you Achi group for providing us a great service of installing your scaffolding at our newly purchased villa in Daroun / Harissa (4 floors of steel scaffolding were installed)
+Amazing service of professionalism and skilled technical team.
+We highly recommend everyone dealing with you, for any required scaffolding rental.`,
+        images: [
+          "/assets/reviews/Francois1.jpg",
+          "/assets/reviews/Francois2.jpg",
+          "/assets/reviews/Francois3.jpg",
+          "/assets/reviews/Francois4.jpg",
+        ],
+      },
+      ziad: {
+        name: "Ziad Bou Dagher",
+        rating: 5,
+        text: `Really appreciate the way u manage your business. Well done`,
+        images: [
+          "/assets/reviews/ziad1.jpg",
+          "/assets/reviews/ziad2.jpg",
+          "/assets/reviews/ziad3.jpg",
+          "/assets/reviews/ziad4.jpg",
+        ],
+      },
+      jad: {
+        name: "Jad Issa",
+        rating: 5,
+        text: `Very professional and respectful team.
+Highly recommended.`,
+        images: ["/assets/reviews/jad1.jpg"],
+      },
+      mourad: {
+        name: "Mourad Achkar",
+        rating: 5,
+        text: `Excellent service`,
+        images: ["/assets/reviews/mourad1.jpg"],
+      },
+    }),
+    []
+  );
+
+  const testimonials = useMemo(
+    () => [
+      { key: "karim", ...reviewsData.karim, thumb: reviewsData.karim.images[0] },
+      { key: "kevin", ...reviewsData.kevin, thumb: reviewsData.kevin.images[0] },
+      { key: "mohammad", ...reviewsData.mohammad, thumb: reviewsData.mohammad.images[0] },
+      { key: "michael", ...reviewsData.michael, thumb: reviewsData.michael.images[0] },
+      { key: "wadih", ...reviewsData.wadih, thumb: reviewsData.wadih.images[0] },
+      { key: "georges", ...reviewsData.georges, thumb: reviewsData.georges.images[0] },
+      { key: "francois", ...reviewsData.francois, thumb: reviewsData.francois.images[0] },
+      { key: "ziad", ...reviewsData.ziad, thumb: reviewsData.ziad.images[0] },
+      { key: "jad", ...reviewsData.jad, thumb: reviewsData.jad.images[0] },
+      { key: "mourad", ...reviewsData.mourad, thumb: reviewsData.mourad.images[0] },
+    ],
+    [reviewsData]
+  );
 
   const openModal = (key) => {
     setActiveReviewKey(key);
@@ -191,7 +229,7 @@ const Testimonials = ({ direction }) => {
   return (
     <>
       <section id="testimonials" className="mt-[50px] pb-[40px]">
-        <div className="max-w-[1200px] mx-auto px-[16px]">
+        <div className="max-w-[1450px] mx-auto px-[10px]">
           <motion.h2
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -202,17 +240,17 @@ const Testimonials = ({ direction }) => {
             {t("testimonials.title")}
           </motion.h2>
 
-          <div className="relative mt-[35px]">
+          <div className="relative mt-[28px]">
             <Slider ref={sliderRef} {...settings}>
               {testimonials.map((r) => (
                 <div key={r.key}>
-                  <article className="px-[18px]">
-                    <div className="bg-white rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[34px] pt-[30px] pb-[34px] h-[610px] flex flex-col items-center text-center">
-                      <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]">
-                        {r.rating}
+                  <article className="px-[10px]">
+                    <div className="bg-white rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[26px] pt-[18px] pb-[18px] h-[520px] flex flex-col items-center text-center">
+                      <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[10px]">
+                        {"★".repeat(r.rating)}
                       </div>
 
-                      <div className="h-[132px] w-full flex items-center justify-center mb-[22px]">
+                      <div className="w-full mb-[10px]">
                         <p
                           className="font-saira text-[16px] font-[400] text-[#64748b] leading-[26px] w-full"
                           style={{
@@ -220,6 +258,7 @@ const Testimonials = ({ direction }) => {
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 4,
                             overflow: "hidden",
+                            whiteSpace: "pre-line",
                           }}
                         >
                           {r.text}
@@ -227,7 +266,7 @@ const Testimonials = ({ direction }) => {
                       </div>
 
                       <div className="w-full flex justify-center mt-auto">
-                        <div className="group relative w-[340px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
+                        <div className="group relative w-[310px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
                           <img
                             src={r.thumb}
                             alt={`Project photo by ${r.name}`}
@@ -249,7 +288,7 @@ const Testimonials = ({ direction }) => {
                       </div>
                     </div>
 
-                    <h3 className="mt-[18px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
+                    <h3 className="mt-[14px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
                       {r.name}
                     </h3>
                   </article>
@@ -257,7 +296,7 @@ const Testimonials = ({ direction }) => {
               ))}
             </Slider>
 
-            <ul className="flex justify-center gap-[10px] mt-[28px]">
+            <ul className="flex justify-center gap-[10px] mt-[22px]">
               {testimonials.map((_, idx) => (
                 <li
                   key={idx}
@@ -296,10 +335,10 @@ const Testimonials = ({ direction }) => {
             </h3>
 
             <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]">
-              {activeReview.rating}
+              {"★".repeat(activeReview.rating)}
             </div>
 
-            <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px]">
+            <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px] whitespace-pre-line">
               {activeReview.text}
             </p>
 
@@ -308,7 +347,7 @@ const Testimonials = ({ direction }) => {
                 <img
                   key={i}
                   src={img}
-                  alt={`${activeReview.name} review ${i + 1}`}
+                  alt={`Project photo by ${activeReview.name}`}
                   className="w-full h-[190px] rounded-[14px] object-cover"
                   loading="lazy"
                   decoding="async"

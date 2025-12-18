@@ -1,103 +1,147 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <main className="bg-[#f5f7fb] text-[#1b3155]">
-      <section id="aboutUs" className="w-full bg-[#eef3fb] py-[60px]">
-        <div className="w-[90%] max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] items-stretch">
-            <div
-              className="min-h-[320px] rounded-[18px] bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: "url('/assets/about.webp')" }}
-              aria-label="Achi Scaffolding team and scaffolding project in Lebanon"
-              role="img"
-            />
+    <main className="about-page">
+      <section className="home-about w-full p-0 m-0">
+        <div className="about-layout grid grid-cols-1 lg:grid-cols-2 items-stretch w-full lg:h-[520px]">
+          <div
+            className="about-image min-h-[260px] lg:min-h-[480px] bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/assets/about.webp')" }}
+            aria-label="Achi Scaffolding about hero image"
+            role="img"
+          />
 
-            <div className="rounded-[18px] bg-white p-[28px] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex flex-col justify-center">
-              <h2 className="uppercase text-[#214f9b] font-[800] text-[30px] leading-[1.1] md:text-[38px]">
-                30+ YEARS OF SCAFFOLDING
-                <br />
-                EXPERIENCE
-              </h2>
+          <div className="about-panel bg-[#274f9f] text-white px-[20px] py-[28px] lg:px-[70px] lg:py-[70px] flex flex-col justify-center relative">
+            <h2
+              className="section-title about-title"
+              style={{
+                fontFamily: '"Rajdhani", sans-serif',
+                fontSize: "42px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                margin: "0 0 12px",
+                color: "#ffffff",
+                lineHeight: "1.2",
+              }}
+            >
+              30+ YEARS OF SCAFFOLDING
+              <br />
+              EXPERIENCE
+            </h2>
 
-              <div className="mt-[16px] text-[15px] leading-[1.75] text-[#4a5c7a]">
-                <p>
-                  Since its establishment in 1993 by engineer Barbar Achi, Achi Scaffolding has evolved into a reputable provider of expert scaffolding and formwork services in Lebanon. Our professional team takes immense pride in building a solid foundation of trust by delivering reliable and high-quality scaffold structures for diverse projects, including shopping malls, towers, residential buildings, and universities.
-                </p>
-              </div>
+            <div className="about-panel-copy">
+              <p className="font-['Open_Sans'] text-white/90 text-[16px] leading-[1.6] max-w-[640px]">
+                Since its establishment in 1993 by engineer Barbar Achi, Achi
+                Scaffolding has evolved into a reputable provider of expert
+                scaffolding and formwork services in Lebanon. Our professional
+                team takes immense pride in building a solid foundation of trust
+                by delivering reliable and high-quality scaffold structures for
+                diverse projects, including shopping malls, towers, residential
+                buildings, and universities.
+              </p>
             </div>
+
+            <span className="hidden lg:block absolute right-[24px] top-[30px] w-[6px] h-[64px] bg-[#1b3a73]" />
           </div>
         </div>
       </section>
 
-      <section id="about-main" className="w-full bg-[#f5f7fb] py-[60px]">
-        <div className="w-[90%] max-w-[1200px] mx-auto">
-          <div className="text-center max-w-[900px] mx-auto">
-            <h1 className="uppercase text-[#214f9b] font-[900] text-[34px] md:text-[44px] leading-[1.1]">
+      <section id="about-main" className="about-main bg-white py-[90px]">
+        <div className="w-[90%] max-w-[980px] mx-auto">
+          <div className="about-intro">
+            <h1
+              className="about-hero-title text-[#214f9b] uppercase"
+              style={{
+                fontFamily: '"Rajdhani", sans-serif',
+                fontSize: "42px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                margin: "0 0 12px",
+                lineHeight: "1.2",
+              }}
+            >
               ABOUT ACHI SCAFFOLDING
             </h1>
-            <p className="mt-[14px] text-[15px] md:text-[16px] leading-[1.8] text-[#4a5c7a]">
-              Achi Scaffolding provides professional scaffolding, formwork and shoring solutions for commercial, residential and industrial projects across Lebanon and the region. We combine field experience with engineered solutions to deliver safe, reliable and cost-effective systems.
+
+            <p className="text-[#4a5c7a] text-[16px] leading-[1.7] mt-[10px]">
+              Achi Scaffolding provides professional scaffolding, formwork and
+              shoring solutions for commercial, residential and industrial
+              projects across Lebanon and the region. We combine field experience
+              with engineered solutions to deliver safe, reliable and
+              cost-effective systems.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[22px] mt-[32px]">
-            <article className="rounded-[18px] bg-white p-[26px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
-              <h3 className="uppercase text-[#214f9b] font-[800] text-[22px]">
+          <div className="grid-2 grid grid-cols-1 lg:grid-cols-2 gap-[28px] mt-[40px]">
+            <article className="card bg-white rounded-[16px] p-[30px] shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
+              <h3
+                className="about-subtitle text-[#214f9b]"
+                style={{
+                  fontFamily: '"Rajdhani", sans-serif',
+                  fontSize: "22px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  margin: "0 0 12px",
+                }}
+              >
                 OUR MISSION
               </h3>
-              <p className="mt-[10px] text-[15px] leading-[1.8] text-[#4a5c7a]">
-                We specialize in comprehensive scaffolding services — from rental and installation to design and export of new and used construction equipment across the Middle East and Africa. Our mission is to provide engineered, safe and timely solutions that help clients deliver their projects on schedule.
+
+              <p className="text-[#4a5c7a] leading-[1.6]">
+                We specialize in comprehensive scaffolding services — from rental
+                and installation to design and export of new and used
+                construction equipment across the Middle East and Africa. Our
+                mission is to provide engineered, safe and timely solutions that
+                help clients deliver their projects on schedule.
               </p>
 
-              <div className="mt-[16px]">
+              <div className="mt-[22px] flex justify-center">
                 <Link
                   to="/projects"
-                  className="inline-flex items-center justify-center px-[22px] py-[10px] rounded-full border-[2px] border-[#214f9b] text-[#214f9b] font-[800] uppercase text-[13px] tracking-[.06em] hover:bg-[#214f9b] hover:text-white transition"
+                  className="inline-flex items-center justify-center px-[34px] py-[12px] rounded-[40px] border-[2px] border-[#214f9b] text-[#214f9b] font-[600] uppercase text-[15px] font-['Rajdhani'] hover:bg-[#214f9b] hover:text-white transition"
                 >
                   See projects
                 </Link>
               </div>
             </article>
 
-            <article className="rounded-[18px] bg-white p-[26px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
-              <h3 className="uppercase text-[#214f9b] font-[800] text-[22px]">
+            <article className="card bg-white rounded-[16px] p-[30px] shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
+              <h3
+                className="about-subtitle text-[#214f9b]"
+                style={{
+                  fontFamily: '"Rajdhani", sans-serif',
+                  fontSize: "22px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  margin: "0 0 12px",
+                }}
+              >
                 OUR VISION
               </h3>
-              <p className="mt-[10px] text-[15px] leading-[1.8] text-[#4a5c7a]">
-                To make scaffolding a symbol of innovation, sustainability and safety in the built environment. We aim to lead the industry by improving standards, investing in skilled crews and supplying modern systems that reduce risk and increase productivity.
+
+              <p className="text-[#4a5c7a] leading-[1.6]">
+                To make scaffolding a symbol of innovation, sustainability and
+                safety in the built environment. We aim to lead the industry by
+                improving standards, investing in skilled crews and supplying
+                modern systems that reduce risk and increase productivity.
               </p>
 
-              <div className="mt-[16px]">
+              <div className="mt-[22px] flex justify-center">
                 <Link
-                  to="/#contactForm"
-                  className="inline-flex items-center justify-center px-[22px] py-[10px] rounded-full bg-[#214f9b] text-white font-[800] uppercase text-[13px] tracking-[.06em] hover:translate-y-[-1px] transition"
+                  to="/contact"
+                  className="inline-flex items-center justify-center px-[34px] py-[12px] rounded-[40px] border-[2px] border-[#214f9b] text-[#214f9b] font-[600] uppercase text-[15px] font-['Rajdhani'] hover:bg-[#214f9b] hover:text-white transition"
                 >
                   Get in touch
                 </Link>
               </div>
             </article>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-[12px] justify-center mt-[26px]">
-            <Link
-              to="/#contactForm"
-              className="inline-flex items-center justify-center px-[26px] py-[11px] rounded-full bg-[#214f9b] text-white font-[800] uppercase text-[13px] tracking-[.06em] hover:translate-y-[-1px] transition"
-            >
-              Get in touch
-            </Link>
-            <Link
-              to="/projects"
-              className="inline-flex items-center justify-center px-[26px] py-[11px] rounded-full border-[2px] border-[#214f9b] text-[#214f9b] font-[800] uppercase text-[13px] tracking-[.06em] hover:bg-[#214f9b] hover:text-white transition"
-            >
-              See projects
-            </Link>
-          </div>
         </div>
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default About
+export default About;
