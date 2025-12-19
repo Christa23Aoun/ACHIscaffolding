@@ -6,21 +6,21 @@ import { useTranslation } from "react-i18next";
 import ImageWebp from "./ImageWebp";
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, style, onClick, assetBase } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src="/assets/Button Arrow R.svg" alt="serviceIcon" />
+      <img src={`${assetBase}/assets/Button Arrow R.svg`} alt="serviceIcon" />
     </div>
   );
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, style, onClick, assetBase } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
       <ImageWebp
-        srcWebp="/assets/ButtonArrowL_lossyalpha.webp"
-        src="/assets/ButtonArrowL_lossyalpha.webp"
+        srcWebp={`${assetBase}/assets/ButtonArrowL_lossyalpha.webp`}
+        src={`${assetBase}/assets/ButtonArrowL_lossyalpha.webp`}
         alt="serviceIcon"
       />
     </div>
@@ -30,23 +30,24 @@ function SamplePrevArrow(props) {
 const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
   const { t } = useTranslation();
 
- var settings = {
-  dots: true,
-  swipeToSlide: true,
-  swipe: true,
-  infinite: true,
-  autoplay: true,
-  autoplaySpeed: 4000,
-  speed: 800,
-  pauseOnHover: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  initialSlide: 0,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-  rtl: direction === "rtl" ? true : false,
-};
+  const ASSET = process.env.PUBLIC_URL || "";
 
+  var settings = {
+    dots: true,
+    swipeToSlide: true,
+    swipe: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    speed: 800,
+    pauseOnHover: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    nextArrow: <SampleNextArrow assetBase={ASSET} />,
+    prevArrow: <SamplePrevArrow assetBase={ASSET} />,
+    rtl: direction === "rtl" ? true : false,
+  };
 
   const panelBase =
     "pr-[10px] ltr:ml-[20px] rtl:mr-[20px] w-fit ltr:2xl:ml-[120px] ltr:xl:ml-[120px] ltr:lg:ml-[80px] ltr:md:ml-[60px] ltr:sm:ml-[60px] rtl:2xl:mr-[120px] rtl:xl:mr-[120px] rtl:lg:mr-[80px] rtl:md:mr-[60px] rtl:sm:mr-[60px] py-[30px] p-[20px] rounded-[10px] bg-gradient-to-tr from-black/60 via-black/30 to-black/5";
@@ -60,7 +61,7 @@ const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
 
       <Slider {...settings}>
         <div
-        className="bg-firstSlideBg min-h-[800px] md:min-h-[700px] bg-no-repeat bg-cover bg-center pb-[220px] pt-[220px] md:pb-[170px] md:pt-[170px]"
+          className="bg-firstSlideBg min-h-[800px] md:min-h-[700px] bg-no-repeat bg-cover bg-center pb-[220px] pt-[220px] md:pb-[170px] md:pt-[170px]"
           dir={direction}
         >
           <motion.div
@@ -91,7 +92,8 @@ const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
 
         <div
           className="bg-secondSlidebg h-full bg-no-repeat bg-cover bg-center pb-[160px] pt-[160px] md:pb-[120px] md:pt-[120px]"
-          dir={direction}>
+          dir={direction}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
