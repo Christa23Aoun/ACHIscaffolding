@@ -4,6 +4,9 @@ import ImageWebp from '../ImageWebp';
 import { Link } from 'react-router-dom';
 
 const ServiceSection = () => {
+
+    const ASSET = process.env.PUBLIC_URL || ""
+
     return (
         <div>
             <motion.h1
@@ -28,10 +31,10 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/361641065_768035905323121_6701313797518833287_n 2(2).png'
+                            srcWebp={`${ASSET}/assets/services/361641065_768035905323121_6701313797518833287_n 2(2).png`}
                             id="switchImageAnim"
                             className="object-cover w-full"
-                            src="/assets/services/361641065_768035905323121_6701313797518833287_n 2(2).png"
+                            src={`${ASSET}/assets/services/361641065_768035905323121_6701313797518833287_n 2(2).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -55,9 +58,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/Suspended scaffolding 1 2(1).png'
+                            srcWebp={`${ASSET}/assets/services/Suspended scaffolding 1 2(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/Suspended scaffolding 1 2(1).png"
+                            src={`${ASSET}/assets/services/Suspended scaffolding 1 2(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -81,9 +84,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/SDC14429(1).png'
+                            srcWebp={`${ASSET}/assets/services/SDC14429(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/SDC14429(1).png"
+                            src={`${ASSET}/assets/services/SDC14429(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -107,9 +110,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/Home Banner 4 2(1).png'
+                            srcWebp={`${ASSET}/assets/services/Home Banner 4 2(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/Home Banner 4 2(1).png"
+                            src={`${ASSET}/assets/services/Home Banner 4 2(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -133,9 +136,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/Home Banner 1 2(1).png'
+                            srcWebp={`${ASSET}/assets/services/Home Banner 1 2(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/Home Banner 1 2(1).png"
+                            src={`${ASSET}/assets/services/Home Banner 1 2(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -159,9 +162,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/20819369_135108873765021_8187137705964148355_o (1) 2(1).png'
+                            srcWebp={`${ASSET}/assets/services/20819369_135108873765021_8187137705964148355_o (1) 2(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/20819369_135108873765021_8187137705964148355_o (1) 2(1).png"
+                            src={`${ASSET}/assets/services/20819369_135108873765021_8187137705964148355_o (1) 2(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -185,9 +188,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/stock-photo-engineers-are-helping-to-design-work-on-blueprints-and-collaborate-on-structural-analyzing-of-1724713963 1.png'
+                            srcWebp={`${ASSET}/assets/services/stock-photo-engineers-are-helping-to-design-work-on-blueprints-and-collaborate-on-structural-analyzing-of-1724713963 1.png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/stock-photo-engineers-are-helping-to-design-work-on-blueprints-and-collaborate-on-structural-analyzing-of-1724713963 1.png"
+                            src={`${ASSET}/assets/services/stock-photo-engineers-are-helping-to-design-work-on-blueprints-and-collaborate-on-structural-analyzing-of-1724713963 1.png`}
                             alt="serviceIcon"
                         />
                     </div>
@@ -211,9 +214,9 @@ const ServiceSection = () => {
                 >
                     <div className="relative group w-full">
                         <ImageWebp
-                            srcWebp='/assets/services/stock-photo-young-woman-using-smart-phone-social-media-concept-1573945981(1).png'
+                            srcWebp={`${ASSET}/assets/services/stock-photo-young-woman-using-smart-phone-social-media-concept-1573945981(1).png`}
                             className="object-cover w-full h-full  "
-                            src="/assets/services/stock-photo-young-woman-using-smart-phone-social-media-concept-1573945981(1).png"
+                            src={`${ASSET}/assets/services/stock-photo-young-woman-using-smart-phone-social-media-concept-1573945981(1).png`}
                             alt="serviceIcon"
                         />
                     </div>
