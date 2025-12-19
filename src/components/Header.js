@@ -12,8 +12,8 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
   const isHome = location.pathname === "/"
   const { t } = useTranslation()
 
-  const [showMenu, setshowMenu] = useState(false)
-  const [showMenu2, setshowMenu2] = useState(false)
+  const ASSET = process.env.PUBLIC_URL || ""
+
   const [showMenu3, setshowMenu3] = useState(false)
   const [showCountry, setshowCountry] = useState(false)
   const [open, setOpen] = useState(false)
@@ -24,8 +24,6 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
   }, [isHome])
 
   const closeAllDropdowns = () => {
-    setshowMenu(false)
-    setshowMenu2(false)
     setshowMenu3(false)
     setshowCountry(false)
   }
@@ -69,36 +67,36 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
               className='hidden md:block ltr:2xl:ml-[100px] ltr:xl:ml-[75px] ltr:lg:ml-[50px] ltr:md:ml-[20px] ltr:sm:ml-[60px] rtl:2xl:mr-[100px] rtl:xl:mr-[75px] rtl:lg:mr-[50px] rtl:md:mr-[20px] rtl:sm:mr-[60px] 2xl:flex-[0.5] xl:flex-[0.5] lg:flex-[0.5] md:flex-[0.5]'
               onClick={() => { closeAllDropdowns(); setOpen(false) }}
             >
-              <ImageWebp srcWebp='/assets/ArchiScaffoldinglogo_lossyalpha.webp' src='/assets/ArchiScaffoldinglogo_lossyalpha.webp' alt='siteLogo' className='2xl:w-[150px] w-[100px]' />
+              <ImageWebp srcWebp={`${ASSET}/assets/ArchiScaffoldinglogo_lossyalpha.webp`} src={`${ASSET}/assets/ArchiScaffoldinglogo_lossyalpha.webp`} alt='siteLogo' className='2xl:w-[150px] w-[100px]' />
             </Link>
 
             <div className='flex justify-center items-center ltr:md:ml-[20px] ltr:sm:ml-[60px] ltr:lg:ml-0 rtl:md:mr-[20px] rtl:sm:mr-[60px] rtl:lg:mr-0'>
-              <ImageWebp srcWebp="/assets/localisationsicon_lossyalpha.webp" src='/assets/localisationsicon_lossyalpha.webp' className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='localizationIcon' />
+              <ImageWebp srcWebp={`${ASSET}/assets/localisationsicon_lossyalpha.webp`} src={`${ASSET}/assets/localisationsicon_lossyalpha.webp`} className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='localizationIcon' />
               <p className='text-[11px] text-white ltr:font-[500] rtl:font-[600] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira'>{t('header.Lebanon')}</p>
             </div>
 
             <div className='flex justify-center items-center sm:text-[15px]'>
-              <ImageWebp srcWebp='/assets/emailIcon_lossyalpha.webp' src="/assets/emailIcon_lossyalpha.webp" className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='emailIcon' />
+              <ImageWebp srcWebp={`${ASSET}/assets/emailIcon_lossyalpha.webp`} src={`${ASSET}/assets/emailIcon_lossyalpha.webp`} className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='emailIcon' />
               <p className='text-[11px] text-white font-[500] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira'>achi.gr@hotmail.com</p>
             </div>
 
             <div className='flex justify-center items-center'>
-              <ImageWebp srcWebp='/assets/wpicon_lossyalpha.webp' src="/assets/wpicon_lossyalpha.webp" className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='whatsappIcon' />
+              <ImageWebp srcWebp={`${ASSET}/assets/wpicon_lossyalpha.webp`} src={`${ASSET}/assets/wpicon_lossyalpha.webp`} className='ltr:mr-[10px] rtl:ml-[10px] w-[24px]' alt='whatsappIcon' />
               <p className='text-[11px] text-white font-[500] leading-[30px] 2xl:text-[14px] xl:text-[14px] lg:text-[14px] md:text-[14px] sm:text-[14px] font-saira' dir='ltr'>+96103322811</p>
             </div>
           </div>
 
           <div className='hidden xl:flex justify-center items-center pr-[20px] mt-[20px] mb-[10px] md:mt-[0px] md:pt-[10px]'>
-            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://facebook.com/ACHISCAFF' target='_blank' rel="noreferrer"><img src="/assets/iconoir_facebook.svg" alt='Facebook' /></a>
-            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.instagram.com/achiscaffoldinglb' target='_blank' rel="noreferrer"><img src="/assets/mdi_instagram.svg" alt='Instagram' /></a>
-            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://twitter.com/AchiScaffolding' target='_blank' rel="noreferrer"><img src="/assets/ri_twitter-x-fill.svg" alt='X' /></a>
-            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.linkedin.com/company/achi-scaffolding/' target='_blank' rel="noreferrer"><img src="/assets/basil_linkedin-outline.svg" alt='LinkedIn' /></a>
-            <a className='cursor-pointer' href='https://www.tiktok.com/@achiscaffolding' target='_blank' rel="noreferrer"><img src="/assets/ph_tiktok-logo.svg" alt='TikTok' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://facebook.com/ACHISCAFF' target='_blank' rel="noreferrer"><img src={`${ASSET}/assets/iconoir_facebook.svg`} alt='Facebook' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.instagram.com/achiscaffoldinglb' target='_blank' rel="noreferrer"><img src={`${ASSET}/assets/mdi_instagram.svg`} alt='Instagram' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://twitter.com/AchiScaffolding' target='_blank' rel="noreferrer"><img src={`${ASSET}/assets/ri_twitter-x-fill.svg`} alt='X' /></a>
+            <a className='ltr:mr-[20px] rtl:ml-[20px] cursor-pointer' href='https://www.linkedin.com/company/achi-scaffolding/' target='_blank' rel="noreferrer"><img src={`${ASSET}/assets/basil_linkedin-outline.svg`} alt='LinkedIn' /></a>
+            <a className='cursor-pointer' href='https://www.tiktok.com/@achiscaffolding' target='_blank' rel="noreferrer"><img src={`${ASSET}/assets/ph_tiktok-logo.svg`} alt='TikTok' /></a>
           </div>
 
           <div className='flex items-center gap-5 ltr:mr-5 rtl:ml-5 relative'>
             <div className='flex justify-center items-center cursor-pointer relative' onClick={() => { closeAllDropdowns(); setshowCountry(!showCountry) }}>
-              <img src="/assets/ic_outline-language.svg" className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='country' />
+              <img src={`${ASSET}/assets/ic_outline-language.svg`} className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='country' />
               <p className='text-white font-saira font-[500] text-[16px]'>{currentCountry}</p>
               <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
               <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showCountry ? 'flex' : 'hidden'} z-[999]`}>
@@ -111,7 +109,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
             </div>
 
             <div className='flex justify-center items-center cursor-pointer relative' onClick={() => { closeAllDropdowns(); setshowMenu3(!showMenu3) }}>
-              <img src="/assets/ic_outline-language.svg" className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='language' />
+              <img src={`${ASSET}/assets/ic_outline-language.svg`} className='ltr:mr-[9px] rtl:ml-[9px] w-full h-full md:w-[22px]' alt='language' />
               <p className='text-white font-saira font-[500] text-[16px]'>{currentLanguage}</p>
               <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
               <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showMenu3 ? 'flex' : 'hidden'} cursor-default z-[999]`}>
@@ -150,7 +148,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
         <div className='bg-[#28509E] flex md:hidden flex-row justify-between items-center pt-[10px] pb-[10px] sm:pr-[20px] border-b-[#FFFFFF] border-b-[1px] border-solid'>
           <div className='flex flex-row justify-between items-center w-[100%] px-[8px] sm:px-[0px] ltr:ml-[20px] rtl:mr-[20px]'>
             <Link to={`/`} onClick={() => { closeAllDropdowns(); setOpen(false) }}>
-              <img className='w-[90px]' src='/assets/ArchiScaffoldinglogo.png' alt='siteLogo' />
+              <img className='w-[90px]' src={`${ASSET}/assets/ArchiScaffoldinglogo.png`} alt='siteLogo' />
             </Link>
           </div>
 
@@ -165,7 +163,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
           <div className='flex justify-between items-center mb-[25px]'>
             <div className='flex flex-row justify-between items-center w-[100%] px-[8px] sm:px-[0px]'>
               <Link to={`/`} onClick={() => setOpen(false)}>
-                <ImageWebp srcWebp='/assets/ArchiScaffoldinglogo_lossyalpha.webp' className='w-[90px]' src='/assets/ArchiScaffoldinglogo_lossyalpha.webp' alt='siteLogo' />
+                <ImageWebp srcWebp={`${ASSET}/assets/ArchiScaffoldinglogo_lossyalpha.webp`} className='w-[90px]' src={`${ASSET}/assets/ArchiScaffoldinglogo_lossyalpha.webp`} alt='siteLogo' />
               </Link>
             </div>
             <div className='ltr:mr-5 rtl:ml-5'>
