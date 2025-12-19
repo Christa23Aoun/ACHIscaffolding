@@ -35,6 +35,8 @@ const Testimonials = ({ direction }) => {
   const { t } = useTranslation();
   const sliderRef = useRef(null);
 
+  const ASSET = process.env.PUBLIC_URL || ""
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeReviewKey, setActiveReviewKey] = useState(null);
@@ -46,9 +48,9 @@ const Testimonials = ({ direction }) => {
         rating: 5,
         text: `After our experience with Aashi Group on several projects — including Le Grey Hotel in Downtown Beirut and numerous private villas — we can confidently say they are among the best and most professional scaffolding contractors. They consistently deliver their work with exceptional precision, attention to detail, and on-time execution.`,
         images: [
-          "/assets/reviews/karim1.jpg",
-          "/assets/reviews/karim2.jpg",
-          "/assets/reviews/karim3.jpg",
+          `${ASSET}/assets/reviews/karim1.jpg`,
+          `${ASSET}/assets/reviews/karim2.jpg`,
+          `${ASSET}/assets/reviews/karim3.jpg`,
         ],
       },
       kevin: {
@@ -58,9 +60,9 @@ const Testimonials = ({ direction }) => {
 
 The installation was completed on schedule and in full compliance with safety standards, allowing our operations to proceed smoothly and without interruption. Their responsiveness and technical coordination were highly appreciated.`,
         images: [
-          "/assets/reviews/kevin1.jpg",
-          "/assets/reviews/kevin2.jpg",
-          "/assets/reviews/kevin3.jpg",
+          `${ASSET}/assets/reviews/kevin1.jpg`,
+          `${ASSET}/assets/reviews/kevin2.jpg`,
+          `${ASSET}/assets/reviews/kevin3.jpg`,
         ],
       },
       mohammad: {
@@ -68,9 +70,9 @@ The installation was completed on schedule and in full compliance with safety st
         rating: 5,
         text: `ACHI Scaffolding exceeded my expectations! Their customer support is outstanding—quick to respond, professional, and always ready to assist with any inquiries. The scaffolding itself is heavy-duty and extremely reliable, providing the durability and stability needed for even the most demanding projects. On top of that, their service is impressively fast, ensuring that everything is delivered and set up on time. Highly recommended for anyone looking for top-quality scaffolding solutions!`,
         images: [
-          "/assets/reviews/mohammad1.jpg",
-          "/assets/reviews/mohammad2.jpg",
-          "/assets/reviews/mohammad3.jpg",
+          `${ASSET}/assets/reviews/mohammad1.jpg`,
+          `${ASSET}/assets/reviews/mohammad2.jpg`,
+          `${ASSET}/assets/reviews/mohammad3.jpg`,
         ],
       },
       michael: {
@@ -82,10 +84,10 @@ We wouldn’t consider working with any other company for our scaffolding needs.
 
 Highly recommended!`,
         images: [
-          "/assets/reviews/michael1.jpg",
-          "/assets/reviews/michael2.jpg",
-          "/assets/reviews/michael3.jpg",
-          "/assets/reviews/michael4.jpg",
+          `${ASSET}/assets/reviews/michael1.jpg`,
+          `${ASSET}/assets/reviews/michael2.jpg`,
+          `${ASSET}/assets/reviews/michael3.jpg`,
+          `${ASSET}/assets/reviews/michael4.jpg`,
         ],
       },
       wadih: {
@@ -102,10 +104,10 @@ Eng. Wadih Karkabi
 Managing Director
 Arch-Consult sarl.`,
         images: [
-          "/assets/reviews/wadih1.jpg",
-          "/assets/reviews/wadih2.jpg",
-          "/assets/reviews/wadih3.jpg",
-          "/assets/reviews/wadih4.png",
+          `${ASSET}/assets/reviews/wadih1.jpg`,
+          `${ASSET}/assets/reviews/wadih2.jpg`,
+          `${ASSET}/assets/reviews/wadih3.jpg`,
+          `${ASSET}/assets/reviews/wadih4.png`,
         ],
       },
       georges: {
@@ -117,11 +119,11 @@ This experience with Achi group is to be repeated without any doubt. Thank you
 GroundFloor0819
 George and Fadi`,
         images: [
-          "/assets/reviews/georges1.jpg",
-          "/assets/reviews/georges2.jpg",
-          "/assets/reviews/georges3.jpg",
-          "/assets/reviews/georges4.jpg",
-          "/assets/reviews/georges5.jpg",
+          `${ASSET}/assets/reviews/georges1.jpg`,
+          `${ASSET}/assets/reviews/georges2.jpg`,
+          `${ASSET}/assets/reviews/georges3.jpg`,
+          `${ASSET}/assets/reviews/georges4.jpg`,
+          `${ASSET}/assets/reviews/georges5.jpg`,
         ],
       },
       francois: {
@@ -131,10 +133,10 @@ George and Fadi`,
 Amazing service of professionalism and skilled technical team.
 We highly recommend everyone dealing with you, for any required scaffolding rental.`,
         images: [
-          "/assets/reviews/Francois1.jpg",
-          "/assets/reviews/Francois2.jpg",
-          "/assets/reviews/Francois3.jpg",
-          "/assets/reviews/Francois4.jpg",
+          `${ASSET}/assets/reviews/Francois1.jpg`,
+          `${ASSET}/assets/reviews/Francois2.jpg`,
+          `${ASSET}/assets/reviews/Francois3.jpg`,
+          `${ASSET}/assets/reviews/Francois4.jpg`,
         ],
       },
       ziad: {
@@ -142,10 +144,10 @@ We highly recommend everyone dealing with you, for any required scaffolding rent
         rating: 5,
         text: `Really appreciate the way u manage your business. Well done`,
         images: [
-          "/assets/reviews/ziad1.jpg",
-          "/assets/reviews/ziad2.jpg",
-          "/assets/reviews/ziad3.jpg",
-          "/assets/reviews/ziad4.jpg",
+          `${ASSET}/assets/reviews/ziad1.jpg`,
+          `${ASSET}/assets/reviews/ziad2.jpg`,
+          `${ASSET}/assets/reviews/ziad3.jpg`,
+          `${ASSET}/assets/reviews/ziad4.jpg`,
         ],
       },
       jad: {
@@ -153,16 +155,16 @@ We highly recommend everyone dealing with you, for any required scaffolding rent
         rating: 5,
         text: `Very professional and respectful team.
 Highly recommended.`,
-        images: ["/assets/reviews/jad1.jpg"],
+        images: [`${ASSET}/assets/reviews/jad1.jpg`],
       },
       mourad: {
         name: "Mourad Achkar",
         rating: 5,
         text: `Excellent service`,
-        images: ["/assets/reviews/mourad1.jpg"],
+        images: [`${ASSET}/assets/reviews/mourad1.jpg`],
       },
     }),
-    []
+    [ASSET]
   );
 
   const testimonials = useMemo(

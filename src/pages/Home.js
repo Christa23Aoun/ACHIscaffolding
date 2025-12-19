@@ -9,6 +9,8 @@ import Testimonials from '../components/Testimonials'
 import BlogSection from '../components/BlogSection'
 
 const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
+  const ASSET = process.env.PUBLIC_URL || ""
+
   return (
     <div>
       <a
@@ -20,7 +22,7 @@ const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
       >
         <img
           className="w-[50px] h-[50px] md:w-[60px] md:h-[60px]"
-          src="/assets/logos_whatsapp-icon.png"
+          src={`${ASSET}/assets/logos_whatsapp-icon.png`}
           alt="whatsapp-icon"
         />
       </a>
