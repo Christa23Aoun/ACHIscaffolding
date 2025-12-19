@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import ImageWebp from "./ImageWebp";
 
 const BlogSection = () => {
+  const ASSET = process.env.PUBLIC_URL || "";
+
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const baseDate = new Date();
 
@@ -12,21 +14,21 @@ const BlogSection = () => {
       {
         key: "blog-1",
         title: "The Evolution of Scaffolding in Lebanon:\n A Historical Perspective",
-        img: "/assets/blog/blog1.png",
+        img: `${ASSET}/assets/blog/blog1.png`,
         alt: "The evolution of scaffolding in Lebanon historical overview",
         to: "/blog/item/1",
       },
       {
         key: "blog-2",
         title: "Scaffolding Safety Standards: Ensuring Construction Site Security in Lebanon",
-        img: "/assets/blog/blog2.png",
+        img: `${ASSET}/assets/blog/blog2.png`,
         alt: "Scaffolding safety standards and construction site security in Lebanon",
         to: "/blog/item/2",
       },
       {
         key: "blog-3",
         title: "Innovative Scaffolding Solutions for Lebanon's Unique Architectural Challenges",
-        img: "/assets/blog/blog3.png",
+        img: `${ASSET}/assets/blog/blog3.png`,
         alt: "Innovative scaffolding solutions for architectural challenges in Lebanon",
         to: "/blog/item/3",
       },
@@ -41,7 +43,7 @@ const BlogSection = () => {
         month: months[d.getMonth()],
       };
     });
-  }, []);
+  }, [ASSET]);
 
   return (
     <section id="blogSection" className="mt-[120px]" aria-labelledby="home-blog-title">

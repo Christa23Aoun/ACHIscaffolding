@@ -5,25 +5,26 @@ import { useTranslation } from "react-i18next";
 import ImageWebp from "./ImageWebp";
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, style, onClick, assetBase } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src="/assets/clients arrow right.svg" alt="arrow right" />
+      <img src={`${assetBase}/assets/clients arrow right.svg`} alt="arrow right" />
     </div>
   );
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, style, onClick, assetBase } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src="/assets/clients arrow left.svg" alt="arrow left" />
+      <img src={`${assetBase}/assets/clients arrow left.svg`} alt="arrow left" />
     </div>
   );
 }
 
 const Clients = ({ direction }) => {
   const { t } = useTranslation();
+  const ASSET = process.env.PUBLIC_URL || "";
 
   const logos = [
     "abc.png",
@@ -65,26 +66,14 @@ const Clients = ({ direction }) => {
     slidesToShow: 5,
     slidesToScroll: 1,
     swipe: true,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow assetBase={ASSET} />,
+    prevArrow: <SamplePrevArrow assetBase={ASSET} />,
     rtl: direction === "rtl",
     responsive: [
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1, slidesToScroll: 1, infinite: true },
-      },
-      {
-        breakpoint: 600,
-        settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true },
-      },
-      {
-        breakpoint: 1000,
-        settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true },
-      },
-      {
-        breakpoint: 1200,
-        settings: { slidesToShow: 4, slidesToScroll: 1, infinite: true },
-      },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1, infinite: true } },
+      { breakpoint: 600, settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true } },
+      { breakpoint: 1000, settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true } },
+      { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1, infinite: true } },
     ],
   };
 
@@ -102,17 +91,13 @@ const Clients = ({ direction }) => {
 
       <Slider {...settings}>
         {logos.map((file, idx) => {
-          const src = `/assets/clients/${file}`;
+          const src = `${ASSET}/assets/clients/${file}`;
           const isGif = file.toLowerCase().endsWith(".gif");
 
           return (
             <div key={idx} className="flex items-center justify-center">
               {isGif ? (
-                <img
-                  src={src}
-                  alt="companyLogo"
-                  className="w-[50%] object-contain"
-                />
+                <img src={src} alt="companyLogo" className="w-[50%] object-contain" />
               ) : (
                 <ImageWebp
                   srcWebp={src}

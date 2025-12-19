@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 
 const Company = () => {
   const { t } = useTranslation();
+  const ASSET = process.env.PUBLIC_URL || "";
 
   return (
     <div className="mt-[40px] h-full flex flex-col md:flex-row bg-[#FAFAFA] px-[0px]" id="aboutUs">
       <div className="w-full hidden md:block">
         <ImageWebp
-          srcWebp="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
-          src="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
+          srcWebp={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
+          src={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
           alt="Chi siamo"
           className="2xl:block hidden h-full w-full object-cover"
         />
         <ImageWebp
-          srcWebp="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
-          src="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
+          srcWebp={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
+          src={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
           alt="Chi siamo"
           className="2xl:hidden block h-full w-full object-cover"
         />
@@ -26,14 +27,14 @@ const Company = () => {
 
       <div className="block md:hidden relative group bg-gray-900 sm:bg-gray-900">
         <ImageWebp
-          srcWebp="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
-          src="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
+          srcWebp={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
+          src={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
           alt="Chi siamo"
           className="sm:hidden opacity-50 w-full"
         />
         <ImageWebp
-          srcWebp="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
-          src="/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp"
+          srcWebp={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
+          src={`${ASSET}/assets/35629365_219471271995447_497227010943221760_n2_lossyalpha.webp`}
           alt="Chi siamo"
           className="opacity-50 hidden sm:block w-full"
         />
