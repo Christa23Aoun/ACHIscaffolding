@@ -1,6 +1,6 @@
 {
   "name": "achiscaffolding",
-"homepage": "https://achi-scaffolding.github.io",
+  "homepage": "https://achi-scaffolding.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

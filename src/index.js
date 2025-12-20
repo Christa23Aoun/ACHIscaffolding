@@ -6,13 +6,8 @@ import App from "./App";
 
 const container = document.getElementById("root");
 
-// 🔑 KEY FIX
-const isGithubPages = window.location.hostname.includes("github.io");
-
-const basename = isGithubPages ? "/ACHIscaffolding" : "/";
-
 createRoot(container).render(
-  <BrowserRouter basename={basename}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 );
