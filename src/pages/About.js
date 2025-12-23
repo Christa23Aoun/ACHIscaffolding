@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
@@ -14,7 +15,11 @@ const About = () => {
           />
 
           <div className="about-panel bg-[#274f9f] text-white px-[20px] py-[28px] lg:px-[70px] lg:py-[70px] flex flex-col justify-center relative">
-            <h2
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true }}
               className="section-title about-title"
               style={{
                 fontFamily: '"Rajdhani", sans-serif',
@@ -29,10 +34,20 @@ const About = () => {
               30+ YEARS OF SCAFFOLDING
               <br />
               EXPERIENCE
-            </h2>
+            </motion.h2>
 
             <div className="about-panel-copy">
-              <p className="font-['Open_Sans'] text-white/90 text-[16px] leading-[1.6] max-w-[640px]">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.15,
+                  ease: "easeOut",
+                }}
+                viewport={{ once: true }}
+                className="font-['Open_Sans'] text-white/90 text-[16px] leading-[1.6] max-w-[640px]"
+              >
                 Since its establishment in 1993 by engineer Barbar Achi, Achi
                 Scaffolding has evolved into a reputable provider of expert
                 scaffolding and formwork services in Lebanon. Our professional
@@ -40,7 +55,7 @@ const About = () => {
                 by delivering reliable and high-quality scaffold structures for
                 diverse projects, including shopping malls, towers, residential
                 buildings, and universities.
-              </p>
+              </motion.p>
             </div>
 
             <span className="hidden lg:block absolute right-[24px] top-[30px] w-[6px] h-[64px] bg-[#1b3a73]" />
@@ -51,7 +66,11 @@ const About = () => {
       <section id="about-main" className="about-main bg-white py-[90px]">
         <div className="w-[90%] max-w-[980px] mx-auto">
           <div className="about-intro">
-            <h1
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true }}
               className="about-hero-title text-[#214f9b] uppercase"
               style={{
                 fontFamily: '"Rajdhani", sans-serif',
@@ -63,15 +82,21 @@ const About = () => {
               }}
             >
               ABOUT ACHI SCAFFOLDING
-            </h1>
+            </motion.h1>
 
-            <p className="text-[#4a5c7a] text-[16px] leading-[1.7] mt-[10px]">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="text-[#4a5c7a] text-[16px] leading-[1.7] mt-[10px]"
+            >
               Achi Scaffolding provides professional scaffolding, formwork and
               shoring solutions for commercial, residential and industrial
               projects across Lebanon and the region. We combine field experience
               with engineered solutions to deliver safe, reliable and
               cost-effective systems.
-            </p>
+            </motion.p>
           </div>
 
           <div className="grid-2 grid grid-cols-1 lg:grid-cols-2 gap-[28px] mt-[40px]">
