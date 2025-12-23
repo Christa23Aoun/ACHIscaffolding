@@ -1,8 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ImageWebp from "./ImageWebp";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  const goToHomeSection = (id) => {
+    if (!isHome) {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      }, 200);
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    }
+  };
+
   return (
     <footer className="bg-[#28509E] border-t-[#FFFFFF] border-t-[1px] border-solid py-[60px]">
       <div className="max-w-[1250px] mx-auto px-[20px]">
@@ -22,34 +39,22 @@ const Footer = () => {
             <div className="grid grid-cols-2 gap-x-[40px]">
               <ul className="space-y-[10px]">
                 <li>
-                  <Link
-                    to="/"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/about"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/about" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     About us
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/services"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/services" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Services
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/products"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/products" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Products
                   </Link>
                 </li>
@@ -57,34 +62,26 @@ const Footer = () => {
 
               <ul className="space-y-[10px]">
                 <li>
-                  <a
-                    href="/#clientsSection"
+                  <button
+                    type="button"
+                    onClick={() => goToHomeSection("clientsSection")}
                     className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
                   >
                     Clients
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <Link
-                    to="/projects"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/projects" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Projects
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/blog"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/blog" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/gallery"
-                    className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200"
-                  >
+                  <Link to="/gallery" className="font-saira text-white/90 text-[20px] hover:text-[#FF8A00] transition duration-200">
                     Gallery
                   </Link>
                 </li>
@@ -100,20 +97,14 @@ const Footer = () => {
             <ul className="space-y-[12px]">
               <li className="flex items-center font-saira text-white/90 text-[20px]">
                 <i className="fa-solid fa-phone text-[22px] w-[26px] mr-[18px] text-white"></i>
-                <a
-                  href="tel:+96103322811"
-                  className="hover:text-[#FF8A00] transition duration-200"
-                >
+                <a href="tel:+96103322811" className="hover:text-[#FF8A00] transition duration-200">
                   +96103322811
                 </a>
               </li>
 
               <li className="flex items-center font-saira text-white/90 text-[20px]">
                 <i className="fa-regular fa-envelope text-[22px] w-[26px] mr-[18px] text-white"></i>
-                <a
-                  href="mailto:achi.gr@hotmail.com"
-                  className="hover:text-[#FF8A00] transition duration-200"
-                >
+                <a href="mailto:achi.gr@hotmail.com" className="hover:text-[#FF8A00] transition duration-200">
                   achi.gr@hotmail.com
                 </a>
               </li>
@@ -131,53 +122,23 @@ const Footer = () => {
             </h4>
 
             <div className="flex gap-[20px] mt-[14px] items-center">
-              <a
-                href="https://www.facebook.com/ACHISCAFF"
-                target="_blank"
-                rel="noreferrer"
-                className="text-white hover:text-[#FF8A00] transition duration-200"
-                aria-label="Facebook"
-              >
+              <a href="https://www.facebook.com/ACHISCAFF" target="_blank" rel="noreferrer" className="text-white hover:text-[#FF8A00] transition duration-200" aria-label="Facebook">
                 <i className="fa-brands fa-facebook-f text-[22px]"></i>
               </a>
 
-              <a
-                href="https://www.instagram.com/achiscaffoldinglb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                target="_blank"
-                rel="noreferrer"
-                className="text-white hover:text-[#FF8A00] transition duration-200"
-                aria-label="Instagram"
-              >
+              <a href="https://www.instagram.com/achiscaffoldinglb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="text-white hover:text-[#FF8A00] transition duration-200" aria-label="Instagram">
                 <i className="fa-brands fa-instagram text-[22px]"></i>
               </a>
 
-              <a
-                href="https://x.com/AchiScaffolding"
-                target="_blank"
-                rel="noreferrer"
-                className="text-white hover:text-[#FF8A00] transition duration-200"
-                aria-label="X"
-              >
+              <a href="https://x.com/AchiScaffolding" target="_blank" rel="noreferrer" className="text-white hover:text-[#FF8A00] transition duration-200" aria-label="X">
                 <i className="fa-brands fa-x-twitter text-[22px]"></i>
               </a>
 
-              <a
-                href="https://www.linkedin.com/company/achi-scaffolding/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-white hover:text-[#FF8A00] transition duration-200"
-                aria-label="LinkedIn"
-              >
+              <a href="https://www.linkedin.com/company/achi-scaffolding/" target="_blank" rel="noreferrer" className="text-white hover:text-[#FF8A00] transition duration-200" aria-label="LinkedIn">
                 <i className="fa-brands fa-linkedin-in text-[22px]"></i>
               </a>
 
-              <a
-                href="https://www.tiktok.com/@achiscaffolding"
-                target="_blank"
-                rel="noreferrer"
-                className="text-white hover:text-[#FF8A00] transition duration-200"
-                aria-label="TikTok"
-              >
+              <a href="https://www.tiktok.com/@achiscaffolding" target="_blank" rel="noreferrer" className="text-white hover:text-[#FF8A00] transition duration-200" aria-label="TikTok">
                 <i className="fa-brands fa-tiktok text-[22px]"></i>
               </a>
             </div>
