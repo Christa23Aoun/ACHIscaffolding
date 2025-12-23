@@ -14,25 +14,33 @@ const Products = () => {
 
   const products = useMemo(
     () => [
-      {
-        type: "3d",
-        title: "Double Coupler 3D Component",
-        desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
-        model: "/assets/products/double_coupler.glb",
-        badge: "3D VIEW",
-        specs: [
-          "3D interactive model",
-          "Ideal for tube and fitting systems",
-          "Optimized for heavy-duty connections",
-        ],
-        tags: ["Rotate", "Zoom", "Inspect"],
-      },
+   {
+  type: "3d",
+  title: "Double Coupler 3D Component",
+  desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
+  model: "/assets/products/double_coupler.glb",
+  badge: "3D VIEW",
+  cameraOrbit: "0deg 75deg 110%",
+  fieldOfView: "30deg",
+  cameraTarget: "0m -0.35m 0m",
+  specs: [
+    "3D interactive model",
+    "Ideal for tube and fitting systems",
+    "Optimized for heavy-duty connections",
+  ],
+  tags: ["Rotate", "Zoom", "Inspect"],
+},
+
       {
         type: "3d",
         title: "H Frame 3D Component",
         desc: "3D visualization of H frame scaffolding for façade and elevation works.",
         model: "/assets/products/h_frame.glb",
         badge: "3D VIEW",
+        scale: "0.55 0.55 0.55",
+        cameraOrbit: "0deg 75deg 260%",
+        fieldOfView: "28deg",
+        cameraTarget: "0m -0.55m 0m",
         specs: [
           "Quick-assembly frame geometry",
           "Stable vertical support",
@@ -46,6 +54,10 @@ const Products = () => {
         desc: "3D model of the joint coupler used to connect scaffold tubes end-to-end.",
         model: "/assets/products/joint_coupler.glb",
         badge: "3D VIEW",
+        scale: "0.18 0.18 0.18",
+        cameraOrbit: "0deg 75deg 245%",
+        fieldOfView: "26deg",
+        cameraTarget: "0m -0.35m 0m",
         specs: [
           "End-to-end tube connection",
           "Rigid alignment in elevation",
@@ -59,6 +71,10 @@ const Products = () => {
         desc: "3D visualization of half coupler used for connecting scaffold tubes to accessories.",
         model: "/assets/products/half_coupler.glb",
         badge: "3D VIEW",
+        scale: "0.18 0.18 0.18",
+        cameraOrbit: "0deg 75deg 245%",
+        fieldOfView: "26deg",
+        cameraTarget: "0m -0.35m 0m",
         specs: [
           "Single jaw connection",
           "For beams, brackets and specials",
@@ -72,10 +88,13 @@ const Products = () => {
         desc: "3D model of swivel coupler for connecting tubes at variable angles.",
         model: "/assets/products/swivel_coupler.glb",
         badge: "3D VIEW",
+        scale: "0.18 0.18 0.18",
+        cameraOrbit: "0deg 75deg 245%",
+        fieldOfView: "26deg",
+        cameraTarget: "0m -0.35m 0m",
         specs: ["Flexible angle connections", "Perfect for bracing and ties", "High-strength forged body"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
-
       {
         type: "img",
         title: "Standard Frame Scaffolding",
@@ -142,30 +161,40 @@ const Products = () => {
             {products.map((p, idx) => (
               <article
                 key={`${p.title}-${idx}`}
-                className="group rounded-[16px] overflow-hidden"
+                className="group rounded-[16px] overflow-hidden flex flex-col h-[470px]"
               >
                 {p.type === "3d" ? (
-                  <div className="relative bg-[#eef3fb] rounded-[16px] overflow-hidden">
-                    <model-viewer
-                      class="w-full h-[320px]"
-                      src={p.model}
-                      alt={p.title}
-                      camera-controls
-                      auto-rotate
-                      shadow-intensity="1"
-                      interaction-prompt="none"
-                      loading="eager"
-                      ar-modes="webxr scene-viewer quick-look"
-                    />
+                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px]">
+                      <model-viewer
+                        key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
+                        class="w-full h-[380px]"
+  style={{ display: "block" }}
+  src={p.model}
+  alt={p.title}
+  camera-controls
+  auto-rotate
+  interaction-prompt="none"
+  shadow-intensity="1"
+  loading="eager"
+  bounds="tight"
+  camera-orbit={p.cameraOrbit || "0deg 75deg 120%"}
+  camera-target={p.cameraTarget || "0m 0m 0m"}
+  field-of-view={p.fieldOfView || "30deg"}
+  ar-modes="webxr scene-viewer quick-look"
+/>
+
+
+
                     <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
                       {p.badge}
                     </span>
-                    {/* Overlay with text */}
+
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                         <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
                           {p.desc}
                         </p>
+
                         <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
                           {p.specs.map((s) => (
                             <li key={`${p.title}-${s}`} className="flex gap-[8px]">
@@ -178,19 +207,20 @@ const Products = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="relative bg-[#eef3fb] rounded-[16px] overflow-hidden">
+                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px]">
                     <img
                       src={p.img}
                       alt={p.title}
-                      className="w-full h-[320px] object-cover"
+                      className="w-full h-[380px] object-contain"
                       loading="lazy"
                     />
-                    {/* Overlay with text */}
+
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
                         <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
                           {p.desc}
                         </p>
+
                         <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
                           {p.specs.map((s) => (
                             <li key={`${p.title}-${s}`} className="flex gap-[8px]">
@@ -199,6 +229,7 @@ const Products = () => {
                             </li>
                           ))}
                         </ul>
+
                         <a
                           href="#"
                           onClick={(e) => e.preventDefault()}
@@ -211,7 +242,9 @@ const Products = () => {
                   </div>
                 )}
 
-                <h3 className="font-[900] text-[16px] mt-[12px] text-center">{p.title}</h3>
+                <h3 className="font-[900] text-[16px] mt-[12px] text-center px-[10px] min-h-[44px] flex items-center justify-center">
+                  {p.title}
+                </h3>
               </article>
             ))}
           </div>
