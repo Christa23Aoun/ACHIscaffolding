@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# gallery images (do NOT track in git)
+public/assets/gallery/*
