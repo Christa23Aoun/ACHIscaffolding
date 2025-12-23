@@ -142,12 +142,12 @@ const Products = () => {
             {products.map((p, idx) => (
               <article
                 key={`${p.title}-${idx}`}
-                className="bg-white rounded-[16px] overflow-hidden shadow-[0_12px_35px_rgba(0,0,0,0.10)]"
+                className="group rounded-[16px] overflow-hidden"
               >
                 {p.type === "3d" ? (
-                  <div className="relative bg-[#eef3fb]">
+                  <div className="relative bg-[#eef3fb] rounded-[16px] overflow-hidden">
                     <model-viewer
-                      class="w-full h-[260px]"
+                      class="w-full h-[320px]"
                       src={p.model}
                       alt={p.title}
                       camera-controls
@@ -157,57 +157,61 @@ const Products = () => {
                       loading="eager"
                       ar-modes="webxr scene-viewer quick-look"
                     />
-                    <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full">
+                    <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
                       {p.badge}
                     </span>
+                    {/* Overlay with text */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
+                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+                        <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                          {p.desc}
+                        </p>
+                        <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
+                          {p.specs.map((s) => (
+                            <li key={`${p.title}-${s}`} className="flex gap-[8px]">
+                              <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
+                              <span className="leading-[1.6]">{s}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 ) : (
-                  <div className="bg-[#eef3fb]">
+                  <div className="relative bg-[#eef3fb] rounded-[16px] overflow-hidden">
                     <img
                       src={p.img}
                       alt={p.title}
-                      className="w-full h-[240px] object-cover"
+                      className="w-full h-[320px] object-cover"
                       loading="lazy"
                     />
+                    {/* Overlay with text */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
+                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+                        <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                          {p.desc}
+                        </p>
+                        <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
+                          {p.specs.map((s) => (
+                            <li key={`${p.title}-${s}`} className="flex gap-[8px]">
+                              <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
+                              <span className="leading-[1.6]">{s}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <a
+                          href="#"
+                          onClick={(e) => e.preventDefault()}
+                          className="inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px] border-2 border-white text-white font-[900] uppercase text-[13px] hover:bg-white hover:text-[#214f9b] transition-all opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 duration-300 ease-out delay-[150ms] mt-[12px]"
+                        >
+                          Read More
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 )}
 
-                <div className="p-[18px]">
-                  <h3 className="font-[900] text-[18px]">{p.title}</h3>
-                  <p className="mt-[8px] text-[14px] leading-[1.7] text-[#4a5c7a]">{p.desc}</p>
-
-                  <ul className="mt-[12px] space-y-[6px] text-[13px] text-[#1b3155]">
-                    {p.specs.map((s) => (
-                      <li key={`${p.title}-${s}`} className="flex gap-[8px]">
-                        <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-[#214f9b]" />
-                        <span className="leading-[1.6]">{s}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {p.type === "3d" && (
-                    <div className="mt-[12px] flex flex-wrap gap-[8px]">
-                      {p.tags.map((tag) => (
-                        <span
-                          key={`${p.title}-${tag}`}
-                          className="text-[12px] px-[10px] py-[6px] rounded-full bg-[#eef3fb] text-[#214f9b] font-[900]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {p.type === "img" && (
-                    <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
-                      className="mt-[14px] inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px] border-2 border-[#214f9b] text-[#214f9b] font-[900] uppercase text-[13px] hover:bg-[#214f9b] hover:text-white transition"
-                    >
-                      Read More
-                    </a>
-                  )}
-                </div>
+                <h3 className="font-[900] text-[16px] mt-[12px] text-center">{p.title}</h3>
               </article>
             ))}
           </div>
