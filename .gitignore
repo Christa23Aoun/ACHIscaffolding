@@ -24,3 +24,5 @@ yarn-error.log*
 
 # gallery images (do NOT track in git)
 public/assets/gallery/*
+# gallery images (too large for normal git push)
+public/assets/gallery/*
