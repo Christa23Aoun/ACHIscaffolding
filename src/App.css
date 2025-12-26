@@ -11,6 +11,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
 @font-face {
   font-family: 'Spartan';
@@ -70,6 +81,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 #service .slick-slide {
@@ -493,3 +515,66 @@
   }
 }
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.slick-list {
+  overflow: hidden !important;
+}
+
+.slick-track {
+  overflow: hidden !important;
+}
+@media screen and (max-width: 768px) {
+  #testimonials .slick-slide {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  #clientsSection .slick-track img {
+    width: 100% !important;
+  }
+
+  #clientsSection .slick-slide {
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+/* REMOVE slick default arrow circles */
+#clientsSection .slick-prev,
+#clientsSection .slick-next {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#clientsSection .slick-prev::before,
+#clientsSection .slick-next::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* REMOVE browser button styles */
+#clientsSection button {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* REMOVE focus ring */
+#clientsSection button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
