@@ -10,7 +10,7 @@ const SingleService = () => {
       {/* HERO */}
       <section className="w-full bg-[#28509E] flex flex-col md:flex-row items-center">
         <div className="w-full md:w-1/2 px-[20px] md:px-[80px] py-[90px] md:py-[0]">
-          <div className="font-[Rajdhani] text-[16px] tracking-[3px] font-[700] text-white mb-[12px]">
+          <div className="font-[Rajdhani] text-[20px] tracking-[3px] font-[700] text-white mb-[12px]">
             SERVICES
           </div>
 

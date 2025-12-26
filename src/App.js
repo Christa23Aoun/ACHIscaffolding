@@ -68,8 +68,9 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
 
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/item" element={<BlogItem />} />
-
+          <Route path="/blog-post-2" element={<BlogItem />} />
+          <Route path="/blog-post-1" element={<BlogItem />} />
+          <Route path="/blog-post-3" element={<BlogItem />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 
