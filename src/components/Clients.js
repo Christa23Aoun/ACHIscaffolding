@@ -10,15 +10,11 @@ function SampleNextArrow(props) {
     <button
       type="button"
       aria-label="Next"
-      className={`${className} !flex !items-center !justify-center !w-[44px] !h-[44px] !rounded-full !bg-white/90 !shadow-md hover:!bg-white transition`}
-      style={{ ...style }}
       onClick={onClick}
+      className={`${className} clients-arrow clients-next`}
+      style={{ ...style }}
     >
-      <img
-        src={`${assetBase}/assets/clients arrow right.svg`}
-        alt="arrow right"
-        className="w-[18px] h-[18px]"
-      />
+      <img src={`${assetBase}/assets/clients arrow right.svg`} alt="arrow right" />
     </button>
   );
 }
@@ -29,15 +25,11 @@ function SamplePrevArrow(props) {
     <button
       type="button"
       aria-label="Previous"
-      className={`${className} !flex !items-center !justify-center !w-[44px] !h-[44px] !rounded-full !bg-white/90 !shadow-md hover:!bg-white transition`}
-      style={{ ...style }}
       onClick={onClick}
+      className={`${className} clients-arrow clients-prev`}
+      style={{ ...style }}
     >
-      <img
-        src={`${assetBase}/assets/clients arrow left.svg`}
-        alt="arrow left"
-        className="w-[18px] h-[18px]"
-      />
+      <img src={`${assetBase}/assets/clients arrow left.svg`} alt="arrow left" />
     </button>
   );
 }
@@ -82,14 +74,14 @@ const Clients = ({ direction }) => {
     speed: 700,
     autoplaySpeed: 2000,
     pauseOnHover: false,
+    swipeToSlide: true,
     swipe: true,
     slidesToShow: 5,
     slidesToScroll: 1,
-    centerMode: false,
     arrows: true,
+    rtl: direction === "rtl",
     nextArrow: <SampleNextArrow assetBase={ASSET} />,
     prevArrow: <SamplePrevArrow assetBase={ASSET} />,
-    rtl: direction === "rtl",
     responsive: [
       {
         breakpoint: 768,
@@ -101,30 +93,24 @@ const Clients = ({ direction }) => {
           arrows: true,
         },
       },
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3, slidesToScroll: 1 },
-      },
-      {
-        breakpoint: 1200,
-        settings: { slidesToShow: 4, slidesToScroll: 1 },
-      },
+      { breakpoint: 1000, settings: { slidesToShow: 3, slidesToScroll: 1 } },
+      { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1 } },
     ],
   };
 
   return (
-    <div id="clientsSection" className="text-center pt-[80px] pb-[10px]">
+    <div id="clients" className="text-center pb-[100px] pt-[100px]">
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
-        className="font-[Rajdhani] text-[38px] md:text-[42px] font-[700] uppercase mb-[26px] leading-[1.15] text-[#003A80] text-center"
+        className="font-[Rajdhani] text-[42px] font-[700] uppercase mb-[40px] leading-[1.15] text-[#003A80] text-center"
       >
         {t("clients.title")}
       </motion.h1>
 
-      <div className="max-w-[1100px] mx-auto px-[14px] pt-[10px]">
+      <div className="relative max-w-[1250px] mx-auto px-[40px] md:px-[20px]">
         <Slider {...settings}>
           {logos.map((file, idx) => {
             const src = `${ASSET}/assets/clients/${file}`;
@@ -132,26 +118,62 @@ const Clients = ({ direction }) => {
 
             return (
               <div key={idx}>
-                <div className="flex justify-center items-center w-full py-[10px]">
-                  {isGif ? (
-                    <img
-                      src={src}
-                      alt="company logo"
-                      className="max-w-[210px] w-full object-contain mx-auto"
-                    />
-                  ) : (
-                    <ImageWebp
-                      srcWebp={src}
-                      src={src}
-                      alt="company logo"
-                      className="max-w-[210px] w-full object-contain mx-auto"
-                    />
-                  )}
+                <div className="flex items-center justify-center w-full">
+                  <div className="w-full max-w-[220px] h-[120px] flex items-center justify-center mx-auto">
+                    {isGif ? (
+                      <img
+                        src={src}
+                        alt="company logo"
+                        className="max-h-[110px] max-w-[200px] w-auto h-auto object-contain"
+                      />
+                    ) : (
+                      <ImageWebp
+                        srcWebp={src}
+                        src={src}
+                        alt="company logo"
+                        className="max-h-[110px] max-w-[200px] w-auto h-auto object-contain"
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             );
           })}
         </Slider>
+
+        <style>{`
+          #clients .slick-prev, 
+          #clients .slick-next {
+            width: 44px !important;
+            height: 44px !important;
+            z-index: 50 !important;
+          }
+
+          #clients .clients-arrow {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+          }
+
+          #clients .clients-arrow img {
+            width: 28px !important;
+            height: 28px !important;
+            display: block !important;
+          }
+
+          /* keep desktop arrows visible & aligned */
+          #clients .slick-prev { left: 10px !important; }
+          #clients .slick-next { right: 10px !important; }
+
+          /* mobile: ensure arrows fully visible (no clipping) */
+          @media (max-width: 767px) {
+            #clients .slick-prev { left: -8px !important; }
+            #clients .slick-next { right: -8px !important; }
+          }
+        `}</style>
       </div>
     </div>
   );
