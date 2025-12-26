@@ -99,7 +99,7 @@ const Clients = ({ direction }) => {
   };
 
   return (
-    <div id="clients" className="text-center pb-[100px] pt-[100px]">
+    <div id="clientsSection" className="text-center pb-[100px] pt-[100px]">
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
