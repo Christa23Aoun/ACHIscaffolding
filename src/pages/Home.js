@@ -14,6 +14,13 @@ const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
   return (
     <div>
       <a
+        href="tel:+96103322811"
+        className="fixed right-[40px] bottom-[120px] md:bottom-[140px] z-[999999] rounded-full bg-[#28509E] hover:bg-[#214f9b] transition-colors duration-300 flex items-center justify-center shadow-lg w-[50px] h-[50px] md:w-[60px] md:h-[60px] border-4 border-white callbutton"
+        aria-label="Call Achi Scaffolding +96103322811"
+      >
+        <i className="fa-solid fa-phone text-white text-[20px] md:text-[24px]" style={{ transform: 'scaleX(-1)' }}></i>
+      </a>
+      <a
         href="https://wa.me/+96103322811"
         target="_blank"
         rel="noreferrer"
