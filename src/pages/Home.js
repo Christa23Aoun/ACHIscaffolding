@@ -7,6 +7,7 @@ import WhyChoseUs from '../components/WhyChoseUs'
 import Clients from '../components/Clients'
 import Testimonials from '../components/Testimonials'
 import BlogSection from '../components/BlogSection'
+import SectorsBar from '../components/SectorsBar'
 
 const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
   const ASSET = process.env.PUBLIC_URL || ""
@@ -39,6 +40,7 @@ const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
       <Company />
       <Clients direction={direction} />
       <WhyChoseUs direction={direction} />
+      <SectorsBar />
       <Testimonials direction={direction} />
       <BlogSection />
       <ContactForm />

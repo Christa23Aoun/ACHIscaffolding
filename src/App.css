@@ -446,6 +446,16 @@ html, body {
   display: none !important;
 }
 
+/* Scrollbar hide utility for horizontal scrolling tabs */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 #testimonials .slick-dots li.slick-active button::before ,
 #testimonials .slick-dots li button:hover::before {
   color: #FF8E26 !important;
