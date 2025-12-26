@@ -35,7 +35,7 @@ const Testimonials = ({ direction }) => {
   const { t } = useTranslation();
   const sliderRef = useRef(null);
 
-  const ASSET = process.env.PUBLIC_URL || ""
+  const ASSET = process.env.PUBLIC_URL || "";
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -183,17 +183,25 @@ Highly recommended.`,
     [reviewsData]
   );
 
+  const closeModal = () => {
+    setModalOpen(false);
+    setActiveReviewKey(null);
+    document.body.style.overflow = "";
+  };
+
   const openModal = (key) => {
     setActiveReviewKey(key);
     setModalOpen(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    setActiveReviewKey(null);
-    document.body.style.overflow = "";
-  };
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeModal();
+    };
+    if (modalOpen) document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [modalOpen]);
 
   useEffect(() => {
     return () => {
@@ -202,6 +210,33 @@ Highly recommended.`,
   }, []);
 
   const activeReview = testimonials.find((x) => x.key === activeReviewKey);
+
+  const previewText = (txt) => {
+    const s = (txt || "").replace(/\s+/g, " ").trim();
+    if (!s) return "";
+
+    const cutAt = (pos) => s.slice(0, pos).trim() + (pos < s.length ? "..." : "");
+
+    const firstSentenceEnd = (() => {
+      const m = s.match(/[^.?!]*[.?!]/);
+      return m ? m[0].length : -1;
+    })();
+
+    if (!/^(dear|hi|hello)\b/i.test(s)) {
+      if (firstSentenceEnd > 0 && firstSentenceEnd < 170) return cutAt(firstSentenceEnd);
+    }
+
+    const secondSentenceEnd = (() => {
+      const m = s.match(/(?:[^.?!]*[.?!]){2}/);
+      return m ? m[0].length : -1;
+    })();
+
+    if (secondSentenceEnd > 0 && secondSentenceEnd < 220) return cutAt(secondSentenceEnd);
+
+    const hardLimit = 190;
+    if (s.length <= hardLimit) return s;
+    return cutAt(hardLimit);
+  };
 
   const settings = {
     className: "center",
@@ -222,7 +257,7 @@ Highly recommended.`,
     rtl: direction === "rtl",
     afterChange: (current) => setActiveIndex(current),
     responsive: [
-      { breakpoint: 480, settings: { slidesToShow: 1, centerMode: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1, centerMode: false, arrows: true } },
       { breakpoint: 900, settings: { slidesToShow: 2, centerMode: false } },
       { breakpoint: 1200, settings: { slidesToShow: 3 } },
     ],
@@ -243,60 +278,97 @@ Highly recommended.`,
           </motion.h2>
 
           <div className="relative mt-[28px]">
-            <Slider ref={sliderRef} {...settings}>
-              {testimonials.map((r) => (
-                <div key={r.key}>
-                  <article className="px-[10px]">
-                    <div className="bg-white rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[26px] pt-[18px] pb-[18px] h-[520px] flex flex-col items-center text-center">
-                      <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[10px]">
-                        {"★".repeat(r.rating)}
-                      </div>
+          <Slider ref={sliderRef} {...settings}>
+  {testimonials.map((r) => (
+    <div key={r.key}>
+      <article className="px-[10px]">
+        <div className="bg-white relative rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[26px] pt-[18px] pb-[88px] h-[520px] flex flex-col items-center text-center overflow-hidden">
+          <div className="hidden md:block text-[#FFB000] text-[18px] tracking-[3px] mb-[10px]">
+            {"★".repeat(r.rating)}
+          </div>
 
-                      <div className="w-full mb-[10px]">
-                        <p
-                          className="font-saira text-[16px] font-[400] text-[#64748b] leading-[26px] w-full"
-                          style={{
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 4,
-                            overflow: "hidden",
-                            whiteSpace: "pre-line",
-                          }}
-                        >
-                          {r.text}
-                        </p>
-                      </div>
+          <div className="hidden md:block w-full mb-[10px]">
+            <p
+              className="font-saira text-[16px] font-[400] text-[#64748b] leading-[26px] w-full"
+              style={{
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 4,
+                overflow: "hidden",
+                whiteSpace: "pre-line",
+              }}
+            >
+              {r.text}
+            </p>
+          </div>
 
-                      <div className="w-full flex justify-center mt-auto">
-                        <div className="group relative w-[310px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
-                          <img
-                            src={r.thumb}
-                            alt={`Project photo by ${r.name}`}
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover transition duration-300 group-hover:scale-[1.04]"
-                          />
+          <div className="hidden md:flex w-full justify-center mt-auto">
+            <div className="group relative w-[310px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
+              <img
+                src={r.thumb}
+                alt={`Project photo by ${r.name}`}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover transition duration-300 group-hover:scale-[1.04]"
+              />
 
-                          <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/35" />
+              <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/35" />
 
-                          <button
-                            type="button"
-                            onClick={() => openModal(r.key)}
-                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[18px] py-[10px] rounded-[12px]"
-                          >
-                            View More
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+              <button
+                type="button"
+                onClick={() => openModal(r.key)}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[18px] py-[10px] rounded-[12px]"
+              >
+                View More
+              </button>
+            </div>
+          </div>
 
-                    <h3 className="mt-[14px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
-                      {r.name}
-                    </h3>
-                  </article>
-                </div>
-              ))}
-            </Slider>
+          <div className="md:hidden w-full flex flex-col items-center text-center pt-[6px]">
+            <div className="w-full flex justify-center">
+              <div className="group relative w-[250px] h-[250px] rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
+                <img
+                  src={r.thumb}
+                  alt={`Project photo by ${r.name}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/10" />
+                <button
+                  type="button"
+                  onClick={() => openModal(r.key)}
+                  className="absolute left-1/2 bottom-[12px] -translate-x-1/2 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[16px] py-[9px] rounded-[12px]"
+                >
+                  View More
+                </button>
+              </div>
+            </div>
+
+            <div className="text-[#FFB000] text-[18px] tracking-[3px] mt-[14px]">
+              {"★".repeat(r.rating)}
+            </div>
+
+            <p className="font-saira text-[15px] font-[400] text-[#64748b] leading-[24px] mt-[10px] px-[4px]">
+              {previewText(r.text)}
+            </p>
+          </div>
+
+          <div className="md:hidden absolute left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-[#e2e8f0] py-[14px] px-[16px]">
+            <h3 className="text-[26px] text-[#214f9b] text-center font-saira font-[800] leading-[1.1]">
+              {r.name}
+            </h3>
+          </div>
+        </div>
+
+        <h3 className="hidden md:block mt-[14px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
+          {r.name}
+        </h3>
+      </article>
+    </div>
+  ))}
+</Slider>
+
 
             <ul className="flex justify-center gap-[10px] mt-[22px]">
               {testimonials.map((_, idx) => (
@@ -314,51 +386,54 @@ Highly recommended.`,
         </div>
       </section>
 
-      {modalOpen && activeReview && (
-        <div
-          className="fixed inset-0 bg-black/70 z-[999999] flex items-center justify-center px-[16px]"
-          onClick={closeModal}
-        >
-          <div
-            className="bg-white w-full max-w-[980px] rounded-[18px] p-[22px] md:p-[30px] relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              aria-label="Close"
-              className="absolute top-[12px] right-[14px] text-[28px] leading-[28px] text-[#0f172a]"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
+   {modalOpen && activeReview && (
+  <div
+    className="fixed inset-0 bg-black/70 z-[999999] flex items-center justify-center px-[16px] py-[16px]"
+    onClick={closeModal}
+  >
+    <div
+      className="bg-white w-full max-w-[980px] rounded-[18px] relative overflow-hidden"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        onClick={closeModal}
+        className="fixed md:absolute top-[14px] right-[14px] z-[1000000] w-[42px] h-[42px] rounded-full bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)] text-[#0f172a] text-[26px] leading-[26px] flex items-center justify-center hover:bg-[#f1f5f9] transition"
+      >
+        &times;
+      </button>
 
-            <h3 className="font-[Rajdhani] text-[28px] font-[700] uppercase text-[#003A80] mb-[8px]">
-              {activeReview.name}
-            </h3>
+      <div className="max-h-[85vh] overflow-y-auto p-[22px] md:p-[30px]">
+        <h3 className="font-[Rajdhani] text-[28px] font-[700] uppercase text-[#003A80] mb-[8px] pr-[60px]">
+          {activeReview.name}
+        </h3>
 
-            <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]">
-              {"★".repeat(activeReview.rating)}
-            </div>
-
-            <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px] whitespace-pre-line">
-              {activeReview.text}
-            </p>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-[12px]">
-              {activeReview.images.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`Project photo by ${activeReview.name}`}
-                  className="w-full h-[190px] rounded-[14px] object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ))}
-            </div>
-          </div>
+        <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]">
+          {"★".repeat(activeReview.rating)}
         </div>
-      )}
+
+        <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px] whitespace-pre-line">
+          {activeReview.text}
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-[12px]">
+          {activeReview.images.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              alt={`Project photo by ${activeReview.name}`}
+              className="w-full h-[190px] rounded-[14px] object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </>
   );
 };
