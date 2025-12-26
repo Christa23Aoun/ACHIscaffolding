@@ -13,6 +13,280 @@ const Products = () => {
     }
   }, [])
 
+  // Center models in the view when they load
+  useEffect(() => {
+    const centerModels = () => {
+      const modelViewers = document.querySelectorAll("model-viewer")
+      modelViewers.forEach((viewer) => {
+        const handleLoad = () => {
+          try {
+            // Set camera target to origin (center) to center the model in view
+            viewer.cameraTarget = "0m 0m 0m"
+            
+            // Scale down the model using model-viewer's scale attribute
+            // This is the safest way that won't affect canvas sizing
+            try {
+              viewer.scale = "0.7 0.7 0.7"
+            } catch (e) {
+              // If scale attribute doesn't work, try accessing the scene
+              if (viewer.model) {
+                // Access through the model property if available
+                const model = viewer.model
+                if (model.scale) {
+                  model.scale.set(0.7, 0.7, 0.7)
+                }
+              }
+            }
+            
+            // Use model-viewer's updateFraming to center and fit the model in view
+            if (typeof viewer.updateFraming === "function") {
+              viewer.updateFraming()
+            }
+          } catch (error) {
+            // Silently fail if API is not available
+          }
+        }
+        
+        // Add load event listener
+        if (viewer.loaded) {
+          // Model already loaded, center it now
+          setTimeout(handleLoad, 100)
+        } else {
+          viewer.addEventListener("load", handleLoad, { once: true })
+        }
+      })
+    }
+
+    // Wait for model-viewer custom element to be defined
+    const checkInterval = setInterval(() => {
+      if (window.customElements?.get("model-viewer")) {
+        clearInterval(checkInterval)
+        // Small delay to ensure DOM is ready
+        setTimeout(centerModels, 300)
+        // Also run after a longer delay to catch late-loading models
+        setTimeout(centerModels, 1000)
+      }
+    }, 100)
+
+    // Cleanup
+    return () => clearInterval(checkInterval)
+  }, [])
+
+  useEffect(() => {
+    const updateCanvasSizes = () => {
+      requestAnimationFrame(() => {
+        const modelViewers = document.querySelectorAll("model-viewer")
+        modelViewers.forEach((viewer) => {
+          // Get the container div (parent of model-viewer) - this is the article's div
+          const container = viewer.parentElement
+          if (!container) return
+          
+          // Get the article element to potentially expand the container
+          const article = container.closest("article")
+          
+          // Get container's exact dimensions - use full bounding box
+          const containerRect = container.getBoundingClientRect()
+          let containerWidth = containerRect.width || container.clientWidth || container.offsetWidth
+          let containerHeight = containerRect.height || container.clientHeight || container.offsetHeight
+          
+          // If article exists, use article's full width
+          if (article) {
+            const articleRect = article.getBoundingClientRect()
+            const articleWidth = articleRect.width || article.clientWidth || article.offsetWidth
+            // Use article's full width for container
+            containerWidth = articleWidth
+            // Force container to full article width
+            container.style.width = "100%"
+            container.style.maxWidth = "none"
+          }
+          
+          // Also ensure container uses full available height
+          const containerComputedHeight = containerRect.height || container.clientHeight || container.offsetHeight
+          if (containerComputedHeight > containerHeight) {
+            containerHeight = containerComputedHeight
+          }
+          
+          if (containerWidth > 0 && containerHeight > 0) {
+            // Ensure container fills the full width
+            container.style.width = `${containerWidth}px`
+            container.style.height = `${containerHeight}px`
+            container.style.maxWidth = "none"
+            container.style.maxHeight = "none"
+            
+            // Get model-viewer's exact dimensions
+            const viewerRect = viewer.getBoundingClientRect()
+            let viewerWidth = viewerRect.width || viewer.clientWidth || viewer.offsetWidth
+            let viewerHeight = viewerRect.height || viewer.clientHeight || viewer.offsetHeight
+            
+            // Update model-viewer to match container exactly
+            viewer.style.width = `${containerWidth}px`
+            viewer.style.height = `${containerHeight}px`
+            viewer.style.maxWidth = "none"
+            viewer.style.maxHeight = "none"
+            // Recalculate after setting size
+            viewerWidth = containerWidth
+            viewerHeight = containerHeight
+            
+            const roundedWidth = Math.round(viewerWidth)
+            const roundedHeight = Math.round(viewerHeight)
+            
+            // Find and resize the container.userInput element in shadow DOM to match model-viewer exactly
+            if (viewer.shadowRoot) {
+              const containerDiv = viewer.shadowRoot.querySelector("div.container")
+              if (containerDiv) {
+                // Match container div to model-viewer's size and position
+                containerDiv.style.width = `${roundedWidth}px`
+                containerDiv.style.height = `${roundedHeight}px`
+                containerDiv.style.maxWidth = "none"
+                containerDiv.style.maxHeight = "none"
+                containerDiv.style.margin = "0"
+                containerDiv.style.padding = "0"
+                containerDiv.style.position = "absolute"
+                containerDiv.style.top = "0"
+                containerDiv.style.left = "0"
+                containerDiv.style.right = "0"
+                containerDiv.style.bottom = "0"
+                containerDiv.style.boxSizing = "border-box"
+                
+                const userInputDiv = containerDiv.querySelector("div.userInput.show") || containerDiv.querySelector("div.userInput")
+                if (userInputDiv) {
+                  // Match userInput div exactly to model-viewer's size and position
+                  userInputDiv.style.width = `${roundedWidth}px`
+                  userInputDiv.style.height = `${roundedHeight}px`
+                  userInputDiv.style.maxWidth = "none"
+                  userInputDiv.style.maxHeight = "none"
+                  userInputDiv.style.margin = "0"
+                  userInputDiv.style.padding = "0"
+                  userInputDiv.style.position = "absolute"
+                  userInputDiv.style.top = "0"
+                  userInputDiv.style.left = "0"
+                  userInputDiv.style.right = "0"
+                  userInputDiv.style.bottom = "0"
+                  userInputDiv.style.boxSizing = "border-box"
+                  userInputDiv.style.overflow = "visible"
+                  // Ensure it's fully nested and matches model-viewer's location
+                  userInputDiv.style.transform = "none"
+                  userInputDiv.style.transformOrigin = "top left"
+                }
+              }
+            }
+            
+            // Try shadow DOM first, then regular DOM for canvas
+            const canvas = viewer.shadowRoot?.querySelector("canvas") || viewer.querySelector("canvas")
+            if (canvas) {
+              // Set canvas dimensions to fill entire container
+              canvas.style.width = `${roundedWidth}px`
+              canvas.style.height = `${roundedHeight}px`
+              canvas.style.maxWidth = "none"
+              canvas.style.maxHeight = "none"
+              canvas.style.position = "absolute"
+              canvas.style.top = "0"
+              canvas.style.left = "0"
+              canvas.style.right = "auto"
+              canvas.style.bottom = "auto"
+              canvas.style.margin = "0"
+              canvas.style.padding = "0"
+              canvas.style.transform = "none"
+              canvas.style.border = "none"
+              canvas.style.outline = "none"
+              
+              // Update canvas resolution attributes (important for rendering quality)
+              canvas.setAttribute("width", roundedWidth.toString())
+              canvas.setAttribute("height", roundedHeight.toString())
+              
+              // Also update the canvas element's internal size if needed
+              if (canvas.width !== roundedWidth) {
+                canvas.width = roundedWidth
+              }
+              if (canvas.height !== roundedHeight) {
+                canvas.height = roundedHeight
+              }
+            }
+          }
+        })
+      })
+    }
+
+    // Initial update with multiple attempts to catch loaded model-viewers
+    const timeouts = [
+      setTimeout(updateCanvasSizes, 100),
+      setTimeout(updateCanvasSizes, 500),
+      setTimeout(updateCanvasSizes, 1000),
+    ]
+
+    // Update on resize with debounce
+    let resizeTimeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(updateCanvasSizes, 100)
+    }
+    window.addEventListener("resize", handleResize)
+
+    // Use ResizeObserver to watch both container and model-viewer size changes
+    const resizeObservers = []
+    const modelViewers = document.querySelectorAll("model-viewer")
+    modelViewers.forEach((viewer) => {
+      // Observe the container div
+      const container = viewer.parentElement
+      if (container) {
+        const containerObserver = new ResizeObserver(() => {
+          updateCanvasSizes()
+        })
+        containerObserver.observe(container)
+        resizeObservers.push(containerObserver)
+      }
+      
+      // Also observe the model-viewer itself
+      const viewerObserver = new ResizeObserver(() => {
+        updateCanvasSizes()
+      })
+      viewerObserver.observe(viewer)
+      resizeObservers.push(viewerObserver)
+    })
+
+    // Use MutationObserver to catch when model-viewer loads
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) {
+            // Check if it's a model-viewer or contains one
+            const viewers = node.nodeName === "MODEL-VIEWER" 
+              ? [node] 
+              : node.querySelectorAll?.("model-viewer") || []
+            viewers.forEach((viewer) => {
+              // Observe the container div
+              const container = viewer.parentElement
+              if (container) {
+                const containerObserver = new ResizeObserver(() => {
+                  updateCanvasSizes()
+                })
+                containerObserver.observe(container)
+                resizeObservers.push(containerObserver)
+              }
+              
+              // Also observe the model-viewer itself
+              const viewerObserver = new ResizeObserver(() => {
+                updateCanvasSizes()
+              })
+              viewerObserver.observe(viewer)
+              resizeObservers.push(viewerObserver)
+            })
+          }
+        })
+      })
+      setTimeout(updateCanvasSizes, 50)
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      timeouts.forEach(clearTimeout)
+      clearTimeout(resizeTimeout)
+      window.removeEventListener("resize", handleResize)
+      resizeObservers.forEach((ro) => ro.disconnect())
+      observer.disconnect()
+    }
+  }, [])
+
   const products = useMemo(
     () => [
       {
@@ -21,9 +295,9 @@ const Products = () => {
         desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
         model: "/assets/products/double_coupler.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 55%",
-        fieldOfView: "18deg",
-        cameraTarget: "0m -0.20m 0m",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
+        cameraTarget: "0m 0m 0m",
         specs: ["3D interactive model", "Ideal for tube and fitting systems", "Optimized for heavy-duty connections"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -33,9 +307,9 @@ const Products = () => {
         desc: "3D visualization of H frame scaffolding for façade and elevation works.",
         model: "/assets/products/h_frame.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 85%",
-        fieldOfView: "20deg",
-        cameraTarget: "0m -0.40m 0m",
+        cameraOrbit: "0deg 70deg 150%",
+        fieldOfView: "32deg",
+        cameraTarget: "0m 0m 0m",
         specs: ["Quick-assembly frame geometry", "Stable vertical support", "Compatible with standard accessories"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -45,9 +319,9 @@ const Products = () => {
         desc: "3D model of the joint coupler used to connect scaffold tubes end-to-end.",
         model: "/assets/products/joint_coupler.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 55%",
-        fieldOfView: "18deg",
-        cameraTarget: "0m -0.22m 0m",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
+        cameraTarget: "0m 0m 0m",
         specs: ["End-to-end tube connection", "Rigid alignment in elevation", "Ideal for extending ledgers and standards"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -57,9 +331,9 @@ const Products = () => {
         desc: "3D visualization of half coupler used for connecting scaffold tubes to accessories.",
         model: "/assets/products/half_coupler.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 55%",
-        fieldOfView: "18deg",
-        cameraTarget: "0m -0.22m 0m",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
+        cameraTarget: "0m 0m 0m",
         specs: ["Single jaw connection", "For beams, brackets and specials", "High tightening capacity"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -69,9 +343,9 @@ const Products = () => {
         desc: "3D model of swivel coupler for connecting tubes at variable angles.",
         model: "/assets/products/swivel_coupler.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 55%",
-        fieldOfView: "18deg",
-        cameraTarget: "0m -0.22m 0m",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
+        cameraTarget: "0m 0m 0m",
         specs: ["Flexible angle connections", "Perfect for bracing and ties", "High-strength forged body"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -129,6 +403,26 @@ const Products = () => {
           height: 100% !important;
           display: block !important;
           background: transparent !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          border: none !important;
+          outline: none !important;
+        }
+        model-viewer canvas {
+          display: block !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          border: none !important;
+          outline: none !important;
+          box-sizing: border-box !important;
         }
         model-viewer::part(default-progress-bar) { display: none !important; }
         model-viewer::part(default-ar-button) { transform: scale(0.9); }
@@ -156,7 +450,7 @@ const Products = () => {
                 key={`${p.title}-${idx}`}
                 className="group rounded-[16px] overflow-hidden flex flex-col bg-white shadow-[0_10px_30px_rgba(17,35,64,0.08)]"
               >
-                <div className="relative overflow-hidden h-[380px] bg-white">
+                <div className="relative overflow-hidden bg-white" style={{ width: "100%", minHeight: "380px" }}>
                   {p.type === "3d" ? (
                     <model-viewer
                       key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
@@ -171,13 +465,13 @@ const Products = () => {
                       loading="eager"
                       camera-orbit={p.cameraOrbit || "0deg 70deg 60%"}
                       camera-target={p.cameraTarget || "0m 0m 0m"}
-                      field-of-view={p.fieldOfView || "18deg"}
-                      min-field-of-view="12deg"
-                      max-field-of-view="45deg"
+                      field-of-view={p.fieldOfView || "30deg"}
+                      min-field-of-view="20deg"
+                      max-field-of-view="60deg"
                       touch-action="pan-y"
                       ar-modes="webxr scene-viewer quick-look"
-                      class="w-full h-full block"
-                      style={{ margin: 0, padding: 0 }}
+                      class="absolute inset-0 w-full h-full block"
+                      style={{ margin: 0, padding: 0, top: 0, left: 0, right: 0, bottom: 0 }}
                     />
                   ) : (
                     <img
