@@ -232,47 +232,50 @@ const Projects = () => {
 
   return (
     <main className="bg-[#f5f7fb] text-[#1b3155]">
-      <section
-        className="relative bg-no-repeat bg-cover bg-center pt-[110px] pb-[200px] md:pt-[130px] md:pb-[240px]"
-        style={heroStyle}
+    <section
+  className="relative bg-no-repeat bg-cover bg-center"
+  style={heroStyle}
+>
+  <div className="absolute inset-0 z-0 bg-[rgba(0,35,90,0.55)] backdrop-brightness-[0.9]"></div>
+
+  <motion.div
+    initial={{ opacity: 0, scale: 0.8 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.8, delay: 0.3 }}
+    viewport={{ once: true }}
+    className="relative z-10 w-full h-full flex flex-col justify-center text-left
+               pt-[110px] pb-[200px] md:pt-[130px] md:pb-[240px]
+               pl-[20px] md:pl-[70px] pr-[20px]"
+  >
+    <h1 className="font-[Rajdhani] text-white text-[28px] md:text-[42px] font-[700] uppercase mb-[12px]">
+      Projects
+    </h1>
+
+    <p className="text-white/90 font-['Open_Sans'] text-[16px] md:text-[17px] leading-[1.7] max-w-[650px]">
+      Discover a selection of our completed projects and scaffolding installations across Lebanon and beyond.
+    </p>
+
+    <div className="mt-[28px]">
+      <a
+        href="https://wa.me/+96103322811"
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex w-fit px-[28px] sm:px-[34px]
+                   text-[12px] md:text-[15px]
+                   text-white font-[Rajdhani] font-[700] leading-[29px]
+                   py-[15px]
+                   bg-[#28509E] rounded-[12px] uppercase
+                   hover:bg-[#25D366]
+                   border-[#FFF] hover:border-[#25D366]
+                   border-solid border-2
+                   transition duration-500 heroBtn"
       >
-        <div className="absolute inset-0 z-0 bg-[#00235A]/55"></div>
+        send enquiry over whatsapp
+      </a>
+    </div>
+  </motion.div>
+</section>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="relative z-10 max-w-[1250px] mx-auto px-[20px]"
-        >
-          <h1 className="font-[Rajdhani] text-white text-[55px] md:text-[55px] font-[700] uppercase leading-[0.95]">
-            Projects
-          </h1>
-
-          <p className="text-white/90 font-['Open_Sans'] text-[16px] md:text-[17px] leading-[1.7] max-w-[650px] mt-[12px]">
-            Discover a selection of our completed projects and scaffolding installations across Lebanon and beyond.
-          </p>
-
-          <div className="mt-[28px]">
-            <a
-              href="https://wa.me/+96103322811"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex w-fit px-[28px] sm:px-[34px]
-                         text-[12px] 2xl:text-[15px] xl:text-[15px] lg:text-[15px] md:text-[15px]
-                         text-white font-saira font-[700] leading-[29px]
-                         py-[15px]
-                         bg-[#28509E] rounded-[12px] uppercase
-                         hover:bg-[#25D366]
-                         border-[#FFF] hover:border-[#25D366]
-                         border-solid border-2
-                         transition duration-500 heroBtn"
-            >
-              send enquiry over whatsapp
-            </a>
-          </div>
-        </motion.div>
-      </section>
 
       <section className="py-[50px]">
         <div className="w-[90%] max-w-[1200px] mx-auto">
