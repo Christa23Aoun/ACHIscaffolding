@@ -111,7 +111,7 @@ const Blog = () => {
                     {post.excerpt}
                   </p>
 
-                  <div className="w-full flex justify-end items-center mt-[17px]">
+                  <div className="w-full flex justify-end items-center mt-[15px] mb-[30px] md:mb-[0]">
                     <Link
                       to={post.link}
                       className="group font-saira uppercase font-[600] text-[#003A80] text-[18px] transition-all mr-[15px] inline-flex items-center gap-[12px] hover:text-[#ff8e26]"
