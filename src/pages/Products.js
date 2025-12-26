@@ -1,3 +1,4 @@
+// src/pages/Products.js
 import React, { useEffect, useMemo } from "react"
 
 const Products = () => {
@@ -14,38 +15,28 @@ const Products = () => {
 
   const products = useMemo(
     () => [
-   {
-  type: "3d",
-  title: "Double Coupler 3D Component",
-  desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
-  model: "/assets/products/double_coupler.glb",
-  badge: "3D VIEW",
-  cameraOrbit: "0deg 75deg 85%",
-  fieldOfView: "30deg",
-  cameraTarget: "0m -0.35m 0m",
-  specs: [
-    "3D interactive model",
-    "Ideal for tube and fitting systems",
-    "Optimized for heavy-duty connections",
-  ],
-  tags: ["Rotate", "Zoom", "Inspect"],
-},
-
+      {
+        type: "3d",
+        title: "Double Coupler 3D Component",
+        desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
+        model: "/assets/products/double_coupler.glb",
+        badge: "3D VIEW",
+        cameraOrbit: "0deg 70deg 55%",
+        fieldOfView: "18deg",
+        cameraTarget: "0m -0.20m 0m",
+        specs: ["3D interactive model", "Ideal for tube and fitting systems", "Optimized for heavy-duty connections"],
+        tags: ["Rotate", "Zoom", "Inspect"],
+      },
       {
         type: "3d",
         title: "H Frame 3D Component",
         desc: "3D visualization of H frame scaffolding for façade and elevation works.",
         model: "/assets/products/h_frame.glb",
         badge: "3D VIEW",
-        scale: "0.55 0.55 0.55",
-        cameraOrbit: "0deg 75deg 180%",
-        fieldOfView: "28deg",
-        cameraTarget: "0m -0.55m 0m",
-        specs: [
-          "Quick-assembly frame geometry",
-          "Stable vertical support",
-          "Compatible with standard accessories",
-        ],
+        cameraOrbit: "0deg 70deg 85%",
+        fieldOfView: "20deg",
+        cameraTarget: "0m -0.40m 0m",
+        specs: ["Quick-assembly frame geometry", "Stable vertical support", "Compatible with standard accessories"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
       {
@@ -54,15 +45,10 @@ const Products = () => {
         desc: "3D model of the joint coupler used to connect scaffold tubes end-to-end.",
         model: "/assets/products/joint_coupler.glb",
         badge: "3D VIEW",
-        scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 160%",
-        fieldOfView: "26deg",
-        cameraTarget: "0m -0.35m 0m",
-        specs: [
-          "End-to-end tube connection",
-          "Rigid alignment in elevation",
-          "Ideal for extending ledgers and standards",
-        ],
+        cameraOrbit: "0deg 70deg 55%",
+        fieldOfView: "18deg",
+        cameraTarget: "0m -0.22m 0m",
+        specs: ["End-to-end tube connection", "Rigid alignment in elevation", "Ideal for extending ledgers and standards"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
       {
@@ -71,15 +57,10 @@ const Products = () => {
         desc: "3D visualization of half coupler used for connecting scaffold tubes to accessories.",
         model: "/assets/products/half_coupler.glb",
         badge: "3D VIEW",
-        scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 160%",
-        fieldOfView: "26deg",
-        cameraTarget: "0m -0.35m 0m",
-        specs: [
-          "Single jaw connection",
-          "For beams, brackets and specials",
-          "High tightening capacity",
-        ],
+        cameraOrbit: "0deg 70deg 55%",
+        fieldOfView: "18deg",
+        cameraTarget: "0m -0.22m 0m",
+        specs: ["Single jaw connection", "For beams, brackets and specials", "High tightening capacity"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
       {
@@ -88,10 +69,9 @@ const Products = () => {
         desc: "3D model of swivel coupler for connecting tubes at variable angles.",
         model: "/assets/products/swivel_coupler.glb",
         badge: "3D VIEW",
-        scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 160%",
-        fieldOfView: "26deg",
-        cameraTarget: "0m -0.35m 0m",
+        cameraOrbit: "0deg 70deg 55%",
+        fieldOfView: "18deg",
+        cameraTarget: "0m -0.22m 0m",
         specs: ["Flexible angle connections", "Perfect for bracing and ties", "High-strength forged body"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
@@ -143,14 +123,27 @@ const Products = () => {
 
   return (
     <main className="bg-[#f5f7fb] text-[#1b3155]">
+      <style>{`
+        model-viewer {
+          width: 100% !important;
+          height: 100% !important;
+          display: block !important;
+          background: transparent !important;
+        }
+        model-viewer::part(default-progress-bar) { display: none !important; }
+        model-viewer::part(default-ar-button) { transform: scale(0.9); }
+
+        model-viewer::part(controls) { display: none !important; }
+        model-viewer::part(overlay) { display: none !important; }
+        model-viewer::part(interaction-prompt) { display: none !important; }
+      `}</style>
+
       <section className="py-[60px]">
         <div className="w-[90%] max-w-[1200px] mx-auto text-center">
-          <h1 className="text-[#214f9b] font-[900] uppercase text-[30px] md:text-[40px]">
-            ALL PRODUCTS
-          </h1>
+          <h1 className="text-[#214f9b] font-[900] uppercase text-[30px] md:text-[40px]">ALL PRODUCTS</h1>
           <p className="mt-[10px] text-[#4a5c7a] text-[14px] md:text-[15px] leading-[1.7] max-w-[820px] mx-auto">
-            Discover our range of professional scaffolding systems, components, and safety equipment designed for
-            reliable, secure, and efficient construction projects.
+            Discover our range of professional scaffolding systems, components, and safety equipment designed for reliable,
+            secure, and efficient construction projects.
           </p>
         </div>
       </section>
@@ -161,75 +154,56 @@ const Products = () => {
             {products.map((p, idx) => (
               <article
                 key={`${p.title}-${idx}`}
-                className="group rounded-[16px] overflow-hidden flex flex-col h-[470px]"
+                className="group rounded-[16px] overflow-hidden flex flex-col bg-white shadow-[0_10px_30px_rgba(17,35,64,0.08)]"
               >
-                {p.type === "3d" ? (
-                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px] flex items-center justify-center p-[2px]">
-                      <div className="w-full h-full flex items-center justify-center relative" style={{ transform: 'scale(1.2)' }}>
-                        <model-viewer
-                          key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
-                          class="w-full h-full"
-                          style={{ 
-                            display: "block",
-                            width: '100%',
-                            height: '100%',
-                            maxWidth: '100%',
-                            maxHeight: '100%'
-                          }}
-                          src={p.model}
-                          alt={p.title}
-                          camera-controls
-                          auto-rotate
-                          interaction-prompt="none"
-                          shadow-intensity="1"
-                          loading="eager"
-                          bounds="tight"
-                          camera-orbit={p.cameraOrbit || "0deg 75deg 85%"}
-                          camera-target={p.cameraTarget || "0m 0m 0m"}
-                          field-of-view={p.fieldOfView || "30deg"}
-                          ar-modes="webxr scene-viewer quick-look"
-                        />
-                      </div>
-
-
-
-                    <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
-                      {p.badge}
-                    </span>
-
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
-                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-                        <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
-                          {p.desc}
-                        </p>
-
-                        <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
-                          {p.specs.map((s) => (
-                            <li key={`${p.title}-${s}`} className="flex gap-[8px]">
-                              <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
-                              <span className="leading-[1.6]">{s}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px]">
+                <div className="relative overflow-hidden h-[380px] bg-white">
+                  {p.type === "3d" ? (
+                    <model-viewer
+                      key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
+                      src={p.model}
+                      alt={p.title}
+                      camera-controls
+                      auto-rotate
+                      auto-rotate-delay="0"
+                      rotation-per-second="28deg"
+                      interaction-prompt="none"
+                      shadow-intensity="1"
+                      loading="eager"
+                      camera-orbit={p.cameraOrbit || "0deg 70deg 60%"}
+                      camera-target={p.cameraTarget || "0m 0m 0m"}
+                      field-of-view={p.fieldOfView || "18deg"}
+                      min-field-of-view="12deg"
+                      max-field-of-view="45deg"
+                      touch-action="pan-y"
+                      ar-modes="webxr scene-viewer quick-look"
+                      class="w-full h-full block"
+                      style={{ margin: 0, padding: 0 }}
+                    />
+                  ) : (
                     <img
                       src={p.img}
                       alt={p.title}
-                      className="w-full h-[380px] object-contain"
+                      className="absolute inset-0 w-full h-full object-contain block"
                       loading="lazy"
                     />
+                  )}
 
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-300 ease-out flex flex-col justify-center p-[18px]">
-                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out">
-                        <p className="text-white text-[14px] leading-[1.7] mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
-                          {p.desc}
-                        </p>
+                  <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
+                    {p.type === "3d" ? p.badge : "PRODUCT"}
+                  </span>
 
-                        <ul className="space-y-[6px] text-[13px] text-white mb-[12px] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-[75ms]">
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div
+                      className="absolute inset-x-0 bottom-0 p-[16px] md:p-[18px]
+                                 bg-gradient-to-t from-black/80 via-black/35 to-transparent
+                                 opacity-0 translate-y-[10px]
+                                 group-hover:opacity-100 group-hover:translate-y-0
+                                 transition-all duration-300 ease-out"
+                    >
+                      <div className="pointer-events-auto max-w-[92%]">
+                        <p className="text-white text-[14px] leading-[1.7] mb-[12px]">{p.desc}</p>
+
+                        <ul className="space-y-[6px] text-[13px] text-white">
                           {p.specs.map((s) => (
                             <li key={`${p.title}-${s}`} className="flex gap-[8px]">
                               <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
@@ -238,19 +212,23 @@ const Products = () => {
                           ))}
                         </ul>
 
-                        <a
-                          href="#"
-                          onClick={(e) => e.preventDefault()}
-                          className="inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px] border-2 border-white text-white font-[900] uppercase text-[13px] hover:bg-white hover:text-[#214f9b] transition-all opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 duration-300 ease-out delay-[150ms] mt-[12px]"
-                        >
-                          Read More
-                        </a>
+                        {p.type === "img" && (
+                          <a
+                            href="#"
+                            onClick={(e) => e.preventDefault()}
+                            className="mt-[12px] inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px]
+                                       border-2 border-white text-white font-[900] uppercase text-[13px]
+                                       hover:bg-white hover:text-[#214f9b] transition-all"
+                          >
+                            Read More
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
-                )}
+                </div>
 
-                <h3 className="font-[900] text-[16px] mt-[12px] text-center px-[10px] min-h-[44px] flex items-center justify-center">
+                <h3 className="font-[900] text-[16px] text-center px-[10px] min-h-[56px] flex items-center justify-center">
                   {p.title}
                 </h3>
               </article>
@@ -262,9 +240,7 @@ const Products = () => {
       <section className="py-[55px] bg-[#eef3fb]">
         <div className="w-[90%] max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-[18px]">
           <div className="text-center md:text-left">
-            <h2 className="text-[#214f9b] font-[900] uppercase text-[22px] md:text-[28px]">
-              Need a Quote for Your Next Project?
-            </h2>
+            <h2 className="text-[#214f9b] font-[900] uppercase text-[22px] md:text-[28px]">Need a Quote for Your Next Project?</h2>
             <p className="mt-[8px] text-[#4a5c7a] text-[14px] leading-[1.7]">
               Share your project details and we’ll recommend the best system for your needs.
             </p>
