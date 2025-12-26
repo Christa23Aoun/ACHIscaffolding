@@ -20,7 +20,7 @@ const Products = () => {
   desc: "High-strength double coupler for connecting scaffold tubes at 90° with precise alignment.",
   model: "/assets/products/double_coupler.glb",
   badge: "3D VIEW",
-  cameraOrbit: "0deg 75deg 110%",
+  cameraOrbit: "0deg 75deg 85%",
   fieldOfView: "30deg",
   cameraTarget: "0m -0.35m 0m",
   specs: [
@@ -38,7 +38,7 @@ const Products = () => {
         model: "/assets/products/h_frame.glb",
         badge: "3D VIEW",
         scale: "0.55 0.55 0.55",
-        cameraOrbit: "0deg 75deg 260%",
+        cameraOrbit: "0deg 75deg 180%",
         fieldOfView: "28deg",
         cameraTarget: "0m -0.55m 0m",
         specs: [
@@ -55,7 +55,7 @@ const Products = () => {
         model: "/assets/products/joint_coupler.glb",
         badge: "3D VIEW",
         scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 245%",
+        cameraOrbit: "0deg 75deg 160%",
         fieldOfView: "26deg",
         cameraTarget: "0m -0.35m 0m",
         specs: [
@@ -72,7 +72,7 @@ const Products = () => {
         model: "/assets/products/half_coupler.glb",
         badge: "3D VIEW",
         scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 245%",
+        cameraOrbit: "0deg 75deg 160%",
         fieldOfView: "26deg",
         cameraTarget: "0m -0.35m 0m",
         specs: [
@@ -89,7 +89,7 @@ const Products = () => {
         model: "/assets/products/swivel_coupler.glb",
         badge: "3D VIEW",
         scale: "0.18 0.18 0.18",
-        cameraOrbit: "0deg 75deg 245%",
+        cameraOrbit: "0deg 75deg 160%",
         fieldOfView: "26deg",
         cameraTarget: "0m -0.35m 0m",
         specs: ["Flexible angle connections", "Perfect for bracing and ties", "High-strength forged body"],
@@ -164,24 +164,32 @@ const Products = () => {
                 className="group rounded-[16px] overflow-hidden flex flex-col h-[470px]"
               >
                 {p.type === "3d" ? (
-                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px]">
-                      <model-viewer
-                        key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
-                        class="w-full h-[380px]"
-  style={{ display: "block" }}
-  src={p.model}
-  alt={p.title}
-  camera-controls
-  auto-rotate
-  interaction-prompt="none"
-  shadow-intensity="1"
-  loading="eager"
-  bounds="tight"
-  camera-orbit={p.cameraOrbit || "0deg 75deg 120%"}
-  camera-target={p.cameraTarget || "0m 0m 0m"}
-  field-of-view={p.fieldOfView || "30deg"}
-  ar-modes="webxr scene-viewer quick-look"
-/>
+                  <div className="relative bg-[#ffffff] rounded-[16px] overflow-hidden h-[380px] flex items-center justify-center p-[2px]">
+                      <div className="w-full h-full flex items-center justify-center relative" style={{ transform: 'scale(1.2)' }}>
+                        <model-viewer
+                          key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
+                          class="w-full h-full"
+                          style={{ 
+                            display: "block",
+                            width: '100%',
+                            height: '100%',
+                            maxWidth: '100%',
+                            maxHeight: '100%'
+                          }}
+                          src={p.model}
+                          alt={p.title}
+                          camera-controls
+                          auto-rotate
+                          interaction-prompt="none"
+                          shadow-intensity="1"
+                          loading="eager"
+                          bounds="tight"
+                          camera-orbit={p.cameraOrbit || "0deg 75deg 85%"}
+                          camera-target={p.cameraTarget || "0m 0m 0m"}
+                          field-of-view={p.fieldOfView || "30deg"}
+                          ar-modes="webxr scene-viewer quick-look"
+                        />
+                      </div>
 
 
 
