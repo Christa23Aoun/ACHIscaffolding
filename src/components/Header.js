@@ -136,6 +136,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
               <li><NavLink to="/about" className={navLinkClass} onClick={closeAllDropdowns}>About us</NavLink></li>
               <li><NavLink to="/services" className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
               <li><NavLink to="/products" className={navLinkClass} onClick={closeAllDropdowns}>Products</NavLink></li>
+              <li><NavLink to="/sectors" className={navLinkClass} onClick={closeAllDropdowns}>Sectors</NavLink></li>
               <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("clientsSection")}>Clients</button></li>
               <li><NavLink to="/projects" className={navLinkClass} onClick={closeAllDropdowns}>Projects</NavLink></li>
               <li><NavLink to="/blog" className={navLinkClass} onClick={closeAllDropdowns}>Blog</NavLink></li>
@@ -176,6 +177,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
         <NavLink to={`/about`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>About us</p></NavLink>
         <NavLink to={`/services`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Services</p></NavLink>
         <NavLink to={`/products`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Products</p></NavLink>
+        <NavLink to={`/sectors`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Sectors</p></NavLink>
         <li className='ltr:ml-[20px] rtl:mr-[20px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("clientsSection")}>Clients</p></li>
         <NavLink to={`/projects`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Projects</p></NavLink>
         <NavLink to={`/blog`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Blog</p></NavLink>

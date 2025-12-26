@@ -21,6 +21,7 @@ import SingleService from './components/services/SingleService'
 import About from './pages/About'
 import Products from './pages/Products'
 import Projects from './pages/Projects'
+import Sectors from './pages/Sectors'
 
 function App() {
   const [showMenu, setshowMenu] = useState(false)
@@ -61,6 +62,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/sectors" element={<Sectors />} />
 
           <Route path="/services" element={<Services showMenu={showMenu} setshowMenu={setshowMenu} userLang={i18n.language} />} />
           <Route path="/services/serviceItem" element={<SingleService />} />
