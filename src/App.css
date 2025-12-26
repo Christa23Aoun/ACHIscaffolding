@@ -357,6 +357,32 @@ html, body {
   }
 }
 
+.callbutton::before, .callbutton::after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  left: 0%;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  animation: callbuttonGlow 2s ease-out infinite;
+}
+
+@keyframes callbuttonGlow {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
 @keyframes glowing {
   0% {
     background-color: #28509E;
