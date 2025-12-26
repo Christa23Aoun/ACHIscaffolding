@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import StatsHighlights from "../components/StatsHighlights";
 
 const About = () => {
   return (
@@ -63,7 +64,7 @@ const About = () => {
         </div>
       </section>
 
-      <section id="about-main" className="about-main bg-white py-[90px]">
+      <section id="about-main" className="about-main bg-white pt-[90px] pb-0">
         <div className="w-[90%] max-w-[980px] mx-auto">
           <div className="about-intro">
             <motion.h1
@@ -165,6 +166,9 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      {/* Moved from Services page: Happy Clients / Years of experience / Awards winning / Consultations */}
+      <StatsHighlights className="py-[90px]" />
     </main>
   );
 };
