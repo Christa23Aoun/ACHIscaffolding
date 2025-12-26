@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/assets/cropped-image-achiscaff-logo-32x32.jpg" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/cropped-image-achiscaff-logo-32x32.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Achi Scaffolding Lebanon | Scaffolding & Shoring Services Since 1993</title>
@@ -32,8 +32,8 @@
     />
     <meta name="twitter:image" content="https://achi-scaffolding.github.io/assets/ArchiScaffoldinglogo.png" />
 
-    <link rel="apple-touch-icon" href="/assets/cropped-image-achiscaff-logo-32x32.jpg" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/assets/cropped-image-achiscaff-logo-32x32.jpg" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -77,9 +77,10 @@
       When a user directly accesses or refreshes a route like /about, GitHub Pages
       looks for /about/index.html which doesn't exist, causing a 404.
       
-      This 404.html file is identical to index.html. When GitHub Pages serves it
-      for any missing route, React Router (BrowserRouter) will read the current
-      URL path from window.location and handle the client-side routing correctly.
+      This 404.html file will be copied from index.html after build (see package.json
+      postbuild script) so it includes the injected script tags. When GitHub Pages
+      serves it for any missing route, React Router (BrowserRouter) will read the
+      current URL path from window.location and handle the client-side routing correctly.
       This allows all routes to work on refresh and direct access.
     -->
   </head>
