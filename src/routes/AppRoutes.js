@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Home from '../pages/Home'
 import { Route, Routes } from "react-router-dom"
-import { useTranslation } from "react-i18next"
+import { useLangRouter } from '../routing/LangRouter'
 
 import 'glider-js/glider.min.css'
 import "slick-carousel/slick/slick.css"
@@ -22,27 +21,17 @@ import Products from '../pages/Products'
 import Projects from '../pages/Projects'
 import Sectors from '../pages/Sectors'
 
-function App() {
-  const [showMenu, setshowMenu] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState('English')
-  const [currentCountry, setCurrentCountry] = useState('Country')
-
-  const { t, i18n } = useTranslation()
-
-  const handleLanguage = (lang) => {
-    i18n.changeLanguage(lang)
-    if (lang === 'en') setCurrentLanguage(t('langDropwn.english'))
-    else if (lang === 'ar') setCurrentLanguage(t('langDropwn.arabic'))
-    else setCurrentLanguage(t('langDropwn.french'))
-  }
-
-  const handleCountry = (country) => {
-    setCurrentCountry(country)
-  }
-
-  useEffect(() => {
-    document.dir = i18n.dir()
-  }, [i18n, i18n.language])
+function AppRoutes({ 
+  showMenu, 
+  setshowMenu, 
+  userLang, 
+  direction, 
+  handleLanguage, 
+  currentLanguage, 
+  handleCountry, 
+  currentCountry 
+}) {
+  const { cleanLocation } = useLangRouter()
 
   return (
     <>
@@ -55,15 +44,15 @@ function App() {
           currentCountry={currentCountry}
         />
 
-        <Routes>
-          <Route path="/" element={<Home showMenu={showMenu} setshowMenu={setshowMenu} direction={i18n.dir()} userLang={i18n.language} />} />
+        <Routes location={cleanLocation}>
+          <Route path="/" element={<Home showMenu={showMenu} setshowMenu={setshowMenu} direction={direction} userLang={userLang} />} />
 
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/sectors" element={<Sectors />} />
 
-          <Route path="/services" element={<Services showMenu={showMenu} setshowMenu={setshowMenu} userLang={i18n.language} />} />
+          <Route path="/services" element={<Services showMenu={showMenu} setshowMenu={setshowMenu} userLang={userLang} />} />
           <Route path="/services/serviceItem" element={<SingleService />} />
 
           <Route path="/gallery" element={<Gallery />} />
@@ -81,4 +70,4 @@ function App() {
   )
 }
 
-export default App
+export default AppRoutes

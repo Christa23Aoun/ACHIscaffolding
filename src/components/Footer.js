@@ -1,15 +1,19 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLangPath } from "../hooks/useLangPath";
+import { stripLangPrefix } from "../utils/langRouting";
 import ImageWebp from "./ImageWebp";
 
 const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === "/";
+  const langPath = useLangPath();
+  const cleanPath = stripLangPrefix(location.pathname);
+  const isHome = cleanPath === "/";
 
   const goToHomeSection = (id) => {
     if (!isHome) {
-      navigate("/");
+      navigate(langPath("/"));
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
@@ -25,7 +29,7 @@ const Footer = () => {
       <div className="max-w-[1250px] mx-auto px-[20px] sm:px-[20px]">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-y-[30px] md:gap-y-[30px] gap-x-0 md:gap-x-[60px] items-start">
           <div className="flex justify-start items-start md:pt-[30px] -ml-0 md:-ml-[60px]">
-            <Link to="/">
+            <Link to={langPath("/")}>
               <ImageWebp
                 srcWebp="/assets/ArchiScaffoldinglogo_lossyalpha.webp"
                 src="/assets/ArchiScaffoldinglogo_lossyalpha.webp"
@@ -39,22 +43,22 @@ const Footer = () => {
             <div className="grid grid-cols-2 md:grid-cols-2 gap-x-[20px] sm:gap-x-[40px] gap-y-[10px] w-full">
               <ul className="space-y-[10px]">
                 <li>
-                  <Link to="/" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/about")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     About us
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/services")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Services
                   </Link>
                 </li>
                 <li>
-                  <Link to="/products" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/products")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Products
                   </Link>
                 </li>
@@ -71,17 +75,17 @@ const Footer = () => {
                   </button>
                 </li>
                 <li>
-                  <Link to="/projects" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/projects")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Projects
                   </Link>
                 </li>
                 <li>
-                  <Link to="/blog" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/blog")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link to="/gallery" className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
+                  <Link to={langPath("/gallery")} className="font-saira text-white/90 text-[18px] sm:text-[20px] hover:text-[#FF8A00] transition duration-200 block py-[4px]">
                     Gallery
                   </Link>
                 </li>
