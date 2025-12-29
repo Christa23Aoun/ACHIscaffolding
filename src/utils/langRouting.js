@@ -22,21 +22,27 @@ export const getCountryPrefix = (country) => {
 
 /**
  * Single source of truth: Get locale prefix from country and/or language
- * Priority: If both country and language point to the same prefix, use that.
+ * Priority: Language takes precedence. If language is English, no prefix is used.
+ * If both country and language point to the same prefix, use that.
  * Otherwise, prioritize language (since it affects content translation).
  * @param {Object} options - { country?: string, language?: string }
- * @returns {string} - Locale prefix: "fr", "lb", or ""
+ * @returns {string} - Locale prefix: "fr", "lb", or "" (empty for English)
  */
 export const getLocalePrefix = ({ country, language }) => {
   const countryPrefix = country ? getCountryPrefix(country) : ''
   const langPrefix = language ? getLangPrefix(language) : ''
+  
+  // English always has no prefix, regardless of country
+  if (language === 'en') {
+    return ''
+  }
   
   // If both exist and match, use that prefix
   if (countryPrefix && langPrefix && countryPrefix === langPrefix) {
     return countryPrefix
   }
   
-  // If only one exists, use that
+  // If only one exists, use that (language takes priority)
   if (langPrefix) return langPrefix
   if (countryPrefix) return countryPrefix
   
@@ -129,5 +135,53 @@ export const prefixToLang = (prefix) => {
   if (prefix === 'fr') return 'fr'
   if (prefix === 'lb') return 'ar'
   return 'en'
+}
+
+/**
+ * Apply locale prefix to current pathname
+ * This is the single source of truth for updating URLs when language or country changes
+ * 
+ * @param {Object} options
+ * @param {string} options.currentPathname - Current pathname (e.g., "/fr/products", "/products")
+ * @param {string} [options.country] - Country name (e.g., "France", "Lebanon")
+ * @param {string} [options.language] - i18n language code (e.g., "en", "fr", "ar")
+ * @param {Function} options.navigate - React Router navigate function
+ * @param {Function} [options.onLanguageChange] - Callback when language should change
+ * @param {Function} [options.onCountryChange] - Callback when country should change
+ * @returns {string} - New pathname with locale prefix
+ */
+export const applyLocalePrefix = ({
+  currentPathname,
+  country,
+  language,
+  navigate,
+  onLanguageChange,
+  onCountryChange
+}) => {
+  // Strip any existing locale prefix from current path
+  const cleanPath = stripLocalePrefix(currentPathname)
+  
+  // Compute the new prefix using single source of truth
+  const newPrefix = getLocalePrefix({ country, language })
+  
+  // Build the new path with the computed prefix
+  const newPath = buildLocalizedPath(newPrefix, cleanPath)
+  
+  // Navigate to the new path
+  if (navigate && newPath !== currentPathname) {
+    navigate(newPath)
+  }
+  
+  // Sync language if provided and different
+  if (language && onLanguageChange) {
+    onLanguageChange(language)
+  }
+  
+  // Sync country if provided and different
+  if (country && onCountryChange) {
+    onCountryChange(country)
+  }
+  
+  return newPath
 }
 

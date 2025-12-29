@@ -5,12 +5,23 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom"
 import { useTranslation } from 'react-i18next'
 import ImageWebp from './ImageWebp'
+import { applyLocalePrefix, getLangFromPath } from '../utils/langRouting'
 
 function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry = "Country" }) {
   const navigate = useNavigate()
   const location = useLocation()
   const isHome = location.pathname === "/"
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  
+  // Get current language from URL to sync with dropdowns
+  const currentLang = getLangFromPath(location.pathname)
+  
+  // Helper to build language-aware paths for NavLinks
+  const langPath = (path) => {
+    const prefix = currentLang === 'fr' ? 'fr' : currentLang === 'ar' ? 'lb' : ''
+    if (!prefix) return path
+    return `/${prefix}${path}`
+  }
 
   const ASSET = process.env.PUBLIC_URL || ""
 
@@ -25,6 +36,53 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
 
   const closeAllDropdowns = () => {
     setshowMenu3(false)
+    setshowCountry(false)
+  }
+
+  // Shared function to apply locale prefix changes (used by both dropdowns)
+  const applyLocaleChange = (newCountry, newLanguage) => {
+    // Determine the final country and language to use
+    const finalCountry = newCountry !== null && newCountry !== undefined ? newCountry : currentCountry
+    const finalLanguage = newLanguage !== null && newLanguage !== undefined ? newLanguage : currentLang
+    
+    // If country changed, try to sync language (France → French, Lebanon → Arabic)
+    let syncedLanguage = finalLanguage
+    if (newCountry) {
+      if (newCountry === 'France' && finalLanguage !== 'fr') {
+        syncedLanguage = 'fr'
+      } else if (newCountry === 'Lebanon' && finalLanguage !== 'ar') {
+        syncedLanguage = 'ar'
+      }
+    }
+    
+    applyLocalePrefix({
+      currentPathname: location.pathname,
+      country: finalCountry,
+      language: syncedLanguage,
+      navigate,
+      onLanguageChange: (lang) => {
+        if (handleLanguage) {
+          handleLanguage(lang)
+          i18n.changeLanguage(lang)
+        }
+      },
+      onCountryChange: (country) => {
+        if (handleCountry) {
+          handleCountry(country)
+        }
+      }
+    })
+  }
+
+  // Handle language change from dropdown
+  const handleLanguageChange = (lang) => {
+    applyLocaleChange(null, lang)
+    setshowMenu3(false)
+  }
+
+  // Handle country change from dropdown
+  const handleCountryChange = (country) => {
+    applyLocaleChange(country, null)
     setshowCountry(false)
   }
 
@@ -101,9 +159,8 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
               <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
               <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showCountry ? 'flex' : 'hidden'} z-[999]`}>
                 <div className='flex flex-col'>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => { if (handleCountry) handleCountry('Lebanon'); setshowCountry(false) }}>Lebanon</p>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { if (handleCountry) handleCountry('Italy'); setshowCountry(false) }}>Italy</p>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { if (handleCountry) handleCountry('France'); setshowCountry(false) }}>France</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => handleCountryChange('Lebanon')}>Lebanon</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => handleCountryChange('France')}>France</p>
                 </div>
               </div>
             </div>
@@ -114,9 +171,9 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
               <ExpandMoreIcon fontSize={'medium'} className='ml-[5px] text-white cursor-pointer' />
               <div className={`absolute right-0 top-[50px] bg-white p-[16px] ${showMenu3 ? 'flex' : 'hidden'} cursor-default z-[999]`}>
                 <div className='flex flex-col ltr:mr-[50px] rtl:ml-[50px]'>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => { handleLanguage('en'); setshowMenu3(false) }}>{t('langDropwn.english')}</p>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { handleLanguage('ar'); setshowMenu3(false) }}>{t('langDropwn.arabic')}</p>
-                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => { handleLanguage('fr'); setshowMenu3(false) }}>{t('langDropwn.french')}</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500' onClick={() => handleLanguageChange('en')}>{t('langDropwn.english')}</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => handleLanguageChange('ar')}>{t('langDropwn.arabic')}</p>
+                  <p className='text-[#00204A] font-saira font-[500] text-[16px] cursor-pointer hover:text-[#FA7800] transition duration-500 pt-[16px]' onClick={() => handleLanguageChange('fr')}>{t('langDropwn.french')}</p>
                 </div>
               </div>
             </div>
@@ -132,15 +189,15 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
         >
           <div className="w-full flex justify-start">
             <ul className={`${isHome ? "flex gap-8 py-[18px] px-[120px]" : "flex gap-8 py-[18px] px-[120px]"}`}>
-              <li><NavLink to="/" className={navLinkClass} onClick={closeAllDropdowns}>Home</NavLink></li>
-              <li><NavLink to="/about" className={navLinkClass} onClick={closeAllDropdowns}>About us</NavLink></li>
-              <li><NavLink to="/services" className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
-              <li><NavLink to="/products" className={navLinkClass} onClick={closeAllDropdowns}>Products</NavLink></li>
-              <li><NavLink to="/sectors" className={navLinkClass} onClick={closeAllDropdowns}>Sectors</NavLink></li>
+              <li><NavLink to={langPath("/")} className={navLinkClass} onClick={closeAllDropdowns}>Home</NavLink></li>
+              <li><NavLink to={langPath("/about")} className={navLinkClass} onClick={closeAllDropdowns}>About us</NavLink></li>
+              <li><NavLink to={langPath("/services")} className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
+              <li><NavLink to={langPath("/products")} className={navLinkClass} onClick={closeAllDropdowns}>Products</NavLink></li>
+              <li><NavLink to={langPath("/sectors")} className={navLinkClass} onClick={closeAllDropdowns}>Sectors</NavLink></li>
               <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("clientsSection")}>Clients</button></li>
-              <li><NavLink to="/projects" className={navLinkClass} onClick={closeAllDropdowns}>Projects</NavLink></li>
-              <li><NavLink to="/blog" className={navLinkClass} onClick={closeAllDropdowns}>Blog</NavLink></li>
-              <li><NavLink to="/gallery" className={navLinkClass} onClick={closeAllDropdowns}>Gallery</NavLink></li>
+              <li><NavLink to={langPath("/projects")} className={navLinkClass} onClick={closeAllDropdowns}>Projects</NavLink></li>
+              <li><NavLink to={langPath("/blog")} className={navLinkClass} onClick={closeAllDropdowns}>Blog</NavLink></li>
+              <li><NavLink to={langPath("/gallery")} className={navLinkClass} onClick={closeAllDropdowns}>Gallery</NavLink></li>
               <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("contactForm")}>Contact us</button></li>
             </ul>
           </div>
@@ -173,15 +230,15 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
           </div>
         </li>
 
-        <NavLink to={`/`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Home</p></NavLink>
-        <NavLink to={`/about`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>About us</p></NavLink>
-        <NavLink to={`/services`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Services</p></NavLink>
-        <NavLink to={`/products`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Products</p></NavLink>
-        <NavLink to={`/sectors`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Sectors</p></NavLink>
+        <NavLink to={langPath("/")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Home</p></NavLink>
+        <NavLink to={langPath("/about")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>About us</p></NavLink>
+        <NavLink to={langPath("/services")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Services</p></NavLink>
+        <NavLink to={langPath("/products")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Products</p></NavLink>
+        <NavLink to={langPath("/sectors")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Sectors</p></NavLink>
         <li className='ltr:ml-[20px] rtl:mr-[20px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("clientsSection")}>Clients</p></li>
-        <NavLink to={`/projects`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Projects</p></NavLink>
-        <NavLink to={`/blog`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Blog</p></NavLink>
-        <NavLink to={`/gallery`} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Gallery</p></NavLink>
+        <NavLink to={langPath("/projects")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Projects</p></NavLink>
+        <NavLink to={langPath("/blog")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Blog</p></NavLink>
+        <NavLink to={langPath("/gallery")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Gallery</p></NavLink>
         <li className='ltr:ml-[20px] rtl:mr-[20px] border-[#FFFFFF] border-solid border-b-[2px] pb-[30px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("contactForm")}>Contact us</p></li>
       </ul>
     </>
