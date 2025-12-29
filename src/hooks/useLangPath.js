@@ -12,3 +12,4 @@ export const useLangPath = () => {
   return (path) => buildPathWithLang(currentLang, path)
 }
 
+
