@@ -13,43 +13,30 @@ const Products = () => {
     }
   }, [])
 
-  // Center models in the view when they load
   useEffect(() => {
     const centerModels = () => {
       const modelViewers = document.querySelectorAll("model-viewer")
       modelViewers.forEach((viewer) => {
         const handleLoad = () => {
           try {
-            // Set camera target to origin (center) to center the model in view
             viewer.cameraTarget = "0m 0m 0m"
-            
-            // Scale down the model using model-viewer's scale attribute
-            // This is the safest way that won't affect canvas sizing
             try {
               viewer.scale = "0.7 0.7 0.7"
             } catch (e) {
-              // If scale attribute doesn't work, try accessing the scene
               if (viewer.model) {
-                // Access through the model property if available
                 const model = viewer.model
                 if (model.scale) {
                   model.scale.set(0.7, 0.7, 0.7)
                 }
               }
             }
-            
-            // Use model-viewer's updateFraming to center and fit the model in view
             if (typeof viewer.updateFraming === "function") {
               viewer.updateFraming()
             }
-          } catch (error) {
-            // Silently fail if API is not available
-          }
+          } catch (error) {}
         }
-        
-        // Add load event listener
+
         if (viewer.loaded) {
-          // Model already loaded, center it now
           setTimeout(handleLoad, 100)
         } else {
           viewer.addEventListener("load", handleLoad, { once: true })
@@ -57,18 +44,14 @@ const Products = () => {
       })
     }
 
-    // Wait for model-viewer custom element to be defined
     const checkInterval = setInterval(() => {
       if (window.customElements?.get("model-viewer")) {
         clearInterval(checkInterval)
-        // Small delay to ensure DOM is ready
         setTimeout(centerModels, 300)
-        // Also run after a longer delay to catch late-loading models
         setTimeout(centerModels, 1000)
       }
     }, 100)
 
-    // Cleanup
     return () => clearInterval(checkInterval)
   }, [])
 
@@ -77,64 +60,52 @@ const Products = () => {
       requestAnimationFrame(() => {
         const modelViewers = document.querySelectorAll("model-viewer")
         modelViewers.forEach((viewer) => {
-          // Get the container div (parent of model-viewer) - this is the article's div
           const container = viewer.parentElement
           if (!container) return
-          
-          // Get the article element to potentially expand the container
+
           const article = container.closest("article")
-          
-          // Get container's exact dimensions - use full bounding box
+
           const containerRect = container.getBoundingClientRect()
           let containerWidth = containerRect.width || container.clientWidth || container.offsetWidth
           let containerHeight = containerRect.height || container.clientHeight || container.offsetHeight
-          
-          // If article exists, use article's full width
+
           if (article) {
             const articleRect = article.getBoundingClientRect()
             const articleWidth = articleRect.width || article.clientWidth || article.offsetWidth
-            // Use article's full width for container
             containerWidth = articleWidth
-            // Force container to full article width
             container.style.width = "100%"
             container.style.maxWidth = "none"
           }
-          
-          // Also ensure container uses full available height
+
           const containerComputedHeight = containerRect.height || container.clientHeight || container.offsetHeight
           if (containerComputedHeight > containerHeight) {
             containerHeight = containerComputedHeight
           }
-          
+
           if (containerWidth > 0 && containerHeight > 0) {
-            // Ensure container fills the full width
             container.style.width = `${containerWidth}px`
             container.style.height = `${containerHeight}px`
             container.style.maxWidth = "none"
             container.style.maxHeight = "none"
-            
-            // Get model-viewer's exact dimensions
+
             const viewerRect = viewer.getBoundingClientRect()
             let viewerWidth = viewerRect.width || viewer.clientWidth || viewer.offsetWidth
             let viewerHeight = viewerRect.height || viewer.clientHeight || viewer.offsetHeight
-            
-            // Update model-viewer to match container exactly
+
             viewer.style.width = `${containerWidth}px`
             viewer.style.height = `${containerHeight}px`
             viewer.style.maxWidth = "none"
             viewer.style.maxHeight = "none"
-            // Recalculate after setting size
+
             viewerWidth = containerWidth
             viewerHeight = containerHeight
-            
+
             const roundedWidth = Math.round(viewerWidth)
             const roundedHeight = Math.round(viewerHeight)
-            
-            // Find and resize the container.userInput element in shadow DOM to match model-viewer exactly
+
             if (viewer.shadowRoot) {
               const containerDiv = viewer.shadowRoot.querySelector("div.container")
               if (containerDiv) {
-                // Match container div to model-viewer's size and position
                 containerDiv.style.width = `${roundedWidth}px`
                 containerDiv.style.height = `${roundedHeight}px`
                 containerDiv.style.maxWidth = "none"
@@ -147,10 +118,9 @@ const Products = () => {
                 containerDiv.style.right = "0"
                 containerDiv.style.bottom = "0"
                 containerDiv.style.boxSizing = "border-box"
-                
+
                 const userInputDiv = containerDiv.querySelector("div.userInput.show") || containerDiv.querySelector("div.userInput")
                 if (userInputDiv) {
-                  // Match userInput div exactly to model-viewer's size and position
                   userInputDiv.style.width = `${roundedWidth}px`
                   userInputDiv.style.height = `${roundedHeight}px`
                   userInputDiv.style.maxWidth = "none"
@@ -164,17 +134,14 @@ const Products = () => {
                   userInputDiv.style.bottom = "0"
                   userInputDiv.style.boxSizing = "border-box"
                   userInputDiv.style.overflow = "visible"
-                  // Ensure it's fully nested and matches model-viewer's location
                   userInputDiv.style.transform = "none"
                   userInputDiv.style.transformOrigin = "top left"
                 }
               }
             }
-            
-            // Try shadow DOM first, then regular DOM for canvas
+
             const canvas = viewer.shadowRoot?.querySelector("canvas") || viewer.querySelector("canvas")
             if (canvas) {
-              // Set canvas dimensions to fill entire container
               canvas.style.width = `${roundedWidth}px`
               canvas.style.height = `${roundedHeight}px`
               canvas.style.maxWidth = "none"
@@ -189,12 +156,10 @@ const Products = () => {
               canvas.style.transform = "none"
               canvas.style.border = "none"
               canvas.style.outline = "none"
-              
-              // Update canvas resolution attributes (important for rendering quality)
+
               canvas.setAttribute("width", roundedWidth.toString())
               canvas.setAttribute("height", roundedHeight.toString())
-              
-              // Also update the canvas element's internal size if needed
+
               if (canvas.width !== roundedWidth) {
                 canvas.width = roundedWidth
               }
@@ -207,14 +172,12 @@ const Products = () => {
       })
     }
 
-    // Initial update with multiple attempts to catch loaded model-viewers
     const timeouts = [
       setTimeout(updateCanvasSizes, 100),
       setTimeout(updateCanvasSizes, 500),
       setTimeout(updateCanvasSizes, 1000),
     ]
 
-    // Update on resize with debounce
     let resizeTimeout
     const handleResize = () => {
       clearTimeout(resizeTimeout)
@@ -222,11 +185,9 @@ const Products = () => {
     }
     window.addEventListener("resize", handleResize)
 
-    // Use ResizeObserver to watch both container and model-viewer size changes
     const resizeObservers = []
     const modelViewers = document.querySelectorAll("model-viewer")
     modelViewers.forEach((viewer) => {
-      // Observe the container div
       const container = viewer.parentElement
       if (container) {
         const containerObserver = new ResizeObserver(() => {
@@ -235,8 +196,7 @@ const Products = () => {
         containerObserver.observe(container)
         resizeObservers.push(containerObserver)
       }
-      
-      // Also observe the model-viewer itself
+
       const viewerObserver = new ResizeObserver(() => {
         updateCanvasSizes()
       })
@@ -244,17 +204,12 @@ const Products = () => {
       resizeObservers.push(viewerObserver)
     })
 
-    // Use MutationObserver to catch when model-viewer loads
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === 1) {
-            // Check if it's a model-viewer or contains one
-            const viewers = node.nodeName === "MODEL-VIEWER" 
-              ? [node] 
-              : node.querySelectorAll?.("model-viewer") || []
+            const viewers = node.nodeName === "MODEL-VIEWER" ? [node] : node.querySelectorAll?.("model-viewer") || []
             viewers.forEach((viewer) => {
-              // Observe the container div
               const container = viewer.parentElement
               if (container) {
                 const containerObserver = new ResizeObserver(() => {
@@ -263,8 +218,7 @@ const Products = () => {
                 containerObserver.observe(container)
                 resizeObservers.push(containerObserver)
               }
-              
-              // Also observe the model-viewer itself
+
               const viewerObserver = new ResizeObserver(() => {
                 updateCanvasSizes()
               })
@@ -347,6 +301,18 @@ const Products = () => {
         fieldOfView: "30deg",
         cameraTarget: "0m 0m 0m",
         specs: ["Flexible angle connections", "Perfect for bracing and ties", "High-strength forged body"],
+        tags: ["Rotate", "Zoom", "Inspect"],
+      },
+      {
+        type: "3d",
+        title: "Stirrup Head 3D Component",
+        desc: "3D model of a stirrup head used for shoring support and formwork applications where stable load transfer and safe positioning are required.",
+        model: "/assets/products/stirrup_head.glb",
+        badge: "3D VIEW",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
+        cameraTarget: "0m 0m 0m",
+        specs: ["Shoring head accessory for props", "Supports beams and formwork elements", "Designed for stable positioning on site"],
         tags: ["Rotate", "Zoom", "Inspect"],
       },
       {
