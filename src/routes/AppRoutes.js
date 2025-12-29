@@ -15,7 +15,7 @@ import ScrollToTop from '../components/ScrollToTop'
 import PageNotFound from '../pages/PageNotFound'
 import Blog from '../pages/Blog'
 import BlogItem from '../pages/BlogItem'
-import Services from '../components/services/ServiceSection'
+import Services from '../pages/Services'
 import SingleService from '../components/services/SingleService'
 
 import About from '../pages/About'

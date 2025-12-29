@@ -194,7 +194,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
               <li><NavLink to={langPath("/services")} className={navLinkClass} onClick={closeAllDropdowns}>Services</NavLink></li>
               <li><NavLink to={langPath("/products")} className={navLinkClass} onClick={closeAllDropdowns}>Products</NavLink></li>
               <li><NavLink to={langPath("/sectors")} className={navLinkClass} onClick={closeAllDropdowns}>Sectors</NavLink></li>
-              <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("clientsSection")}>Clients</button></li>
+              <li><button className="text-white font-saira font-[600] uppercase text-[14px] tracking-wide hover:text-[#FA7800] transition duration-300" onClick={() => goToHomeSection("clients")}>Clients</button></li>
               <li><NavLink to={langPath("/projects")} className={navLinkClass} onClick={closeAllDropdowns}>Projects</NavLink></li>
               <li><NavLink to={langPath("/blog")} className={navLinkClass} onClick={closeAllDropdowns}>Blog</NavLink></li>
               <li><NavLink to={langPath("/gallery")} className={navLinkClass} onClick={closeAllDropdowns}>Gallery</NavLink></li>
@@ -235,7 +235,7 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
         <NavLink to={langPath("/services")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Services</p></NavLink>
         <NavLink to={langPath("/products")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Products</p></NavLink>
         <NavLink to={langPath("/sectors")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Sectors</p></NavLink>
-        <li className='ltr:ml-[20px] rtl:mr-[20px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("clientsSection")}>Clients</p></li>
+        <li className='ltr:ml-[20px] rtl:mr-[20px]'><p className='font-[500] text-[20px] cursor-pointer hover:text-[#FA7800] transition duration-500 font-saira py-5' onClick={() => goToHomeSection("clients")}>Clients</p></li>
         <NavLink to={langPath("/projects")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Projects</p></NavLink>
         <NavLink to={langPath("/blog")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Blog</p></NavLink>
         <NavLink to={langPath("/gallery")} className={mobileNavLinkClass} onClick={() => setOpen(false)}><p className='font-[500] text-[20px] font-saira py-5'>Gallery</p></NavLink>

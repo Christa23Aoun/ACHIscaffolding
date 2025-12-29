@@ -5,7 +5,7 @@ import { sectors } from "../data/sectors";
 const Sectors = () => {
 
   return (
-    <main className="bg-[#f5f7fb] text-[#1b3155]">
+    <main id="sectors" className="bg-[#f5f7fb] text-[#1b3155]">
       {/* Hero Section */}
       <section className="py-[60px]">
         <div className="w-[90%] max-w-[1200px] mx-auto text-center">

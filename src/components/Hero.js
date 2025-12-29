@@ -9,7 +9,7 @@ function SampleNextArrow(props) {
   const { className, style, onClick, assetBase } = props;
   return (
     <div className={className} style={{ ...style }} onClick={onClick}>
-      <img src={`${assetBase}/assets/Button Arrow R.svg`} alt="serviceIcon" />
+      <img src={`${assetBase}/assets/Button Arrow R.svg`} alt="Next slide" />
     </div>
   );
 }
@@ -21,7 +21,7 @@ function SamplePrevArrow(props) {
       <ImageWebp
         srcWebp={`${assetBase}/assets/ButtonArrowL_lossyalpha.webp`}
         src={`${assetBase}/assets/ButtonArrowL_lossyalpha.webp`}
-        alt="serviceIcon"
+        alt="Previous slide"
       />
     </div>
   );
@@ -71,9 +71,9 @@ const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
             viewport={{ once: true }}
             className={panelSlide1}
           >
-            <h1 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
+            <h2 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
               {t("banner1.title")}
-            </h1>
+            </h2>
 
             <p className="pr-[10px] text-[15px] 2xl:text-[20px] xl:text-[17px] lg:text-[17px] md:text-[15px] sm:text-[15px] w-fit xl:leading-[32px] lg:leading-[32px] leading-[24px] font-[400] text-white font-saira mt-[15px] sm:mt-[20px] md:mt-[30px] mb-[30px]">
               {t("banner1.subtitle")}
@@ -101,9 +101,9 @@ const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
             viewport={{ once: true }}
             className={panelSlide2}
           >
-            <h1 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
+            <h2 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
               {t("banner2.title")}
-            </h1>
+            </h2>
 
             <p className="pr-[10px] text-[15px] 2xl:text-[20px] xl:text-[17px] lg:text-[17px] md:text-[15px] sm:text-[15px] w-fit xl:leading-[32px] lg:leading-[32px] leading-[24px] font-[400] text-white font-saira mt-[15px] sm:mt-[20px] md:mt-[30px] mb-[30px]">
               {t("banner2.subtitle")}
@@ -131,9 +131,9 @@ const Hero = ({ showMenu, setshowMenu, direction, userLang }) => {
             viewport={{ once: true }}
             className={panelSlide3}
           >
-            <h1 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
+            <h2 className="font-[Rajdhani] uppercase text-white text-[42px] font-[700] leading-[1.15] mb-[12px]">
               {t("banner3.title")}
-            </h1>
+            </h2>
 
             <p className="pr-[10px] text-[15px] 2xl:text-[20px] xl:text-[17px] lg:text-[17px] md:text-[15px] sm:text-[15px] w-fit xl:leading-[32px] lg:leading-[32px] leading-[24px] font-[400] text-white font-saira mt-[15px] sm:mt-[20px] md:mt-[30px] mb-[30px]">
               {t("banner3.subtitle")}

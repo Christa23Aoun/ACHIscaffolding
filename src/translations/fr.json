@@ -57,12 +57,14 @@
         "title2" : "Initiative des professionnels",
         "title2br" : "Initiative des\n professionnels"
     },
-    "aboutUs" : {
-        "titleMultiLine" : "30+ ANS\n D'EXPÉRIENCE EN\n ÉCHAFAUDAGE",
-        "title" : "30+ ANS D'EXPÉRIENCE EN ÉCHAFAUDAGE",
-        "description" : "Depuis sa fondation en 1993 par l'ingénieur Barbar Achi, Achi Échafaudage est devenu un fournisseur de renom spécialisé dans les services d'échafaudage et de coffrage au Liban. Notre équipe professionnelle est fière de construire une solide réputation basée sur la confiance, en fournissant des structures d'échafaudage fiables et de haute qualité pour divers projets, tels que les centres commerciaux, les tours, les immeubles résidentiels, et les universités.",
-        "additionalText" : "Contactez-nous ou envoyez-nous votre demande via WhatsApp pour une réponse rapide."
+    "aboutUs": {
+        "titleMultiLine": "30+ ANS\nD'EXPÉRIENCE EN\nÉCHAFAUDAGE",
+        "title": "30+ ANS D'EXPÉRIENCE EN ÉCHAFAUDAGE",
+        "description": "Depuis sa fondation en 1993 par l'ingénieur Barbar Achi, Achi Échafaudage est devenu un fournisseur de renom spécialisé dans les services d'échafaudage et de coffrage au Liban. Notre équipe professionnelle est fière de construire une solide réputation basée sur la confiance, en fournissant des structures d'échafaudage fiables et de haute qualité pour divers projets, tels que les centres commerciaux, les tours, les immeubles résidentiels et les universités.",
+        "additionalText": "Contactez-nous ou envoyez-nous votre demande via WhatsApp pour une réponse rapide.",
+        "button": "En savoir plus sur nous"
     },
+
     "clients" : {
         "title" : "Nos clients"
     },

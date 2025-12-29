@@ -1,71 +1,74 @@
-import React from "react";
-import { motion } from "framer-motion";
-import Slider from "react-slick";
-import { useTranslation } from "react-i18next";
-import ImageWebp from "./ImageWebp";
+import React, { useMemo } from "react"
+import { motion } from "framer-motion"
+import Slider from "react-slick"
+import { useTranslation } from "react-i18next"
+import ImageWebp from "./ImageWebp"
 
 function SampleNextArrow(props) {
-  const { className, style, onClick, assetBase } = props;
+  const { className, style, onClick, assetBase } = props
   return (
     <button
       type="button"
-      aria-label="Next"
+      aria-label="Next client logos"
       onClick={onClick}
       className={`${className} clients-arrow clients-next`}
       style={{ ...style }}
     >
-      <img src={`${assetBase}/assets/clients arrow right.svg`} alt="arrow right" />
+      <img src={`${assetBase}/assets/clients arrow right.svg`} alt="" aria-hidden="true" />
     </button>
-  );
+  )
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick, assetBase } = props;
+  const { className, style, onClick, assetBase } = props
   return (
     <button
       type="button"
-      aria-label="Previous"
+      aria-label="Previous client logos"
       onClick={onClick}
       className={`${className} clients-arrow clients-prev`}
       style={{ ...style }}
     >
-      <img src={`${assetBase}/assets/clients arrow left.svg`} alt="arrow left" />
+      <img src={`${assetBase}/assets/clients arrow left.svg`} alt="" aria-hidden="true" />
     </button>
-  );
+  )
 }
 
 const Clients = ({ direction }) => {
-  const { t } = useTranslation();
-  const ASSET = process.env.PUBLIC_URL || "";
+  const { t } = useTranslation()
+  const ASSET = process.env.PUBLIC_URL || ""
 
-  const logos = [
-    "abc.png",
-    "aishti.webp",
-    "algeco.webp",
-    "ambassade.png",
-    "aub.png",
-    "bankaudi.png",
-    "bloc.png",
-    "chaddad.webp",
-    "croix.webp",
-    "damac.png",
-    "dos-logo-light.webp",
-    "general.webp",
-    "hicon.png",
-    "imar.png",
-    "jesh.webp",
-    "ka.webp",
-    "kbuild.png",
-    "kfoury.webp",
-    "mac.webp",
-    "Man.webp",
-    "modec.png",
-    "parissis.webp",
-    "solidere.png",
-    "spinneys.webp",
-    "vaccum.webp",
-    "zerock.gif",
-  ];
+  const logos = useMemo(
+    () => [
+      { file: "abc.png", name: "ABC" },
+      { file: "aishti.webp", name: "Aishti" },
+      { file: "algeco.webp", name: "Algeco" },
+      { file: "ambassade.png", name: "Ambassade" },
+      { file: "aub.png", name: "American University of Beirut (AUB)" },
+      { file: "bankaudi.png", name: "Bank Audi" },
+      { file: "bloc.png", name: "Bloc" },
+      { file: "chaddad.webp", name: "Chaddad" },
+      { file: "croix.webp", name: "Croix" },
+      { file: "damac.png", name: "Damac" },
+      { file: "dos-logo-light.webp", name: "DOS" },
+      { file: "general.webp", name: "General" },
+      { file: "hicon.png", name: "Hicon" },
+      { file: "imar.png", name: "Imar" },
+      { file: "jesh.webp", name: "Jesh" },
+      { file: "ka.webp", name: "KA" },
+      { file: "kbuild.png", name: "KBuild" },
+      { file: "kfoury.webp", name: "Kfoury" },
+      { file: "mac.webp", name: "MAC" },
+      { file: "Man.webp", name: "MAN" },
+      { file: "modec.png", name: "Modec" },
+      { file: "parissis.webp", name: "Parissis" },
+      { file: "solidere.png", name: "Solidere" },
+      { file: "spinneys.webp", name: "Spinneys" },
+      { file: "vaccum.webp", name: "Vaccum" },
+      { file: "zerock.gif", name: "Zerock" }
+    ],
+    []
+  )
 
   const settings = {
     dots: false,
@@ -90,59 +93,74 @@ const Clients = ({ direction }) => {
           slidesToScroll: 1,
           centerMode: true,
           centerPadding: "0px",
-          arrows: true,
-        },
+          arrows: true
+        }
       },
       { breakpoint: 1000, settings: { slidesToShow: 3, slidesToScroll: 1 } },
-      { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1 } },
-    ],
-  };
+      { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1 } }
+    ]
+  }
 
   return (
-    <div id="clientsSection" className="text-center pb-[100px] pt-[100px]">
-      <motion.h1
+    <section
+      id="clients"
+      className="text-center pb-[100px] pt-[100px]"
+      aria-labelledby="home-clients-title"
+    >
+      <motion.h2
+        id="home-clients-title"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
-        className="font-[Rajdhani] text-[42px] font-[700] uppercase mb-[40px] leading-[1.15] text-[#003A80] text-center"
+        className="font-[Rajdhani] text-[42px] font-[700] uppercase mb-[14px] leading-[1.15] text-[#003A80] text-center"
       >
         {t("clients.title")}
-      </motion.h1>
+      </motion.h2>
 
-      <div className="relative max-w-[1250px] mx-auto px-[40px] md:px-[20px]">
+      <p className="font-saira text-[15px] md:text-[16px] text-[#003A80] opacity-90 max-w-[900px] mx-auto px-[20px] mb-[40px]">
+        ACHI Scaffolding supports contractors, developers, and engineers with execution-ready access systems and
+        scaffolding solutions across construction and industrial projects.
+      </p>
+
+      <div className="relative max-w-[1250px] mx-auto px-[40px] md:px-[20px]" aria-label="Client logos carousel">
         <Slider {...settings}>
-          {logos.map((file, idx) => {
-            const src = `${ASSET}/assets/clients/${file}`;
-            const isGif = file.toLowerCase().endsWith(".gif");
+          {logos.map((item, idx) => {
+            const src = `${ASSET}/assets/clients/${item.file}`
+            const isGif = item.file.toLowerCase().endsWith(".gif")
+            const altText = `${item.name} logo`
 
             return (
-              <div key={idx}>
+              <div key={`${item.file}-${idx}`}>
                 <div className="flex items-center justify-center w-full">
                   <div className="w-full max-w-[220px] h-[120px] flex items-center justify-center mx-auto">
                     {isGif ? (
                       <img
                         src={src}
-                        alt="company logo"
+                        alt={altText}
                         className="max-h-[110px] max-w-[200px] w-auto h-auto object-contain"
+                        loading="lazy"
+                        decoding="async"
                       />
                     ) : (
                       <ImageWebp
                         srcWebp={src}
                         src={src}
-                        alt="company logo"
+                        alt={altText}
                         className="max-h-[110px] max-w-[200px] w-auto h-auto object-contain"
+                        loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
         </Slider>
 
         <style>{`
-          #clients .slick-prev, 
+          #clients .slick-prev,
           #clients .slick-next {
             width: 44px !important;
             height: 44px !important;
@@ -164,19 +182,17 @@ const Clients = ({ direction }) => {
             display: block !important;
           }
 
-          /* keep desktop arrows visible & aligned */
           #clients .slick-prev { left: 10px !important; }
           #clients .slick-next { right: 10px !important; }
 
-          /* mobile: ensure arrows fully visible (no clipping) */
           @media (max-width: 767px) {
             #clients .slick-prev { left: -8px !important; }
             #clients .slick-next { right: -8px !important; }
           }
         `}</style>
       </div>
-    </div>
-  );
-};
+    </section>
+  )
+}
 
-export default Clients;
+export default Clients
