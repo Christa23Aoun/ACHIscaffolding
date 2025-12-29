@@ -27,11 +27,13 @@ const WhyChoseUs = ({ direction }) => {
   }
 
   return (
-    <div
+    <section
       id="WhychoseUs"
+      aria-labelledby="whychoseus-title"
       className="py-[60px] mt-[80px] bg-bgwhychose bg-cover bg-center shadow-choseBg"
     >
-      <motion.h1
+      <motion.h2
+        id="whychoseus-title"
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
@@ -47,11 +49,20 @@ const WhyChoseUs = ({ direction }) => {
         "
       >
         {t('whychoseus.sectionTitle')}
-      </motion.h1>
+      </motion.h2>
+
+      <p className="sr-only">
+        ACHI Scaffolding delivers industrial and construction scaffolding systems and access solutions for construction, restoration, and industrial projects, including shoring and propping systems.
+      </p>
 
       <Slider {...settings}>
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
-          <ImageWebp srcWebp="/assets/shield(1)1_lossyalpha.webp" src="/assets/shield(1)1_lossyalpha.webp" alt="Expertise" className="mb-[20px] w-[60px]" />
+          <ImageWebp
+            srcWebp="/assets/shield(1)1_lossyalpha.webp"
+            src="/assets/shield(1)1_lossyalpha.webp"
+            alt="Safety-driven scaffolding systems aligned with site constraints"
+            className="mb-[20px] w-[60px]"
+          />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px]">
             {t('whychoseus.firstCardtitle')}
           </h3>
@@ -61,7 +72,12 @@ const WhyChoseUs = ({ direction }) => {
         </div>
 
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
-          <ImageWebp srcWebp="/assets/support1_lossyalpha.webp" src="/assets/support1_lossyalpha.webp" alt="Support" className="mb-[20px] w-[60px]" />
+          <ImageWebp
+            srcWebp="/assets/support1_lossyalpha.webp"
+            src="/assets/support1_lossyalpha.webp"
+            alt="Reliable scaffolding support and execution for time-sensitive projects"
+            className="mb-[20px] w-[60px]"
+          />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px]">
             {t('whychoseus.secondCardtitle')}
           </h3>
@@ -71,7 +87,12 @@ const WhyChoseUs = ({ direction }) => {
         </div>
 
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
-          <ImageWebp srcWebp="/assets/technical-support1_lossyalpha.webp" src="/assets/technical-support1_lossyalpha.webp" alt="Technical" className="mb-[20px] w-[60px]" />
+          <ImageWebp
+            srcWebp="/assets/technical-support1_lossyalpha.webp"
+            src="/assets/technical-support1_lossyalpha.webp"
+            alt="Technical guidance and clear communication with contractors and engineers"
+            className="mb-[20px] w-[60px]"
+          />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px]">
             {t('whychoseus.thirdCardTitle')}
           </h3>
@@ -81,7 +102,12 @@ const WhyChoseUs = ({ direction }) => {
         </div>
 
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
-          <ImageWebp srcWebp="/assets/inventory1_lossyalpha.webp" src="/assets/inventory1_lossyalpha.webp" alt="Inventory" className="mb-[20px] w-[60px]" />
+          <ImageWebp
+            srcWebp="/assets/inventory1_lossyalpha.webp"
+            src="/assets/inventory1_lossyalpha.webp"
+            alt="Execution-ready scaffolding inventory and modular equipment availability"
+            className="mb-[20px] w-[60px]"
+          />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px]">
             {t('whychoseus.fourthCardTitle')}
           </h3>
@@ -91,7 +117,12 @@ const WhyChoseUs = ({ direction }) => {
         </div>
 
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
-          <ImageWebp srcWebp="/assets/design-team1.png" src="/assets/design-team1.png" alt="Engineering" className="mb-[20px] w-[60px]" />
+          <ImageWebp
+            srcWebp="/assets/design-team1.png"
+            src="/assets/design-team1.png"
+            alt="Operational experience and engineering support for complex scaffolding projects"
+            className="mb-[20px] w-[60px]"
+          />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px]">
             {t('whychoseus.fifthCardTitle')}
           </h3>
@@ -100,12 +131,11 @@ const WhyChoseUs = ({ direction }) => {
           </p>
         </div>
 
-        {/* ✅ NEW WHY US CARDS — ICON + TITLE CENTERED, P LEFT */}
         <div className="flex flex-col items-center bg-[#00204a7a] p-[30px] rounded-[20px] h-full">
           <ImageWebp
             srcWebp="/assets/services/hard-hat.png"
             src="/assets/services/hard-hat.png"
-            alt="Safety focused scaffolding team"
+            alt="Safety focused scaffolding team delivering compliant access systems"
             className="mb-[20px] w-[60px] brightness-0 invert"
           />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px] text-center">
@@ -120,7 +150,7 @@ const WhyChoseUs = ({ direction }) => {
           <ImageWebp
             srcWebp="/assets/services/lightbulb.png"
             src="/assets/services/lightbulb.png"
-            alt="Innovative scaffolding solutions"
+            alt="Innovative scaffolding solutions designed for real site conditions"
             className="mb-[20px] w-[60px] brightness-0 invert"
           />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px] text-center">
@@ -135,7 +165,7 @@ const WhyChoseUs = ({ direction }) => {
           <ImageWebp
             srcWebp="/assets/services/codesandbox.png"
             src="/assets/services/codesandbox.png"
-            alt="Quality in scaffolding execution"
+            alt="Quality in scaffolding execution through precision and experience"
             className="mb-[20px] w-[60px] brightness-0 invert"
           />
           <h3 className="font-saira font-[700] text-[18px] text-white mb-[12px] text-center">
@@ -146,7 +176,7 @@ const WhyChoseUs = ({ direction }) => {
           </p>
         </div>
       </Slider>
-    </div>
+    </section>
   )
 }
 

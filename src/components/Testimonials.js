@@ -263,11 +263,17 @@ Highly recommended.`,
     ],
   };
 
+  const titleId = "testimonials-title";
+  const descId = "testimonials-desc";
+  const dialogTitleId = "testimonial-dialog-title";
+  const dialogDescId = "testimonial-dialog-desc";
+
   return (
     <>
-      <section id="testimonials" className="mt-[50px] pb-[40px]">
+      <section id="testimonials" className="mt-[50px] pb-[40px]" aria-labelledby={titleId}>
         <div className="max-w-[1450px] mx-auto px-[10px]">
           <motion.h2
+            id={titleId}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -277,163 +283,183 @@ Highly recommended.`,
             {t("testimonials.title")}
           </motion.h2>
 
+          <p id={descId} className="sr-only">
+            Client testimonials and reviews about ACHI Scaffolding services, project execution, safety standards, and on-site professionalism.
+          </p>
+
           <div className="relative mt-[28px]">
-          <Slider ref={sliderRef} {...settings}>
-  {testimonials.map((r) => (
-    <div key={r.key}>
-      <article className="px-[10px]">
-        <div className="bg-white relative rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[26px] pt-[18px] pb-[88px] h-[520px] flex flex-col items-center text-center overflow-hidden">
-          <div className="hidden md:block text-[#FFB000] text-[18px] tracking-[3px] mb-[10px]">
-            {"★".repeat(r.rating)}
-          </div>
+            <Slider ref={sliderRef} {...settings} aria-describedby={descId}>
+              {testimonials.map((r) => (
+                <div key={r.key}>
+                  <article className="px-[10px]">
+                    <div className="bg-white relative rounded-[22px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] px-[26px] pt-[18px] pb-[88px] h-[520px] flex flex-col items-center text-center overflow-hidden">
+                      <div className="hidden md:block text-[#FFB000] text-[18px] tracking-[3px] mb-[10px]" aria-label={`${r.rating} out of 5 stars`}>
+                        {"★".repeat(r.rating)}
+                      </div>
 
-          <div className="hidden md:block w-full mb-[10px]">
-            <p
-              className="font-saira text-[16px] font-[400] text-[#64748b] leading-[26px] w-full"
-              style={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 4,
-                overflow: "hidden",
-                whiteSpace: "pre-line",
-              }}
-            >
-              {r.text}
-            </p>
-          </div>
+                      <div className="hidden md:block w-full mb-[10px]">
+                        <p
+                          className="font-saira text-[16px] font-[400] text-[#64748b] leading-[26px] w-full"
+                          style={{
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 4,
+                            overflow: "hidden",
+                            whiteSpace: "pre-line",
+                          }}
+                        >
+                          {r.text}
+                        </p>
+                      </div>
 
-          <div className="hidden md:flex w-full justify-center mt-auto">
-            <div className="group relative w-[310px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
-              <img
-                src={r.thumb}
-                alt={`Project photo by ${r.name}`}
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover transition duration-300 group-hover:scale-[1.04]"
-              />
+                      <div className="hidden md:flex w-full justify-center mt-auto">
+                        <div className="group relative w-[310px] aspect-square rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
+                          <img
+                            src={r.thumb}
+                            alt={`Scaffolding project execution referenced by ${r.name}`}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover transition duration-300 group-hover:scale-[1.04]"
+                          />
 
-              <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/35" />
+                          <div className="absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/35" />
 
-              <button
-                type="button"
-                onClick={() => openModal(r.key)}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[18px] py-[10px] rounded-[12px]"
-              >
-                View More
-              </button>
-            </div>
-          </div>
+                          <button
+                            type="button"
+                            onClick={() => openModal(r.key)}
+                            aria-haspopup="dialog"
+                            aria-controls="testimonial-modal"
+                            aria-label={`View more review photos and full testimonial from ${r.name}`}
+                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-300 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[18px] py-[10px] rounded-[12px]"
+                          >
+                            View More
+                          </button>
+                        </div>
+                      </div>
 
-          <div className="md:hidden w-full flex flex-col items-center text-center pt-[6px]">
-            <div className="w-full flex justify-center">
-              <div className="group relative w-[250px] h-[250px] rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
-                <img
-                  src={r.thumb}
-                  alt={`Project photo by ${r.name}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/10" />
-                <button
-                  type="button"
-                  onClick={() => openModal(r.key)}
-                  className="absolute left-1/2 bottom-[12px] -translate-x-1/2 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[16px] py-[9px] rounded-[12px]"
-                >
-                  View More
-                </button>
-              </div>
-            </div>
+                      <div className="md:hidden w-full flex flex-col items-center text-center pt-[6px]">
+                        <div className="w-full flex justify-center">
+                          <div className="group relative w-[250px] h-[250px] rounded-[18px] overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)]">
+                            <img
+                              src={r.thumb}
+                              alt={`Scaffolding project execution referenced by ${r.name}`}
+                              loading="lazy"
+                              decoding="async"
+                              className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/10" />
+                            <button
+                              type="button"
+                              onClick={() => openModal(r.key)}
+                              aria-haspopup="dialog"
+                              aria-controls="testimonial-modal"
+                              aria-label={`View more review photos and full testimonial from ${r.name}`}
+                              className="absolute left-1/2 bottom-[12px] -translate-x-1/2 bg-white text-[#214f9b] font-saira font-[700] uppercase text-[12px] px-[16px] py-[9px] rounded-[12px]"
+                            >
+                              View More
+                            </button>
+                          </div>
+                        </div>
 
-            <div className="text-[#FFB000] text-[18px] tracking-[3px] mt-[14px]">
-              {"★".repeat(r.rating)}
-            </div>
+                        <div className="text-[#FFB000] text-[18px] tracking-[3px] mt-[14px]" aria-label={`${r.rating} out of 5 stars`}>
+                          {"★".repeat(r.rating)}
+                        </div>
 
-            <p className="font-saira text-[15px] font-[400] text-[#64748b] leading-[24px] mt-[10px] px-[4px]">
-              {previewText(r.text)}
-            </p>
-          </div>
+                        <p className="font-saira text-[15px] font-[400] text-[#64748b] leading-[24px] mt-[10px] px-[4px]">
+                          {previewText(r.text)}
+                        </p>
+                      </div>
 
-          <div className="md:hidden absolute left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-[#e2e8f0] py-[14px] px-[16px]">
-            <h3 className="text-[26px] text-[#214f9b] text-center font-saira font-[800] leading-[1.1]">
-              {r.name}
-            </h3>
-          </div>
-        </div>
+                      <div className="md:hidden absolute left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-[#e2e8f0] py-[14px] px-[16px]">
+                        <h3 className="text-[26px] text-[#214f9b] text-center font-saira font-[800] leading-[1.1]">
+                          {r.name}
+                        </h3>
+                      </div>
+                    </div>
 
-        <h3 className="hidden md:block mt-[14px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
-          {r.name}
-        </h3>
-      </article>
-    </div>
-  ))}
-</Slider>
+                    <h3 className="hidden md:block mt-[14px] text-[26px] text-[#214f9b] text-center font-saira font-[700]">
+                      {r.name}
+                    </h3>
+                  </article>
+                </div>
+              ))}
+            </Slider>
 
-
-            <ul className="flex justify-center gap-[10px] mt-[22px]">
-              {testimonials.map((_, idx) => (
-                <li
-                  key={idx}
-                  className={`w-[10px] h-[10px] rounded-full cursor-pointer transition duration-300 ${
-                    idx === activeIndex ? "bg-[#f59e0b]" : "bg-[#cbd5e1]"
-                  }`}
-                  onClick={() => sliderRef.current?.slickGoTo(idx)}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
+            <ul className="flex justify-center gap-[10px] mt-[22px]" aria-label="Testimonials navigation">
+              {testimonials.map((r, idx) => (
+                <li key={r.key || idx} className="list-none">
+                  <button
+                    type="button"
+                    className={`w-[10px] h-[10px] rounded-full cursor-pointer transition duration-300 ${
+                      idx === activeIndex ? "bg-[#f59e0b]" : "bg-[#cbd5e1]"
+                    }`}
+                    onClick={() => sliderRef.current?.slickGoTo(idx)}
+                    aria-label={`Go to testimonial from ${r.name}`}
+                  />
+                </li>
               ))}
             </ul>
           </div>
         </div>
       </section>
 
-   {modalOpen && activeReview && (
-  <div
-    className="fixed inset-0 bg-black/70 z-[999999] flex items-center justify-center px-[16px] py-[16px]"
-    onClick={closeModal}
-  >
-    <div
-      className="bg-white w-full max-w-[980px] rounded-[18px] relative overflow-hidden"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        type="button"
-        aria-label="Close"
-        onClick={closeModal}
-        className="fixed md:absolute top-[14px] right-[14px] z-[1000000] w-[42px] h-[42px] rounded-full bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)] text-[#0f172a] text-[26px] leading-[26px] flex items-center justify-center hover:bg-[#f1f5f9] transition"
-      >
-        &times;
-      </button>
+      {modalOpen && activeReview && (
+        <div
+          id="testimonial-modal"
+          className="fixed inset-0 bg-black/70 z-[999999] flex items-center justify-center px-[16px] py-[16px]"
+          onClick={closeModal}
+          role="presentation"
+        >
+          <div
+            className="bg-white w-full max-w-[980px] rounded-[18px] relative overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={dialogTitleId}
+            aria-describedby={dialogDescId}
+          >
+            <button
+              type="button"
+              aria-label="Close testimonial dialog"
+              onClick={closeModal}
+              className="fixed md:absolute top-[14px] right-[14px] z-[1000000] w-[42px] h-[42px] rounded-full bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)] text-[#0f172a] text-[26px] leading-[26px] flex items-center justify-center hover:bg-[#f1f5f9] transition"
+            >
+              &times;
+            </button>
 
-      <div className="max-h-[85vh] overflow-y-auto p-[22px] md:p-[30px]">
-        <h3 className="font-[Rajdhani] text-[28px] font-[700] uppercase text-[#003A80] mb-[8px] pr-[60px]">
-          {activeReview.name}
-        </h3>
+            <div className="max-h-[85vh] overflow-y-auto p-[22px] md:p-[30px]">
+              <h3 id={dialogTitleId} className="font-[Rajdhani] text-[28px] font-[700] uppercase text-[#003A80] mb-[8px] pr-[60px]">
+                {activeReview.name}
+              </h3>
 
-        <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]">
-          {"★".repeat(activeReview.rating)}
+              <p id={dialogDescId} className="sr-only">
+                Full testimonial text and review images for {activeReview.name}.
+              </p>
+
+              <div className="text-[#FFB000] text-[18px] tracking-[3px] mb-[14px]" aria-label={`${activeReview.rating} out of 5 stars`}>
+                {"★".repeat(activeReview.rating)}
+              </div>
+
+              <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px] whitespace-pre-line">
+                {activeReview.text}
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-[12px]">
+                {activeReview.images.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`Scaffolding project image referenced in testimonial by ${activeReview.name} (${i + 1} of ${activeReview.images.length})`}
+                    className="w-full h-[190px] rounded-[14px] object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-
-        <p className="font-saira text-[#334155] text-[15px] leading-[26px] mb-[18px] whitespace-pre-line">
-          {activeReview.text}
-        </p>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-[12px]">
-          {activeReview.images.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt={`Project photo by ${activeReview.name}`}
-              className="w-full h-[190px] rounded-[14px] object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </>
   );
 };
