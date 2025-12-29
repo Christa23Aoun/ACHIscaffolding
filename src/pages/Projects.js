@@ -1,6 +1,7 @@
 // src/pages/Projects.js
 import React, { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
+import SEO from "../components/SEO"
 
 const MODAL_GALLERY_STYLE = { columnCount: 3, columnGap: 16 }
 
@@ -232,6 +233,11 @@ const Projects = () => {
 
   return (
     <main className="bg-[#f5f7fb] text-[#1b3155]">
+      <SEO
+        title="Projects | Our Work Portfolio | ACHI Scaffolding"
+        description="Explore ACHI Scaffolding's portfolio of successful scaffolding and shoring projects across Lebanon. Construction, renovation, and industrial projects."
+        canonical="https://achi-scaffolding.github.io/projects"
+      />
     <section
   className="relative bg-no-repeat bg-cover bg-center"
   style={heroStyle}

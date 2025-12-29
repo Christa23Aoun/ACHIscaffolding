@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import SEO from "../components/SEO";
 
 const PER_PAGE = 39;
 
@@ -253,6 +254,12 @@ const Gallery = () => {
   };
 
   return (
+    <>
+      <SEO
+        title="Gallery | Project Photos & Portfolio | ACHI Scaffolding"
+        description="Browse our gallery of scaffolding and shoring projects across Lebanon. See our work in construction, renovation, and industrial projects."
+        canonical="https://achi-scaffolding.github.io/gallery"
+      />
     <div className="gallery-page" id="gallery">
       <style>{`
         .gallery-page { background-color: var(--bg-odd); min-height: 100vh; }
@@ -502,6 +509,7 @@ const Gallery = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

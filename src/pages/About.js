@@ -2,10 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import StatsHighlights from "../components/StatsHighlights";
+import SEO from "../components/SEO";
 
 const About = () => {
   return (
     <main className="about-page">
+      <SEO
+        title="About Us | ACHI Scaffolding"
+        description="Learn about ACHI Scaffolding, Lebanon's trusted scaffolding and shoring solutions provider since 1993. Expert team, quality equipment, and professional service."
+        canonical="https://achi-scaffolding.github.io/about"
+      />
       <section className="home-about w-full p-0 m-0">
         <div className="about-layout grid grid-cols-1 lg:grid-cols-2 items-stretch w-full lg:h-[520px]">
           <div

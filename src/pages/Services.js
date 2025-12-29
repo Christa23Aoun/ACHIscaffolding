@@ -1,10 +1,16 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import ServicesPageAllServices from '../components/services/ServicesPageAllServices';
+import SEO from '../components/SEO';
 
 const Services = () => {
   return (
     <div id='ServicesPage'>
+      <SEO
+        title="Services | Scaffolding & Shoring Solutions | ACHI"
+        description="ACHI Scaffolding offers comprehensive scaffolding, shoring, and access system services for construction, renovation, and industrial projects across Lebanon."
+        canonical="https://achi-scaffolding.github.io/services"
+      />
       <section className="relative bg-servicePageBanner bg-no-repeat bg-cover bg-center pt-[110px] pb-[200px] md:pt-[130px] md:pb-[240px]">
         <div className="absolute inset-0 bg-black/40"></div>
 

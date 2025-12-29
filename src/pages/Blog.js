@@ -3,6 +3,7 @@ import React, { useMemo } from "react"
 import { motion } from "framer-motion"
 import ImageWebp from "../components/ImageWebp"
 import { Link } from "react-router-dom"
+import SEO from "../components/SEO"
 
 const Blog = () => {
   const base = process.env.PUBLIC_URL || ""
@@ -56,6 +57,11 @@ const Blog = () => {
 
   return (
     <div className="blog-page">
+      <SEO
+        title="Blog | Scaffolding News & Insights | ACHI"
+        description="Read the latest news, insights, and updates about scaffolding, construction, and shoring solutions from ACHI Scaffolding."
+        canonical="https://achi-scaffolding.github.io/blog"
+      />
       <section className="blog-header-title mt-[30px]">
         <motion.h1
           initial={{ opacity: 0, scale: 0.8 }}

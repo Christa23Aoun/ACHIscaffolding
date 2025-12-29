@@ -1,5 +1,6 @@
 // src/pages/Products.js
 import React, { useEffect, useMemo } from "react"
+import SEO from "../components/SEO"
 
 const Products = () => {
   useEffect(() => {
@@ -363,6 +364,11 @@ const Products = () => {
 
   return (
     <main className="bg-[#f5f7fb] text-[#1b3155]">
+      <SEO
+        title="Products | Scaffolding Equipment & Components | ACHI"
+        description="Browse ACHI Scaffolding's comprehensive range of scaffolding equipment, components, and accessories. H frames, couplers, safety equipment, and more."
+        canonical="https://achi-scaffolding.github.io/products"
+      />
       <style>{`
         model-viewer {
           width: 100% !important;

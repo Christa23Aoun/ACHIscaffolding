@@ -1,11 +1,52 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ImageWebp from "../components/ImageWebp";
+import SEO from "../components/SEO";
 
 const BlogItem = () => {
+  const location = useLocation();
+  const postId = location.pathname.replace('/blog-post-', '');
+  
+  // Determine post details based on route
+  const getPostMeta = () => {
+    switch(postId) {
+      case '1':
+        return {
+          title: "The Evolution of Scaffolding in Lebanon: A Historical Perspective | ACHI Blog",
+          description: "Explore the history and evolution of scaffolding practices in Lebanon, from traditional methods to modern safety standards.",
+          canonical: "https://achi-scaffolding.github.io/blog-post-1"
+        };
+      case '2':
+        return {
+          title: "Safety First: Best Practices for Scaffolding Installation | ACHI Blog",
+          description: "Learn essential safety practices and best practices for scaffolding installation and maintenance in construction projects.",
+          canonical: "https://achi-scaffolding.github.io/blog-post-2"
+        };
+      case '3':
+        return {
+          title: "Choosing the Right Scaffolding System for Your Project | ACHI Blog",
+          description: "A comprehensive guide to selecting the appropriate scaffolding system for different types of construction and renovation projects.",
+          canonical: "https://achi-scaffolding.github.io/blog-post-3"
+        };
+      default:
+        return {
+          title: "Blog Post | ACHI Scaffolding",
+          description: "Read the latest insights from ACHI Scaffolding.",
+          canonical: `https://achi-scaffolding.github.io/blog-post-${postId}`
+        };
+    }
+  };
+
+  const postMeta = getPostMeta();
+
   return (
     <main className="w-full">
+      <SEO
+        title={postMeta.title}
+        description={postMeta.description}
+        canonical={postMeta.canonical}
+      />
       <section className="w-full flex flex-col md:flex-row">
        <div className="w-full md:w-1/2 px-[20px] md:px-[80px] py-[90px] md:py-[0] flex flex-col justify-center bg-[#28509E]">
   <div className="font-[Rajdhani] text-[20px] tracking-[3px] font-[700] text-white mb-[12px]">

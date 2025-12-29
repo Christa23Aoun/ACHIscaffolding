@@ -1,11 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { sectors } from "../data/sectors";
+import SEO from "../components/SEO";
 
 const Sectors = () => {
 
   return (
     <main id="sectors" className="bg-[#f5f7fb] text-[#1b3155]">
+      <SEO
+        title="Sectors | Industries We Serve | ACHI Scaffolding"
+        description="ACHI Scaffolding serves multiple sectors including renovation, construction, events, industrial facilities, oil & gas, and marine projects across Lebanon."
+        canonical="https://achi-scaffolding.github.io/sectors"
+      />
       {/* Hero Section */}
       <section className="py-[60px]">
         <div className="w-[90%] max-w-[1200px] mx-auto text-center">

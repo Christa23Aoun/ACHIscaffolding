@@ -3,10 +3,16 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ImageWebp from "../ImageWebp";
 import ContactForm from "../ContactForm";
+import SEO from "../SEO";
 
 const SingleService = () => {
   return (
     <div className="w-full">
+      <SEO
+        title="Service Details | ACHI Scaffolding"
+        description="Learn more about our scaffolding and shoring services. Contact us for a consultation."
+        canonical="https://achi-scaffolding.github.io/services/serviceItem"
+      />
       {/* HERO */}
       <section className="w-full bg-[#28509E] flex flex-col md:flex-row items-center">
         <div className="w-full md:w-1/2 px-[20px] md:px-[80px] py-[90px] md:py-[0]">

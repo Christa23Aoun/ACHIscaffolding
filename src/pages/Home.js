@@ -8,12 +8,18 @@ import Clients from '../components/Clients'
 import Testimonials from '../components/Testimonials'
 import BlogSection from '../components/BlogSection'
 import SectorsBar from '../components/SectorsBar'
+import SEO from '../components/SEO'
 
 const Home = ({ showMenu, setshowMenu, direction, userLang }) => {
   const ASSET = process.env.PUBLIC_URL || ""
 
   return (
     <main>
+      <SEO
+        title="Industrial & Construction Scaffolding Systems | ACHI"
+        description="ACHI Scaffolding delivers access systems, shoring, and scaffolding solutions for construction, restoration, and industrial projects. Request technical consultation."
+        canonical="https://achi-scaffolding.github.io/"
+      />
       <div className="sr-only">
         <h1>Industrial &amp; Construction Scaffolding Systems Built for Safety, Precision, and Scale</h1>
 
