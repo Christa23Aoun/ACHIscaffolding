@@ -1,3 +1,4 @@
+// src/routes/AppRoutes.js
 import Header from '../components/Header'
 import Home from '../pages/Home'
 import { Route, Routes } from "react-router-dom"
@@ -13,7 +14,8 @@ import ScrollToTop from '../components/ScrollToTop'
 import PageNotFound from '../pages/PageNotFound'
 import Blog from '../pages/Blog'
 import BlogItem from '../pages/BlogItem'
-import Services from '../components/services/ServiceSection'
+
+import ServicesPage from '../pages/Services'
 import SingleService from '../components/services/SingleService'
 
 import About from '../pages/About'
@@ -52,7 +54,7 @@ function AppRoutes({
           <Route path="/projects" element={<Projects />} />
           <Route path="/sectors" element={<Sectors />} />
 
-          <Route path="/services" element={<Services showMenu={showMenu} setshowMenu={setshowMenu} userLang={userLang} />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/serviceItem" element={<SingleService />} />
 
           <Route path="/gallery" element={<Gallery />} />

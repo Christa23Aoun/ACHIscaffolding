@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import ServicesPageAllServices from '../components/services/ServicesPageAllServices';
-import WhyUsSection from '../components/services/WhyUsSection';
 
 const Services = () => {
   return (
@@ -47,7 +46,6 @@ const Services = () => {
       </section>
 
       <ServicesPageAllServices />
-      <WhyUsSection />
     </div>
   );
 };
