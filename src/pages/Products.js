@@ -307,8 +307,8 @@ const Products = () => {
         desc: "3D visualization of H frame scaffolding for façade and elevation works.",
         model: "/assets/products/h_frame.glb",
         badge: "3D VIEW",
-        cameraOrbit: "0deg 70deg 150%",
-        fieldOfView: "32deg",
+        cameraOrbit: "0deg 70deg 120%",
+        fieldOfView: "30deg",
         cameraTarget: "0m 0m 0m",
         specs: ["Quick-assembly frame geometry", "Stable vertical support", "Compatible with standard accessories"],
         tags: ["Rotate", "Zoom", "Inspect"],
@@ -468,6 +468,7 @@ const Products = () => {
                       field-of-view={p.fieldOfView || "30deg"}
                       min-field-of-view="20deg"
                       max-field-of-view="60deg"
+                      bounds="tight"
                       touch-action="pan-y"
                       ar-modes="webxr scene-viewer quick-look"
                       class="absolute inset-0 w-full h-full block"
