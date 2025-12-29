@@ -1,8 +1,177 @@
 // src/pages/Products.js
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, useState, useRef } from "react"
 import SEO from "../components/SEO"
 
+// Helper component to maintain camera position and handle AI View toggle smoothly
+const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget, productIdx }) => {
+  useEffect(() => {
+    if (!viewerRef) return
+
+    // Lock camera position before making any changes
+    const lockCameraPosition = () => {
+      try {
+        if (cameraOrbit) {
+          viewerRef.setAttribute("camera-orbit", cameraOrbit)
+          viewerRef.cameraOrbit = cameraOrbit
+        }
+        if (cameraTarget) {
+          viewerRef.setAttribute("camera-target", cameraTarget)
+          viewerRef.cameraTarget = cameraTarget
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+
+    // Update camera-controls and auto-rotate attributes directly via DOM
+    const updateAttributes = () => {
+      try {
+        // Lock camera position first
+        lockCameraPosition()
+        
+        if (isAIView) {
+          // Enable camera-controls, disable auto-rotate
+          viewerRef.setAttribute("camera-controls", "")
+          viewerRef.removeAttribute("auto-rotate")
+          viewerRef.removeAttribute("auto-rotate-delay")
+          viewerRef.removeAttribute("rotation-per-second")
+          viewerRef.style.pointerEvents = "auto"
+          viewerRef.style.touchAction = "none"
+        } else {
+          // Disable camera-controls, enable auto-rotate
+          viewerRef.removeAttribute("camera-controls")
+          viewerRef.setAttribute("auto-rotate", "")
+          viewerRef.setAttribute("auto-rotate-delay", "0")
+          viewerRef.setAttribute("rotation-per-second", "28deg")
+          viewerRef.style.pointerEvents = "none"
+          viewerRef.style.touchAction = "pan-y"
+        }
+        
+        // Ensure camera position is maintained
+        lockCameraPosition()
+        
+        // Update framing if available
+        if (typeof viewerRef.updateFraming === "function") {
+          requestAnimationFrame(() => {
+            viewerRef.updateFraming()
+          })
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+
+    // Use requestAnimationFrame for smooth updates
+    const rafId = requestAnimationFrame(() => {
+      updateAttributes()
+      
+      // Double-check after a brief delay
+      setTimeout(() => {
+        lockCameraPosition()
+        if (typeof viewerRef.updateFraming === "function") {
+          viewerRef.updateFraming()
+        }
+      }, 50)
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+    }
+  }, [viewerRef, isAIView, cameraOrbit, cameraTarget, productIdx])
+
+  return null
+}
+
 const Products = () => {
+  // Track AI View state for each product card
+  const [aiViewStates, setAIViewStates] = useState({})
+  // Store refs for model-viewer elements
+  const modelViewerRefs = useRef({})
+
+  const toggleAIView = (productIdx, product) => {
+    // Lock camera position BEFORE state change to prevent flicker
+    const viewer = modelViewerRefs.current[productIdx]
+    if (viewer) {
+      try {
+        // Get camera settings from the product or use defaults
+        const cameraOrbit = product?.cameraOrbit || "0deg 70deg 120%"
+        const cameraTarget = product?.cameraTarget || "0m 0m 0m"
+        
+        // Lock camera position synchronously before any state changes
+        viewer.setAttribute("camera-orbit", cameraOrbit)
+        viewer.setAttribute("camera-target", cameraTarget)
+        viewer.cameraOrbit = cameraOrbit
+        viewer.cameraTarget = cameraTarget
+        
+        // Ensure model stays visible
+        viewer.style.opacity = "1"
+        
+        // Use requestAnimationFrame to ensure smooth transition
+        requestAnimationFrame(() => {
+          if (typeof viewer.updateFraming === "function") {
+            viewer.updateFraming()
+          }
+        })
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+
+    // Update state after camera is locked
+    setAIViewStates((prev) => ({
+      ...prev,
+      [productIdx]: !prev[productIdx],
+    }))
+  }
+
+  // Ensure camera position is maintained when AI View is toggled
+  useEffect(() => {
+    const ensureAllCamerasVisible = () => {
+      Object.keys(aiViewStates).forEach((idx) => {
+        if (aiViewStates[idx] && modelViewerRefs.current[idx]) {
+          const viewer = modelViewerRefs.current[idx]
+          try {
+            // Get the original camera settings from the product data
+            const products = [
+              {
+                cameraOrbit: "0deg 70deg 120%",
+                cameraTarget: "0m 0m 0m",
+              },
+              // Add more products as needed - this is a fallback
+            ]
+            
+            // Force camera position update - use attribute value or fallback
+            const cameraOrbit = viewer.getAttribute("camera-orbit") || "0deg 70deg 120%"
+            const cameraTarget = viewer.getAttribute("camera-target") || "0m 0m 0m"
+            
+            // Set both attribute and property to ensure it sticks
+            viewer.setAttribute("camera-orbit", cameraOrbit)
+            viewer.setAttribute("camera-target", cameraTarget)
+            viewer.cameraOrbit = cameraOrbit
+            viewer.cameraTarget = cameraTarget
+            
+            // Update framing to ensure model is visible
+            if (typeof viewer.updateFraming === "function") {
+              viewer.updateFraming()
+            }
+          } catch (e) {
+            // Ignore errors
+          }
+        }
+      })
+    }
+
+    // Run multiple times to handle timing issues
+    const timeout1 = setTimeout(ensureAllCamerasVisible, 0)
+    const timeout2 = setTimeout(ensureAllCamerasVisible, 100)
+    const timeout3 = setTimeout(ensureAllCamerasVisible, 300)
+    
+    return () => {
+      clearTimeout(timeout1)
+      clearTimeout(timeout2)
+      clearTimeout(timeout3)
+    }
+  }, [aiViewStates])
   useEffect(() => {
     if (!document.querySelector('script[data-model-viewer="true"]')) {
       const s = document.createElement("script")
@@ -384,6 +553,9 @@ const Products = () => {
           bottom: 0 !important;
           border: none !important;
           outline: none !important;
+          opacity: 1 !important;
+          transition: opacity 0.2s ease-in-out !important;
+          will-change: auto !important;
         }
         model-viewer canvas {
           display: block !important;
@@ -395,6 +567,8 @@ const Products = () => {
           border: none !important;
           outline: none !important;
           box-sizing: border-box !important;
+          opacity: 1 !important;
+          transition: opacity 0.2s ease-in-out !important;
         }
         model-viewer::part(default-progress-bar) { display: none !important; }
         model-viewer::part(default-ar-button) { transform: scale(0.9); }
@@ -417,89 +591,133 @@ const Products = () => {
       <section className="pb-[60px]">
         <div className="w-[90%] max-w-[1200px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[18px]">
-            {products.map((p, idx) => (
-              <article
-                key={`${p.title}-${idx}`}
-                className="group rounded-[16px] overflow-hidden flex flex-col bg-white shadow-[0_10px_30px_rgba(17,35,64,0.08)]"
-              >
-                <div className="relative overflow-hidden bg-white" style={{ width: "100%", minHeight: "380px" }}>
-                  {p.type === "3d" ? (
-                    <model-viewer
-                      key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
-                      src={p.model}
-                      alt={p.title}
-                      camera-controls
-                      auto-rotate
-                      auto-rotate-delay="0"
-                      rotation-per-second="28deg"
-                      interaction-prompt="none"
-                      shadow-intensity="1"
-                      loading="eager"
-                      camera-orbit={p.cameraOrbit || "0deg 70deg 60%"}
-                      camera-target={p.cameraTarget || "0m 0m 0m"}
-                      field-of-view={p.fieldOfView || "30deg"}
-                      min-field-of-view="20deg"
-                      max-field-of-view="60deg"
-                      bounds="tight"
-                      touch-action="pan-y"
-                      ar-modes="webxr scene-viewer quick-look"
-                      class="absolute inset-0 w-full h-full block"
-                      style={{ margin: 0, padding: 0, top: 0, left: 0, right: 0, bottom: 0 }}
-                    />
-                  ) : (
-                    <img
-                      src={p.img}
-                      alt={p.title}
-                      className="absolute inset-0 w-full h-full object-contain block"
-                      loading="lazy"
-                    />
-                  )}
+            {products.map((p, idx) => {
+              const isAIView = aiViewStates[idx] || false
+              const is3DProduct = p.type === "3d"
 
-                  <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
-                    {p.type === "3d" ? p.badge : "PRODUCT"}
-                  </span>
+              return (
+                <article
+                  key={`${p.title}-${idx}`}
+                  className="group rounded-[16px] overflow-hidden flex flex-col bg-white shadow-[0_10px_30px_rgba(17,35,64,0.08)]"
+                >
+                  <div className="relative overflow-hidden bg-white" style={{ width: "100%", minHeight: "380px" }}>
+                    {is3DProduct ? (
+                      <>
+                        <model-viewer
+                          ref={(el) => {
+                            if (el) {
+                              modelViewerRefs.current[idx] = el
+                              // Set initial attributes directly
+                              el.setAttribute("camera-orbit", p.cameraOrbit || "0deg 70deg 120%")
+                              el.setAttribute("camera-target", p.cameraTarget || "0m 0m 0m")
+                            }
+                          }}
+                          key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
+                          src={p.model}
+                          alt={p.title}
+                          interaction-prompt="none"
+                          shadow-intensity="1"
+                          loading="eager"
+                          camera-orbit={p.cameraOrbit || "0deg 70deg 120%"}
+                          camera-target={p.cameraTarget || "0m 0m 0m"}
+                          field-of-view={p.fieldOfView || "30deg"}
+                          min-field-of-view="20deg"
+                          max-field-of-view="60deg"
+                          bounds="tight"
+                          ar-modes="webxr scene-viewer quick-look"
+                          class="absolute inset-0 w-full h-full block"
+                          style={{
+                            margin: 0,
+                            padding: 0,
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                          }}
+                        />
+                        <ModelViewerController
+                          viewerRef={modelViewerRefs.current[idx]}
+                          isAIView={isAIView}
+                          cameraOrbit={p.cameraOrbit || "0deg 70deg 120%"}
+                          cameraTarget={p.cameraTarget || "0m 0m 0m"}
+                          productIdx={idx}
+                        />
+                      </>
+                    ) : (
+                      <img
+                        src={p.img}
+                        alt={p.title}
+                        className="absolute inset-0 w-full h-full object-contain block"
+                        loading="lazy"
+                      />
+                    )}
 
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div
-                      className="absolute inset-x-0 bottom-0 p-[16px] md:p-[18px]
-                                 bg-gradient-to-t from-black/80 via-black/35 to-transparent
-                                 opacity-0 translate-y-[10px]
-                                 group-hover:opacity-100 group-hover:translate-y-0
-                                 transition-all duration-300 ease-out"
-                    >
-                      <div className="pointer-events-auto max-w-[92%]">
-                        <p className="text-white text-[14px] leading-[1.7] mb-[12px]">{p.desc}</p>
+                    {/* AI View Toggle Button - only for 3D products */}
+                    {is3DProduct && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          toggleAIView(idx, p)
+                        }}
+                        className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-20 hover:bg-[#1a3d7a] transition-colors duration-200 cursor-pointer"
+                        aria-label={isAIView ? "Exit AI View" : "Enter AI View"}
+                      >
+                        {isAIView ? "EXIT AI VIEW" : "AI VIEW"}
+                      </button>
+                    )}
 
-                        <ul className="space-y-[6px] text-[13px] text-white">
-                          {p.specs.map((s) => (
-                            <li key={`${p.title}-${s}`} className="flex gap-[8px]">
-                              <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
-                              <span className="leading-[1.6]">{s}</span>
-                            </li>
-                          ))}
-                        </ul>
+                    {/* Product badge for non-3D products */}
+                    {!is3DProduct && (
+                      <span className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300 ease-out">
+                        PRODUCT
+                      </span>
+                    )}
 
-                        {p.type === "img" && (
-                          <a
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
-                            className="mt-[12px] inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px]
-                                       border-2 border-white text-white font-[900] uppercase text-[13px]
-                                       hover:bg-white hover:text-[#214f9b] transition-all"
-                          >
-                            Read More
-                          </a>
-                        )}
+                    {/* Text/Details Overlay - hidden in AI View, shown on hover in normal mode */}
+                    {!isAIView && (
+                      <div className="absolute inset-0 pointer-events-none">
+                        <div
+                          className="absolute inset-x-0 bottom-0 p-[16px] md:p-[18px]
+                                     bg-gradient-to-t from-black/80 via-black/35 to-transparent
+                                     opacity-0 translate-y-[10px]
+                                     group-hover:opacity-100 group-hover:translate-y-0
+                                     transition-all duration-300 ease-out"
+                        >
+                          <div className="pointer-events-auto max-w-[92%]">
+                            <p className="text-white text-[14px] leading-[1.7] mb-[12px]">{p.desc}</p>
+
+                            <ul className="space-y-[6px] text-[13px] text-white">
+                              {p.specs.map((s) => (
+                                <li key={`${p.title}-${s}`} className="flex gap-[8px]">
+                                  <span className="mt-[6px] w-[6px] h-[6px] rounded-full bg-white" />
+                                  <span className="leading-[1.6]">{s}</span>
+                                </li>
+                              ))}
+                            </ul>
+
+                            {p.type === "img" && (
+                              <a
+                                href="#"
+                                onClick={(e) => e.preventDefault()}
+                                className="mt-[12px] inline-flex w-full justify-center rounded-[12px] px-[14px] py-[10px]
+                                           border-2 border-white text-white font-[900] uppercase text-[13px]
+                                           hover:bg-white hover:text-[#214f9b] transition-all"
+                              >
+                                Read More
+                              </a>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
-                </div>
 
-                <h3 className="font-[900] text-[16px] text-center px-[10px] min-h-[56px] flex items-center justify-center">
-                  {p.title}
-                </h3>
-              </article>
-            ))}
+                  <h3 className="font-[900] text-[16px] text-center px-[10px] min-h-[56px] flex items-center justify-center">
+                    {p.title}
+                  </h3>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>
