@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import ImageWebp from './ImageWebp'
 import { applyLocalePrefix, getLangFromPath } from '../utils/langRouting'
 
-function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry = "Country" }) {
+function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry = "Lebanon" }) {
   const navigate = useNavigate()
   const location = useLocation()
   const isHome = location.pathname === "/"
@@ -30,9 +30,15 @@ function Header({ handleLanguage, currentLanguage, handleCountry, currentCountry
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    document.body.classList.toggle("home-page", isHome)
-    return () => document.body.classList.remove("home-page")
-  }, [isHome])
+  if (!handleCountry) return
+
+  if (currentLang === 'fr') {
+    handleCountry('France')
+  } else {
+    handleCountry('Lebanon')
+  }
+}, [currentLang])
+
 
   const closeAllDropdowns = () => {
     setshowMenu3(false)
