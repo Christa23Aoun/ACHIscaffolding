@@ -2,8 +2,8 @@
 import React, { useEffect, useMemo, useState, useRef } from "react"
 import SEO from "../components/SEO"
 
-// Helper component to maintain camera position and handle AI View toggle smoothly
-const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget, productIdx }) => {
+// Helper component to maintain camera position and handle AR View toggle smoothly
+const ModelViewerController = ({ viewerRef, isARView, cameraOrbit, cameraTarget, productIdx }) => {
   useEffect(() => {
     if (!viewerRef) return
 
@@ -29,7 +29,7 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
         // Lock camera position FIRST and MULTIPLE times to prevent any movement
         lockCameraPosition()
         
-        if (isAIView) {
+        if (isARView) {
           // Enable camera-controls for interactive mode
           viewerRef.setAttribute("camera-controls", "")
           viewerRef.removeAttribute("auto-rotate")
@@ -38,11 +38,11 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
           viewerRef.style.pointerEvents = "auto"
           viewerRef.style.touchAction = "none"
         } else {
-          // Default state: stationary, no interaction, no auto-rotate
+          // Default state: auto-rotate enabled, no interaction
           viewerRef.removeAttribute("camera-controls")
-          viewerRef.removeAttribute("auto-rotate")
-          viewerRef.removeAttribute("auto-rotate-delay")
-          viewerRef.removeAttribute("rotation-per-second")
+          viewerRef.setAttribute("auto-rotate", "")
+          viewerRef.setAttribute("auto-rotate-delay", "0")
+          viewerRef.setAttribute("rotation-per-second", "28deg")
           viewerRef.style.pointerEvents = "none"
           viewerRef.style.touchAction = "pan-y"
         }
@@ -73,18 +73,18 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
     return () => {
       cancelAnimationFrame(rafId)
     }
-  }, [viewerRef, isAIView, cameraOrbit, cameraTarget, productIdx])
+  }, [viewerRef, isARView, cameraOrbit, cameraTarget, productIdx])
 
   return null
 }
 
 const Products = () => {
-  // Track AI View state for each product card
-  const [aiViewStates, setAIViewStates] = useState({})
+  // Track AR View state for each product card
+  const [arViewStates, setARViewStates] = useState({})
   // Store refs for model-viewer elements
   const modelViewerRefs = useRef({})
 
-  const toggleAIView = (productIdx, product) => {
+  const toggleARView = (productIdx, product) => {
     // Lock camera position BEFORE state change to prevent flicker
     const viewer = modelViewerRefs.current[productIdx]
     if (viewer) {
@@ -117,7 +117,7 @@ const Products = () => {
     }
 
     // Update state after camera is locked
-    setAIViewStates((prev) => ({
+    setARViewStates((prev) => ({
       ...prev,
       [productIdx]: !prev[productIdx],
     }))
@@ -126,7 +126,7 @@ const Products = () => {
   // Ensure ALL model-viewers maintain their camera positions and stay visible
   useEffect(() => {
     const ensureAllCamerasVisible = () => {
-      // Iterate through ALL model-viewers, not just ones in AI View
+      // Iterate through ALL model-viewers, not just ones in AR View
       Object.keys(modelViewerRefs.current).forEach((idx) => {
         const viewer = modelViewerRefs.current[idx]
         if (!viewer) return
@@ -162,7 +162,7 @@ const Products = () => {
       clearTimeout(timeout1)
       clearTimeout(timeout2)
     }
-  }, [aiViewStates])
+  }, [arViewStates])
   useEffect(() => {
     if (!document.querySelector('script[data-model-viewer="true"]')) {
       const s = document.createElement("script")
@@ -583,7 +583,7 @@ const Products = () => {
         <div className="w-[90%] max-w-[1200px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[18px]">
             {products.map((p, idx) => {
-              const isAIView = aiViewStates[idx] || false
+              const isARView = arViewStates[idx] || false
               const is3DProduct = p.type === "3d"
 
               return (
@@ -607,11 +607,11 @@ const Products = () => {
                               el.cameraOrbit = cameraOrbit
                               el.cameraTarget = cameraTarget
                               
-                              // Ensure no auto-rotate and no camera-controls by default
+                              // Enable auto-rotate by default, disable camera-controls
                               el.removeAttribute("camera-controls")
-                              el.removeAttribute("auto-rotate")
-                              el.removeAttribute("auto-rotate-delay")
-                              el.removeAttribute("rotation-per-second")
+                              el.setAttribute("auto-rotate", "")
+                              el.setAttribute("auto-rotate-delay", "0")
+                              el.setAttribute("rotation-per-second", "28deg")
                               el.style.pointerEvents = "none"
                               el.style.touchAction = "pan-y"
                               el.style.opacity = "1"
@@ -638,6 +638,9 @@ const Products = () => {
                           interaction-prompt="none"
                           shadow-intensity="1"
                           loading="eager"
+                          auto-rotate
+                          auto-rotate-delay="0"
+                          rotation-per-second="28deg"
                           camera-orbit={p.cameraOrbit || "0deg 70deg 120%"}
                           camera-target={p.cameraTarget || "0m 0m 0m"}
                           field-of-view={p.fieldOfView || "30deg"}
@@ -658,7 +661,7 @@ const Products = () => {
                         />
                         <ModelViewerController
                           viewerRef={modelViewerRefs.current[idx]}
-                          isAIView={isAIView}
+                          isARView={isARView}
                           cameraOrbit={p.cameraOrbit || "0deg 70deg 120%"}
                           cameraTarget={p.cameraTarget || "0m 0m 0m"}
                           productIdx={idx}
@@ -673,17 +676,17 @@ const Products = () => {
                       />
                     )}
 
-                    {/* AI View Toggle Button - only for 3D products */}
+                    {/* AR View Toggle Button - only for 3D products */}
                     {is3DProduct && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
-                          toggleAIView(idx, p)
+                          toggleARView(idx, p)
                         }}
                         className="absolute top-[12px] left-[12px] bg-[#214f9b] text-white text-[12px] font-[900] px-[10px] py-[6px] rounded-full z-20 hover:bg-[#1a3d7a] transition-colors duration-200 cursor-pointer"
-                        aria-label={isAIView ? "Exit AI View" : "Enter AI View"}
+                        aria-label={isARView ? "Exit AR View" : "Enter AR View"}
                       >
-                        {isAIView ? "EXIT AI VIEW" : "AI VIEW"}
+                        {isARView ? "EXIT AR VIEW" : "AR VIEW"}
                       </button>
                     )}
 
@@ -694,8 +697,8 @@ const Products = () => {
                       </span>
                     )}
 
-                    {/* Text/Details Overlay - hidden in AI View, shown on hover in normal mode */}
-                    {!isAIView && (
+                    {/* Text/Details Overlay - hidden in AR View, shown on hover in normal mode */}
+                    {!isARView && (
                       <div className="absolute inset-0 pointer-events-none">
                         <div
                           className="absolute inset-x-0 bottom-0 p-[16px] md:p-[18px]
