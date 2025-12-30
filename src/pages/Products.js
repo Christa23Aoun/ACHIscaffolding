@@ -23,14 +23,14 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
       }
     }
 
-    // Update camera-controls and auto-rotate attributes directly via DOM
+    // Update camera-controls attributes directly via DOM
     const updateAttributes = () => {
       try {
-        // Lock camera position first
+        // Lock camera position FIRST and MULTIPLE times to prevent any movement
         lockCameraPosition()
         
         if (isAIView) {
-          // Enable camera-controls, disable auto-rotate
+          // Enable camera-controls for interactive mode
           viewerRef.setAttribute("camera-controls", "")
           viewerRef.removeAttribute("auto-rotate")
           viewerRef.removeAttribute("auto-rotate-delay")
@@ -38,24 +38,20 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
           viewerRef.style.pointerEvents = "auto"
           viewerRef.style.touchAction = "none"
         } else {
-          // Disable camera-controls, enable auto-rotate
+          // Default state: stationary, no interaction, no auto-rotate
           viewerRef.removeAttribute("camera-controls")
-          viewerRef.setAttribute("auto-rotate", "")
-          viewerRef.setAttribute("auto-rotate-delay", "0")
-          viewerRef.setAttribute("rotation-per-second", "28deg")
+          viewerRef.removeAttribute("auto-rotate")
+          viewerRef.removeAttribute("auto-rotate-delay")
+          viewerRef.removeAttribute("rotation-per-second")
           viewerRef.style.pointerEvents = "none"
           viewerRef.style.touchAction = "pan-y"
         }
         
-        // Ensure camera position is maintained
+        // Lock camera position again immediately after attribute changes
         lockCameraPosition()
         
-        // Update framing if available
-        if (typeof viewerRef.updateFraming === "function") {
-          requestAnimationFrame(() => {
-            viewerRef.updateFraming()
-          })
-        }
+        // DO NOT call updateFraming() when toggling - it causes buffering/rotation
+        // The camera position is already set correctly, so no need to reframe
       } catch (e) {
         // Ignore errors
       }
@@ -65,11 +61,11 @@ const ModelViewerController = ({ viewerRef, isAIView, cameraOrbit, cameraTarget,
     const rafId = requestAnimationFrame(() => {
       updateAttributes()
       
-      // Double-check after a brief delay
+      // Lock camera position again after a brief delay to ensure it stays locked
       setTimeout(() => {
-        lockCameraPosition()
-        if (typeof viewerRef.updateFraming === "function") {
-          viewerRef.updateFraming()
+        if (viewerRef && viewerRef.isConnected) {
+          lockCameraPosition()
+          // DO NOT call updateFraming() - it causes unwanted movement
         }
       }, 50)
     })
@@ -98,6 +94,13 @@ const Products = () => {
         const cameraTarget = product?.cameraTarget || "0m 0m 0m"
         
         // Lock camera position synchronously before any state changes
+        // Set multiple times to prevent any interpolation/buffering
+        viewer.setAttribute("camera-orbit", cameraOrbit)
+        viewer.setAttribute("camera-target", cameraTarget)
+        viewer.cameraOrbit = cameraOrbit
+        viewer.cameraTarget = cameraTarget
+        
+        // Lock again immediately to prevent any movement
         viewer.setAttribute("camera-orbit", cameraOrbit)
         viewer.setAttribute("camera-target", cameraTarget)
         viewer.cameraOrbit = cameraOrbit
@@ -106,12 +109,8 @@ const Products = () => {
         // Ensure model stays visible
         viewer.style.opacity = "1"
         
-        // Use requestAnimationFrame to ensure smooth transition
-        requestAnimationFrame(() => {
-          if (typeof viewer.updateFraming === "function") {
-            viewer.updateFraming()
-          }
-        })
+        // DO NOT call updateFraming() when toggling - it causes buffering/rotation
+        // The camera is already positioned correctly, so no reframing needed
       } catch (e) {
         // Ignore errors
       }
@@ -124,52 +123,44 @@ const Products = () => {
     }))
   }
 
-  // Ensure camera position is maintained when AI View is toggled
+  // Ensure ALL model-viewers maintain their camera positions and stay visible
   useEffect(() => {
     const ensureAllCamerasVisible = () => {
-      Object.keys(aiViewStates).forEach((idx) => {
-        if (aiViewStates[idx] && modelViewerRefs.current[idx]) {
-          const viewer = modelViewerRefs.current[idx]
-          try {
-            // Get the original camera settings from the product data
-            const products = [
-              {
-                cameraOrbit: "0deg 70deg 120%",
-                cameraTarget: "0m 0m 0m",
-              },
-              // Add more products as needed - this is a fallback
-            ]
-            
-            // Force camera position update - use attribute value or fallback
-            const cameraOrbit = viewer.getAttribute("camera-orbit") || "0deg 70deg 120%"
-            const cameraTarget = viewer.getAttribute("camera-target") || "0m 0m 0m"
-            
-            // Set both attribute and property to ensure it sticks
-            viewer.setAttribute("camera-orbit", cameraOrbit)
-            viewer.setAttribute("camera-target", cameraTarget)
-            viewer.cameraOrbit = cameraOrbit
-            viewer.cameraTarget = cameraTarget
-            
-            // Update framing to ensure model is visible
-            if (typeof viewer.updateFraming === "function") {
-              viewer.updateFraming()
-            }
-          } catch (e) {
-            // Ignore errors
-          }
+      // Iterate through ALL model-viewers, not just ones in AI View
+      Object.keys(modelViewerRefs.current).forEach((idx) => {
+        const viewer = modelViewerRefs.current[idx]
+        if (!viewer) return
+
+        try {
+          // Get camera settings from attributes (they should already be set)
+          const cameraOrbit = viewer.getAttribute("camera-orbit") || "0deg 70deg 120%"
+          const cameraTarget = viewer.getAttribute("camera-target") || "0m 0m 0m"
+          
+          // Ensure camera position is maintained for ALL viewers
+          viewer.setAttribute("camera-orbit", cameraOrbit)
+          viewer.setAttribute("camera-target", cameraTarget)
+          viewer.cameraOrbit = cameraOrbit
+          viewer.cameraTarget = cameraTarget
+          
+          // Ensure visibility
+          viewer.style.opacity = "1"
+          viewer.style.visibility = "visible"
+          
+          // DO NOT call updateFraming() here - it causes buffering/rotation
+          // Only maintain camera position to keep items stationary
+        } catch (e) {
+          // Ignore errors
         }
       })
     }
 
-    // Run multiple times to handle timing issues
-    const timeout1 = setTimeout(ensureAllCamerasVisible, 0)
-    const timeout2 = setTimeout(ensureAllCamerasVisible, 100)
-    const timeout3 = setTimeout(ensureAllCamerasVisible, 300)
+    // Run after a brief delay to ensure all viewers are initialized
+    const timeout1 = setTimeout(ensureAllCamerasVisible, 50)
+    const timeout2 = setTimeout(ensureAllCamerasVisible, 200)
     
     return () => {
       clearTimeout(timeout1)
       clearTimeout(timeout2)
-      clearTimeout(timeout3)
     }
   }, [aiViewStates])
   useEffect(() => {
@@ -607,9 +598,38 @@ const Products = () => {
                           ref={(el) => {
                             if (el) {
                               modelViewerRefs.current[idx] = el
-                              // Set initial attributes directly
-                              el.setAttribute("camera-orbit", p.cameraOrbit || "0deg 70deg 120%")
-                              el.setAttribute("camera-target", p.cameraTarget || "0m 0m 0m")
+                              // Set initial attributes directly - stationary by default
+                              const cameraOrbit = p.cameraOrbit || "0deg 70deg 120%"
+                              const cameraTarget = p.cameraTarget || "0m 0m 0m"
+                              
+                              el.setAttribute("camera-orbit", cameraOrbit)
+                              el.setAttribute("camera-target", cameraTarget)
+                              el.cameraOrbit = cameraOrbit
+                              el.cameraTarget = cameraTarget
+                              
+                              // Ensure no auto-rotate and no camera-controls by default
+                              el.removeAttribute("camera-controls")
+                              el.removeAttribute("auto-rotate")
+                              el.removeAttribute("auto-rotate-delay")
+                              el.removeAttribute("rotation-per-second")
+                              el.style.pointerEvents = "none"
+                              el.style.touchAction = "pan-y"
+                              el.style.opacity = "1"
+                              el.style.visibility = "visible"
+                              
+                              // Ensure model is centered and visible after load
+                              if (typeof el.updateFraming === "function") {
+                                const handleLoad = () => {
+                                  if (el && el.isConnected) {
+                                    el.updateFraming()
+                                  }
+                                }
+                                if (el.loaded) {
+                                  setTimeout(handleLoad, 100)
+                                } else {
+                                  el.addEventListener("load", handleLoad, { once: true })
+                                }
+                              }
                             }
                           }}
                           key={`${p.model}-${idx}-${p.cameraOrbit}-${p.cameraTarget}-${p.fieldOfView}`}
@@ -633,6 +653,7 @@ const Products = () => {
                             left: 0,
                             right: 0,
                             bottom: 0,
+                            pointerEvents: "none",
                           }}
                         />
                         <ModelViewerController
